@@ -36,5 +36,14 @@ public class ItemManager : MonoBehaviour
         {
             Debug.LogError("There can only be one instance of CollectibleManager.");
         }
+
+        foreach (var c in collectibles)
+        {
+            c.Value.GetComponent<Collectible>().id = c.Key;
+        }
+        foreach (var r in relics)
+        {
+            r.Value.GetComponent<Relic>().id = r.Key;
+        }
     }
 }

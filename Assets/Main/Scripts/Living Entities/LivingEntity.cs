@@ -38,8 +38,10 @@ public class LivingEntity : MonoBehaviour
     [SerializeField] private Material defaultMaterial;
     [SerializeField] private Material hitMaterial;
 
-    public AttackInfoModifier attackDealtModifier    = null;
-    public AttackInfoModifier attackReceivedModifier = null;
+    public CritModifier       critDealtModifier          = null;
+    public CritModifier       critReceivedModifier       = null;
+    public AttackInfoModifier attackDealtModifier        = null;
+    public AttackInfoModifier attackReceivedModifier     = null;
 
     public float   currentHealth { get; private set; } = 0.0f;
     public float   currentShield { get; private set; } = 0.0f;
@@ -61,21 +63,36 @@ public class LivingEntity : MonoBehaviour
     private Vector2      m_knockbackOrigin  = Vector2.zero;
     private Vector2      m_previousPosition = Vector2.zero;
 
-    private static float SHIELD_REGENERATE_TIME = 2.0f;
-    private static float HURT_TIME              = 0.1f;
+    private static float         SHIELD_REGENERATE_TIME = 2.0f;
+    private static float         HURT_TIME              = 0.1f;
+    private static System.Random RANDOM                 = new System.Random();
 
-    public static void HandleAttack(LivingEntity attacker, LivingEntity target, AttackInfo attackInfo)
+    public static void HandleAttack(LivingEntity attacker, LivingEntity target, float critChance, float critDamage, AttackInfo attackInfo)
     {
-        if (attacker != null && attacker.attackDealtModifier != null)
-        {
-            attacker.attackDealtModifier(attackInfo, target);
-        }
-        if (target != null && target.attackReceivedModifier != null)
-        {
-            target.attackReceivedModifier(attackInfo, attacker);
-        }
         if (target != null)
         {
+            if (attacker != null && attacker.critDealtModifier != null)
+            {
+                attacker.critDealtModifier(ref critChance, ref critDamage, target);
+            }
+            if (target.critReceivedModifier != null)
+            {
+                target.critReceivedModifier(ref critChance, ref critDamage, target);
+            }
+            critChance = Mathf.Clamp01(critChance * 0.01f);
+            attackInfo.critDamage = (float)RANDOM.NextDouble() <= critChance ? critDamage : 0.0f;
+            attackInfo.damage += critDamage;
+
+            if (attacker != null && attacker.attackDealtModifier != null)
+            {
+                attacker.attackDealtModifier(attackInfo, target);
+            }
+            if (target.attackReceivedModifier != null)
+            {
+                target.attackReceivedModifier(attackInfo, attacker);
+            }
+            attackInfo.damage = Mathf.Max(0.0f, attackInfo.damage);
+
             target.p_ReceiveAttack(attackInfo);
         }
     }
@@ -353,11 +370,11 @@ public class LivingEntity : MonoBehaviour
         }
     }
 
+    [Serializable]
     public struct StatModifier
     {
-        public Operation operation { get; private set; }
-
-        public float amount { get; private set; }
+        public Operation operation;
+        public float     amount;
 
         public StatModifier(Operation operation, float amount)
         {
@@ -369,7 +386,7 @@ public class LivingEntity : MonoBehaviour
         {
             AdditionPercent,
             AdditionValue,
-            Multiply
+            Multiplication
         }
     }
 
@@ -425,7 +442,7 @@ public class LivingEntity : MonoBehaviour
                 {
                     b += modifier.amount;
                 }
-                else if (modifier.operation == StatModifier.Operation.Multiply)
+                else if (modifier.operation == StatModifier.Operation.Multiplication)
                 {
                     c *= modifier.amount;
                 }
@@ -497,6 +514,7 @@ public class LivingEntity : MonoBehaviour
 
     public class AttackInfo {
         public float           damage             = 0.0f;
+        public float           critDamage         = 0.0f;
         public float           stunTime           = 0.0f;
         public float           invulnerableTime   = 0.0f;
         public float           knockback          = 0.0f;
@@ -559,6 +577,7 @@ public class LivingEntity : MonoBehaviour
     }
 
     public delegate void AttackInfoModifier(AttackInfo attackInfo, LivingEntity livingEntity);
+    public delegate void CritModifier(ref float critChance, ref float critDamage, LivingEntity livingEntity);
 
     [Serializable]
     public struct LootPool 

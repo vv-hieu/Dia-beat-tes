@@ -123,6 +123,79 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!21 &28747486
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Health Bar (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance)
+  m_Shader: {fileID: -6465566751694194690, guid: 3ecc57222c88c754f9ae477cf6d19c8c, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 5000
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _CurrentHealth: 2
+    - _CurrentShield: 0
+    - _EdgeWidth: 0.5
+    - _Health: 2
+    - _QueueControl: 1
+    - _QueueOffset: 0
+    - _Shield: 0
+    m_Colors:
+    - _Default_Color: {r: 0, g: 0, b: 0, a: 0}
+    - _Edge_Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Health_Color: {r: 1, g: 0, b: 0, a: 1}
+    - _Health_Color_1: {r: 1, g: 0, b: 0, a: 0}
+    - _Health_Color_2: {r: 0.33962256, g: 0.05574934, b: 0.05574934, a: 0}
+    - _Shield_Color: {r: 0, g: 1, b: 1, a: 1}
+    - _Shield_Color_1: {r: 0, g: 1, b: 1, a: 0}
+    - _Shield_Color_2: {r: 0.059807733, g: 0.28301886, b: 0.28301886, a: 0}
+    - _Size: {r: 0.03, g: 0.2, b: 0, a: 0}
+  m_BuildTextureStacks: []
 --- !u!1001 &141859017
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -611,8 +684,50 @@ MonoBehaviour:
   relics:
     m_keys:
     - apple
+    - milk
+    - candy
+    - orange_juice
+    - golden_apple
+    - chainmail_armor
+    - hellsteel_blade
+    - hellsteel_armor
+    - hellsteel_dagger
+    - monocle
+    - lucky_clover
+    - amulet_of_force
+    - brass_bullet
+    - tactical_scope
+    - extended_clip
+    - helping_hand
+    - double_trouble
+    - dull_needle
+    - corrupted_clover
+    - silver_bullet
+    - lead_bullet
+    - aluminium_bullet
     m_values:
     - {fileID: 2686401005824752277, guid: 9b6a015f7ad76d84cb322fe9cc8e353e, type: 3}
+    - {fileID: 1346089856296028555, guid: 07dc354cd005553499ad36f8c4b40159, type: 3}
+    - {fileID: 293688005645413804, guid: 7d229eda88c44f549bac8982eb8e27ce, type: 3}
+    - {fileID: 3311128173664598091, guid: c952ed6ce32dd5045b942642a7afcbdc, type: 3}
+    - {fileID: 8804443655178877782, guid: 98fffea9b26d63b41b815a51dd618a27, type: 3}
+    - {fileID: 424131069987560532, guid: a79c1ae6065e057439f66028cff10fcd, type: 3}
+    - {fileID: 3192561918444486623, guid: be3d167c8ace83f4eb120e504295f091, type: 3}
+    - {fileID: 3300176085155077744, guid: e752d9c7d664dcf46bfb38e79ffb6e44, type: 3}
+    - {fileID: 8241451432189830778, guid: 58e03198cb74ad943bcf5e228d4dea94, type: 3}
+    - {fileID: 103531380624494870, guid: 5d1adcb62c2e1a04595d0650617dc910, type: 3}
+    - {fileID: 86190312318888298, guid: a69650041aac6bd41995f5f4a31a4651, type: 3}
+    - {fileID: 5234815072706441563, guid: d1e5a434d4cc0804dbbeda1b2e09123a, type: 3}
+    - {fileID: 850878251563652844, guid: 792b3123f173d544189ede51bb02ffbe, type: 3}
+    - {fileID: 8272614710091426618, guid: 5c63c44909c7a5f40bcae2754b27bf1f, type: 3}
+    - {fileID: 7183382592812665955, guid: 72b1a822c2142d9459e92326030b9c89, type: 3}
+    - {fileID: 6230663137364770814, guid: dfa5707427157c2449c31534e6b484b2, type: 3}
+    - {fileID: 2088969827283591519, guid: 513c541e89aef37468f9e59cbf0a0b79, type: 3}
+    - {fileID: 989605503278599020, guid: c9dfd6c1c08ae244eab3a0a71c8acee7, type: 3}
+    - {fileID: 3180961287932524696, guid: 6d0dac9fa4ddc4549a78d67d8d75faf3, type: 3}
+    - {fileID: 5113967160840126314, guid: ef8a96b3216032e4d98df11effe2991d, type: 3}
+    - {fileID: 3842062577575471478, guid: fa941ca7dced2464ea7d78ed73c878b8, type: 3}
+    - {fileID: 3491127673920305213, guid: ad14724066f079a48b557e042fc09f4b, type: 3}
 --- !u!114 &1355744572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1042,7 +1157,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1595699747}
+  - {fileID: 28747486}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1072,75 +1187,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1551244197}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!21 &1595699747
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Health Bar (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance)
-  m_Shader: {fileID: -6465566751694194690, guid: 3ecc57222c88c754f9ae477cf6d19c8c, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 5000
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - unity_Lightmaps:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_LightmapsInd:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_ShadowMasks:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats:
-    - _CurrentHealth: 2
-    - _CurrentShield: 0
-    - _EdgeWidth: 0.5
-    - _Health: 2
-    - _QueueControl: 1
-    - _QueueOffset: 0
-    - _Shield: 0
-    m_Colors:
-    - _Default_Color: {r: 0, g: 0, b: 0, a: 0}
-    - _Edge_Color: {r: 1, g: 1, b: 1, a: 0}
-    - _Health_Color: {r: 1, g: 0, b: 0, a: 1}
-    - _Health_Color_1: {r: 1, g: 0, b: 0, a: 0}
-    - _Health_Color_2: {r: 0.33962256, g: 0.05574934, b: 0.05574934, a: 0}
-    - _Shield_Color: {r: 0, g: 1, b: 1, a: 1}
-    - _Shield_Color_1: {r: 0, g: 1, b: 1, a: 0}
-    - _Shield_Color_2: {r: 0.059807733, g: 0.28301886, b: 0.28301886, a: 0}
-    - _Size: {r: 0.03, g: 0.2, b: 0, a: 0}
-  m_BuildTextureStacks: []
 --- !u!1 &1735801199
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,10 +2,17 @@ using UnityEngine;
 
 public class Collectible : MonoBehaviour
 {
+    [Header("Collectible")]
     [SerializeField] private CollectibleType type = CollectibleType.Unknown;
-    [SerializeField] private Transform       sprite;
-    [SerializeField] private Transform       shadow;
-    [SerializeField] private GameObject      pickupEffect;
+
+    [Header("VFX")]
+    [SerializeField] private GameObject pickupEffect;
+
+    [Header("References")]
+    [SerializeField] private Transform sprite;
+    [SerializeField] private Transform shadow;
+
+    [HideInInspector] public string id;
 
     private Vector3 m_originalSpritePos;
     private Vector3 m_originalShadowScale;
