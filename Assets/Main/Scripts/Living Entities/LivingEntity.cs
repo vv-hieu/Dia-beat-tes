@@ -81,7 +81,7 @@ public class LivingEntity : MonoBehaviour
             }
             critChance = Mathf.Clamp01(critChance * 0.01f);
             attackInfo.critDamage = (float)RANDOM.NextDouble() <= critChance ? critDamage : 0.0f;
-            attackInfo.damage += critDamage;
+            attackInfo.damage += attackInfo.critDamage;
 
             if (attacker != null && attacker.attackDealtModifier != null)
             {
