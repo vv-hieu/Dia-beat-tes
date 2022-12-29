@@ -284,6 +284,7 @@ GameObject:
   - component: {fileID: 86190312318888342}
   - component: {fileID: 86190312318888341}
   - component: {fileID: 86190312318888340}
+  - component: {fileID: 2962445020872264319}
   m_Layer: 6
   m_Name: Relic (Lucky Clover)
   m_TagString: Untagged
@@ -341,14 +342,20 @@ MonoBehaviour:
     name: Lucky Clover
     description: +1 luck
     type: 1
-    upgradable: 1
-    statModifiers:
-      m_keys:
-      - luck
-      m_values:
-      - operation: 1
-        amount: 1
   sprite: {fileID: 86190311450241494}
   shadow: {fileID: 86190311294225889}
   aura: {fileID: 86190311964888006}
   id: lucky_clover
+--- !u!114 &2962445020872264319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86190312318888298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c97879ebd89e498defb326f96e70a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  relic: 10

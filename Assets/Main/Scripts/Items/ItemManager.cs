@@ -34,7 +34,7 @@ public class ItemManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("There can only be one instance of CollectibleManager.");
+            Debug.LogError("There can only be one instance of ItemManager.");
         }
 
         foreach (var c in collectibles)

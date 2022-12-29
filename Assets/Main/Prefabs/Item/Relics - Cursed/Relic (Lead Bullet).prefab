@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 3842062577575471371}
   - component: {fileID: 3842062577575471368}
   - component: {fileID: 3842062577575471369}
+  - component: {fileID: 7579195466321548254}
   m_Layer: 7
   m_Name: Relic (Lead Bullet)
   m_TagString: Untagged
@@ -152,23 +153,23 @@ MonoBehaviour:
     name: Lead Bullet
     description: +2 attack damage, x0.8 bullet speed, x0.8 bullet lifetime
     type: 2
-    upgradable: 0
-    statModifiers:
-      m_keys:
-      - attackDamage
-      - bulletSpeed
-      - bulletLifeTime
-      m_values:
-      - operation: 1
-        amount: 2
-      - operation: 2
-        amount: 0.8
-      - operation: 2
-        amount: 0.8
   sprite: {fileID: 3842062576043545212}
   shadow: {fileID: 3842062578013413674}
   aura: {fileID: 3842062577720848866}
   id: lead_bullet
+--- !u!114 &7579195466321548254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3842062577575471478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c97879ebd89e498defb326f96e70a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  relic: 20
 --- !u!1 &3842062577720848867
 GameObject:
   m_ObjectHideFlags: 0

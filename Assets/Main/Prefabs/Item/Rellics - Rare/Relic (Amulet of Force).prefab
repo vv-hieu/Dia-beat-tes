@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 5234815072706441639}
   - component: {fileID: 5234815072706441636}
   - component: {fileID: 5234815072706441637}
+  - component: {fileID: -3168807670667859604}
   m_Layer: 6
   m_Name: Relic (Amulet of Force)
   m_TagString: Untagged
@@ -236,17 +237,23 @@ MonoBehaviour:
     name: Amulet of Force
     description: +1 attack damage
     type: 1
-    upgradable: 1
-    statModifiers:
-      m_keys:
-      - attackDamage
-      m_values:
-      - operation: 1
-        amount: 1
   sprite: {fileID: 5234815071947698663}
   shadow: {fileID: 5234815071650715088}
   aura: {fileID: 5234815073131729911}
   id: amulet_of_force
+--- !u!114 &-3168807670667859604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5234815072706441563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c97879ebd89e498defb326f96e70a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  relic: 11
 --- !u!1 &5234815073131729908
 GameObject:
   m_ObjectHideFlags: 0

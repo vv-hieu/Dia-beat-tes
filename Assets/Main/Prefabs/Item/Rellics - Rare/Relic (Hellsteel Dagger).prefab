@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8241451432189830790}
   - component: {fileID: 8241451432189830789}
   - component: {fileID: 8241451432189830788}
-  - component: {fileID: 8241451432189830787}
+  - component: {fileID: 2115155569300702128}
   m_Layer: 6
   m_Name: Relic (Hellsteel Dagger)
   m_TagString: Untagged
@@ -69,15 +69,11 @@ MonoBehaviour:
     name: Hellsteel Dagger
     description: +2 crit chance, +0.25 crit damage for each cursed relic held
     type: 1
-    upgradable: 0
-    statModifiers:
-      m_keys: []
-      m_values: []
   sprite: {fileID: 8241451433049040582}
   shadow: {fileID: 8241451433280537329}
   aura: {fileID: 8241451432606729430}
   id: hellsteel_dagger
---- !u!114 &8241451432189830787
+--- !u!114 &2115155569300702128
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,9 +82,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8241451432189830778}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1841918a56e3e864e9e86b6df7af38c4, type: 3}
+  m_Script: {fileID: 11500000, guid: 094c97879ebd89e498defb326f96e70a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  relic: 8
 --- !u!1 &8241451432606729429
 GameObject:
   m_ObjectHideFlags: 0

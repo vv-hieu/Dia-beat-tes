@@ -38,10 +38,8 @@ public class LivingEntity : MonoBehaviour
     [SerializeField] private Material defaultMaterial;
     [SerializeField] private Material hitMaterial;
 
-    public CritModifier       critDealtModifier          = null;
-    public CritModifier       critReceivedModifier       = null;
-    public AttackInfoModifier attackDealtModifier        = null;
-    public AttackInfoModifier attackReceivedModifier     = null;
+    public AttackModifier attackDealtModifier;
+    public AttackModifier attackReceivedModifier;
 
     public float   currentHealth { get; private set; } = 0.0f;
     public float   currentShield { get; private set; } = 0.0f;
@@ -67,31 +65,101 @@ public class LivingEntity : MonoBehaviour
     private static float         HURT_TIME              = 0.1f;
     private static System.Random RANDOM                 = new System.Random();
 
-    public static void HandleAttack(LivingEntity attacker, LivingEntity target, float critChance, float critDamage, AttackInfo attackInfo)
+    public static void HandleAttack(LivingEntity attacker, LivingEntity target, AttackInfo attackInfo)
     {
         if (target != null)
         {
-            if (attacker != null && attacker.critDealtModifier != null)
+            float critChance = 0.0f;
+            if (attacker != null)
             {
-                attacker.critDealtModifier(ref critChance, ref critDamage, target);
+                critChance = attacker.statSet.GetValue("critChance");
             }
-            if (target.critReceivedModifier != null)
+            attackInfo.critDamage = 0.0f;
+            if ((float)RANDOM.NextDouble() * 100.0f <= critChance)
             {
-                target.critReceivedModifier(ref critChance, ref critDamage, target);
+                attackInfo.critDamage = attacker.statSet.GetValue("critDamage");
+                attackInfo.damage += attackInfo.critDamage;
             }
-            critChance = Mathf.Clamp01(critChance * 0.01f);
-            attackInfo.critDamage = (float)RANDOM.NextDouble() <= critChance ? critDamage : 0.0f;
-            attackInfo.damage += attackInfo.critDamage;
+
+            AttackContext context = new AttackContext(attacker, target);
+            List<AttackModifyingOperation> operations = new List<AttackModifyingOperation>();
 
             if (attacker != null && attacker.attackDealtModifier != null)
             {
-                attacker.attackDealtModifier(attackInfo, target);
+                operations.AddRange(attacker.attackDealtModifier.Modify(attackInfo, context));
             }
             if (target.attackReceivedModifier != null)
             {
-                target.attackReceivedModifier(attackInfo, attacker);
+                operations.AddRange(target.attackReceivedModifier.Modify(attackInfo, context));
             }
-            attackInfo.damage = Mathf.Max(0.0f, attackInfo.damage);
+
+            bool negateCrit = false;
+            bool carryOver = attackInfo.carryOverDamage;
+
+            float a0 = 1.0f;
+            float b0 = 0.0f;
+            float c0 = 1.0f;
+
+            float a1 = 1.0f;
+            float b1 = 0.0f;
+            float c1 = 1.0f;
+
+            float a2 = 1.0f;
+            float b2 = 0.0f;
+            float c2 = 1.0f;
+
+            foreach (AttackModifyingOperation operation in operations)
+            {
+                switch (operation.operation)
+                {
+                    case AttackModifyingOperation.Operation.CritNegation:
+                        negateCrit = true;
+                        break;
+                    case AttackModifyingOperation.Operation.CarryOverDamage:
+                        carryOver = (operation.amount > 0.5f);
+                        break;
+                    case AttackModifyingOperation.Operation.DamageAdditionPercent:
+                        a0 += operation.amount;
+                        break;
+                    case AttackModifyingOperation.Operation.DamageAdditionValue:
+                        b0 += operation.amount;
+                        break;
+                    case AttackModifyingOperation.Operation.DamageMultiplication:
+                        c0 *= operation.amount;
+                        break;
+                    case AttackModifyingOperation.Operation.KnockbackAdditionPercent:
+                        a1 += operation.amount;
+                        break;
+                    case AttackModifyingOperation.Operation.KnockbackAdditionValue:
+                        b1 += operation.amount;
+                        break;
+                    case AttackModifyingOperation.Operation.KnockbackMultiplication:
+                        c1 *= operation.amount;
+                        break;
+                    case AttackModifyingOperation.Operation.StunTimeAdditionPercent:
+                        a2 += operation.amount;
+                        break;
+                    case AttackModifyingOperation.Operation.StunTimeAdditionValue:
+                        b2 += operation.amount;
+                        break;
+                    case AttackModifyingOperation.Operation.StunTimeMultiplication:
+                        c2 *= operation.amount;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if (negateCrit)
+            {
+                attackInfo.damage -= attackInfo.critDamage;
+                attackInfo.critDamage = 0.0f;
+            }
+            attackInfo.carryOverDamage = carryOver;
+
+            attackInfo.damage    = Mathf.Max(0.0f, c0 * (a0 * attackInfo.damage + b0));
+            attackInfo.knockback = Mathf.Max(0.0f, c1 * (a1 * attackInfo.knockback + b1));
+            attackInfo.stunTime  = Mathf.Max(0.0f, c2 * (a2 * attackInfo.stunTime + b2));
 
             target.p_ReceiveAttack(attackInfo);
         }
@@ -370,16 +438,37 @@ public class LivingEntity : MonoBehaviour
         }
     }
 
-    [Serializable]
-    public struct StatModifier
+    public struct StatModifyingOperation
     {
+        public string    statId;
         public Operation operation;
         public float     amount;
 
-        public StatModifier(Operation operation, float amount)
+        public static StatModifyingOperation AdditionPercent(string statId, float amount)
         {
-            this.operation = operation;
-            this.amount    = amount;
+            StatModifyingOperation res = new StatModifyingOperation();
+            res.statId    = statId;
+            res.operation = Operation.AdditionPercent;
+            res.amount    = amount;
+            return res;
+        }
+
+        public static StatModifyingOperation AdditionValue(string statId, float amount)
+        {
+            StatModifyingOperation res = new StatModifyingOperation();
+            res.statId    = statId;
+            res.operation = Operation.AdditionValue;
+            res.amount    = amount;
+            return res;
+        }
+
+        public static StatModifyingOperation Multiplication(string statId, float amount)
+        {
+            StatModifyingOperation res = new StatModifyingOperation();
+            res.statId    = statId;
+            res.operation = Operation.Multiplication;
+            res.amount    = amount;
+            return res;
         }
 
         public enum Operation
@@ -390,71 +479,65 @@ public class LivingEntity : MonoBehaviour
         }
     }
 
+    public class StatModifier
+    {
+        public virtual List<StatModifyingOperation> Modify()
+        {
+            return new List<StatModifyingOperation>();
+        }
+    }
+
     public class StatInstance
     {
         public Stat stat { get; private set; }
 
         public float baseValue { get; private set; }
 
-        public float value { get; private set; }
+        //public float value {
+        //    get
+        //    {
+        //        float a = 1.0f;
+        //        float b = 0.0f;
+        //        float c = 1.0f;
 
-        private Dictionary<string, StatModifier> m_modifiers = new Dictionary<string, StatModifier>();
+        //        foreach (StatModifier modifier in m_modifiers.Values)
+        //        {
+        //            StatModifyingOperation operation = modifier.Modify();
+        //            if (operation.operation == StatModifyingOperation.Operation.AdditionPercent)
+        //            {
+        //                a += operation.amount;
+        //            }
+        //            else if (operation.operation == StatModifyingOperation.Operation.AdditionValue)
+        //            {
+        //                b += operation.amount;
+        //            }
+        //            else if (operation.operation == StatModifyingOperation.Operation.Multiplication)
+        //            {
+        //                c *= operation.amount;
+        //            }
+        //        }
+
+        //        return stat.Clamp(c * (a * baseValue + b));
+        //    }
+        //}
 
         public StatInstance(Stat stat)
         {
             this.stat      = stat;
             this.baseValue = stat.defaultValue;
-            p_Validate();
         }
 
         public StatInstance(Stat stat, float baseValue)
         {
             this.stat      = stat;
             this.baseValue = stat.Clamp(baseValue);
-            p_Validate();
-        }
-
-        public void AddModifier(string id, StatModifier modifier)
-        {
-            m_modifiers.Add(id, modifier);
-            p_Validate();
-        }
-
-        public void RemoveModifier(string id)
-        {
-            m_modifiers.Remove(id);
-            p_Validate();
-        }
-
-        private void p_Validate()
-        {
-            float a = 1.0f;
-            float b = 0.0f;
-            float c = 1.0f;
-
-            foreach (StatModifier modifier in m_modifiers.Values)
-            {
-                if (modifier.operation == StatModifier.Operation.AdditionPercent)
-                {
-                    a += modifier.amount;
-                }
-                else if (modifier.operation == StatModifier.Operation.AdditionValue)
-                {
-                    b += modifier.amount;
-                }
-                else if (modifier.operation == StatModifier.Operation.Multiplication)
-                {
-                    c *= modifier.amount;
-                }
-            }
-
-            value = stat.Clamp(c * (a * baseValue + b));
         }
     }
 
     public class StatSet
     {
         private Dictionary<string, StatInstance> m_statInstances = new Dictionary<string, StatInstance>();
+        private Dictionary<string, StatModifier> m_statModifiers = new Dictionary<string, StatModifier>();
 
         public static StatSet NewStatSet()
         {
@@ -473,20 +556,14 @@ public class LivingEntity : MonoBehaviour
             return this;
         }
 
-        public void AddModifier(string statId, string modifierId, StatModifier modifier)
+        public void AddModifier(string modifierId, StatModifier modifier)
         {
-            if (m_statInstances.ContainsKey(statId))
-            {
-                m_statInstances[statId].AddModifier(modifierId, modifier);
-            }
+            m_statModifiers[modifierId] = modifier;
         }
 
-        public void RemoveModifier(string statId, string modifierId)
+        public void RemoveModifier(string modifierId)
         {
-            if (m_statInstances.ContainsKey(statId))
-            {
-                m_statInstances[statId].RemoveModifier(modifierId);
-            }
+            m_statModifiers.Remove(modifierId);
         }
 
         public bool TryGetBaseValue(string statId, out float baseValue)
@@ -504,22 +581,80 @@ public class LivingEntity : MonoBehaviour
         {
             if (m_statInstances.TryGetValue(statId, out StatInstance statInstance))
             {
-                value = statInstance.value;
+                value = statInstance.baseValue;
+
+                float a = 1.0f;
+                float b = 0.0f;
+                float c = 1.0f;
+
+                List<StatModifyingOperation> operations = p_GetOperations();
+                foreach (StatModifyingOperation operation in operations)
+                {
+                    if (operation.statId == statId)
+                    {
+                        switch (operation.operation)
+                        {
+                            case StatModifyingOperation.Operation.AdditionPercent:
+                                a += operation.amount;
+                                break;
+                            case StatModifyingOperation.Operation.AdditionValue:
+                                b += operation.amount;
+                                break;
+                            case StatModifyingOperation.Operation.Multiplication:
+                                c *= operation.amount;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+
+                value = c * (a * value + b);
                 return true;
             }
             value = 0.0f;
             return false;
         }
+
+        public float GetBaseValue(string statId)
+        {
+            float res = float.NaN;
+            if (TryGetBaseValue(statId, out float r))
+            {
+                res = r;
+            }
+            return res;
+        }
+
+        public float GetValue(string statId)
+        {
+            float res = float.NaN;
+            if (TryGetValue(statId, out float r))
+            {
+                res = r;
+            }
+            return res;
+        }
+
+        private List<StatModifyingOperation> p_GetOperations()
+        {
+            List<StatModifyingOperation> res = new List<StatModifyingOperation>();
+            foreach (StatModifier modifier in m_statModifiers.Values)
+            {
+                res.AddRange(modifier.Modify());
+            }
+            return res;
+        }
     }
 
     public class AttackInfo {
         public float           damage             = 0.0f;
-        public float           critDamage         = 0.0f;
+        public float           knockback          = 0.0f;
         public float           stunTime           = 0.0f;
         public float           invulnerableTime   = 0.0f;
-        public float           knockback          = 0.0f;
-        public Vector2         knockbackDirection = Vector2.zero;
+        public float           critDamage         = 0.0f;
         public bool            carryOverDamage    = false;
+        public Vector2         knockbackDirection = Vector2.zero;
         public HashSet<string> tags               = new HashSet<string>();
 
         public static AttackInfo NewAttackInfo()
@@ -576,8 +711,63 @@ public class LivingEntity : MonoBehaviour
         }
     }
 
-    public delegate void AttackInfoModifier(AttackInfo attackInfo, LivingEntity livingEntity);
-    public delegate void CritModifier(ref float critChance, ref float critDamage, LivingEntity livingEntity);
+    public struct AttackModifyingOperation
+    {
+        public Operation operation;
+        public float amount;
+
+        public AttackModifyingOperation(Operation operation)
+        {
+            this.operation = operation;
+            this.amount = 0.0f;
+        }
+
+        public AttackModifyingOperation(Operation operation, float amount)
+        {
+            this.operation = operation;
+            this.amount = amount;
+        }
+
+        public enum Operation
+        {
+            Unknown = -1,
+
+            CritNegation,
+            CarryOverDamage,
+
+            DamageAdditionPercent,
+            DamageAdditionValue,
+            DamageMultiplication,
+
+            KnockbackAdditionPercent,
+            KnockbackAdditionValue,
+            KnockbackMultiplication,
+
+            StunTimeAdditionPercent,
+            StunTimeAdditionValue,
+            StunTimeMultiplication,
+        }
+    }
+
+    public struct AttackContext
+    {
+        public LivingEntity attacker;
+        public LivingEntity target;
+
+        public AttackContext(LivingEntity attacker, LivingEntity target)
+        {
+            this.attacker = attacker;
+            this.target   = target;
+        }
+    }
+
+    public class AttackModifier
+    {
+        public virtual List<AttackModifyingOperation> Modify(AttackInfo attackInfo, AttackContext attackContext)
+        {
+            return new List<AttackModifyingOperation>();
+        }
+    }
 
     [Serializable]
     public struct LootPool 

@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 3192561918444486435}
   - component: {fileID: 3192561918444486432}
   - component: {fileID: 3192561918444486433}
-  - component: {fileID: 3192561918444486438}
+  - component: {fileID: -8552645214144772403}
   m_Layer: 6
   m_Name: Relic (Hellsteel Blade)
   m_TagString: Untagged
@@ -340,17 +340,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   relicProperty:
     name: Hellsteel Blade
-    description: +0.2 attack dealt for each cursed relic held
+    description: +0.2 attack damage for each cursed relic held
     type: 1
-    upgradable: 0
-    statModifiers:
-      m_keys: []
-      m_values: []
   sprite: {fileID: 3192561917727620963}
   shadow: {fileID: 3192561917420870484}
   aura: {fileID: 3192561918090222963}
   id: hellsteel_blade
---- !u!114 &3192561918444486438
+--- !u!114 &-8552645214144772403
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -359,6 +355,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3192561918444486623}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa1225f5179d48b49bd11c8fbe629e7e, type: 3}
+  m_Script: {fileID: 11500000, guid: 094c97879ebd89e498defb326f96e70a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  relic: 6

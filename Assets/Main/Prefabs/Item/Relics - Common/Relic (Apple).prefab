@@ -200,6 +200,7 @@ GameObject:
   - component: {fileID: 2686401005824752273}
   - component: {fileID: 2686401005824752274}
   - component: {fileID: 2686401005824752275}
+  - component: {fileID: 5458490475731138251}
   m_Layer: 6
   m_Name: Relic (Apple)
   m_TagString: Untagged
@@ -257,17 +258,23 @@ MonoBehaviour:
     name: Apple
     description: +1 health
     type: 0
-    upgradable: 1
-    statModifiers:
-      m_keys:
-      - health
-      m_values:
-      - operation: 1
-        amount: 1
   sprite: {fileID: 2686401005443057447}
   shadow: {fileID: 2686401006182174909}
   aura: {fileID: 1015316700181318057}
   id: apple
+--- !u!114 &5458490475731138251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2686401005824752277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c97879ebd89e498defb326f96e70a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  relic: 0
 --- !u!1 &2686401006182174910
 GameObject:
   m_ObjectHideFlags: 0

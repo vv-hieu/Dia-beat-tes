@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 8804443655178877866}
   - component: {fileID: 8804443655178877865}
   - component: {fileID: 8804443655178877864}
-  - component: {fileID: -2164910025057651848}
+  - component: {fileID: -6811454994825119848}
   m_Layer: 6
   m_Name: Relic (Golden Apple)
   m_TagString: Untagged
@@ -174,18 +174,11 @@ MonoBehaviour:
     name: Golden Apple
     description: +2 health, limits incoming damage to 10% health
     type: 1
-    upgradable: 0
-    statModifiers:
-      m_keys:
-      - health
-      m_values:
-      - operation: 1
-        amount: 2
   sprite: {fileID: 8804443655888337898}
   shadow: {fileID: 8804443656204181469}
   aura: {fileID: 8804443654451583482}
   id: golden_apple
---- !u!114 &-2164910025057651848
+--- !u!114 &-6811454994825119848
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -194,9 +187,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8804443655178877782}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 006f9874d7725f546bfae5e8e37786a6, type: 3}
+  m_Script: {fileID: 11500000, guid: 094c97879ebd89e498defb326f96e70a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  relic: 4
 --- !u!1 &8804443655888337897
 GameObject:
   m_ObjectHideFlags: 0

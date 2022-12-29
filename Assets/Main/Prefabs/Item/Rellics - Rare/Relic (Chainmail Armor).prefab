@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 424131069987560616}
   - component: {fileID: 424131069987560619}
   - component: {fileID: 424131069987560618}
-  - component: {fileID: 424131069987560617}
+  - component: {fileID: -5738487001281130888}
   m_Layer: 6
   m_Name: Relic (Chainmail Armor)
   m_TagString: Untagged
@@ -69,18 +69,11 @@ MonoBehaviour:
     name: Chainmail Armor
     description: +2 shield, excess damage is removed
     type: 1
-    upgradable: 0
-    statModifiers:
-      m_keys:
-      - shield
-      m_values:
-      - operation: 1
-        amount: 2
   sprite: {fileID: 424131071267445992}
   shadow: {fileID: 424131071111444703}
   aura: {fileID: 424131070707318520}
   id: chainmail_armor
---- !u!114 &424131069987560617
+--- !u!114 &-5738487001281130888
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,9 +82,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 424131069987560532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55dca091c781cd64398563d69df43b1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 094c97879ebd89e498defb326f96e70a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  relic: 5
 --- !u!1 &424131070707318523
 GameObject:
   m_ObjectHideFlags: 0

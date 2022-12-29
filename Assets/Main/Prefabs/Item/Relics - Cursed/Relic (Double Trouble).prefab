@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 2088969827283591458}
   - component: {fileID: 2088969827283591457}
   - component: {fileID: 2088969827283591456}
+  - component: {fileID: -8548549412328983984}
   m_Layer: 7
   m_Name: Relic (Double Trouble)
   m_TagString: Untagged
@@ -236,20 +237,23 @@ MonoBehaviour:
     name: Double Trouble
     description: x2 attack damage, x0.5 health
     type: 2
-    upgradable: 0
-    statModifiers:
-      m_keys:
-      - attackDamage
-      - health
-      m_values:
-      - operation: 2
-        amount: 2
-      - operation: 2
-        amount: 0.5
   sprite: {fileID: 2088969825734859349}
   shadow: {fileID: 2088969827183356163}
   aura: {fileID: 2088969827410852299}
   id: double_trouble
+--- !u!114 &-8548549412328983984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088969827283591519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c97879ebd89e498defb326f96e70a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  relic: 16
 --- !u!1 &2088969827410852298
 GameObject:
   m_ObjectHideFlags: 0

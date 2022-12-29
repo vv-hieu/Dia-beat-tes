@@ -57,11 +57,17 @@ public class Projectile : MonoBehaviour
 
     private void OnValidate()
     {
-        m_spriteRenderer.color          = color;
-        m_trailRenderer.widthMultiplier = trailSize;
-        m_trailRenderer.colorGradient   = trailColor;
-        m_trailRenderer.time            = trailLifeTime;
-        transform.localScale            = Vector3.one * size;
+        if (m_spriteRenderer != null)
+        {
+            m_spriteRenderer.color = color;
+        }
+        if (m_trailRenderer != null)
+        {
+            m_trailRenderer.widthMultiplier = trailSize;
+            m_trailRenderer.colorGradient   = trailColor;
+            m_trailRenderer.time            = trailLifeTime;
+        }
+        transform.localScale = Vector3.one * size;
     }
 
     private void Update()

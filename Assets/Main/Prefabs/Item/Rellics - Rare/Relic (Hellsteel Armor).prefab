@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3300176085155077772}
   - component: {fileID: 3300176085155077775}
   - component: {fileID: 3300176085155077774}
-  - component: {fileID: 3300176085155077769}
+  - component: {fileID: 1631780345358906843}
   m_Layer: 6
   m_Name: Relic (Hellsteel Armor)
   m_TagString: Untagged
@@ -67,17 +67,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   relicProperty:
     name: Hellsteel Armor
-    description: -0.2 attack received for each cursed relic held
+    description: +0.2 shield for each cursed relic held
     type: 1
-    upgradable: 0
-    statModifiers:
-      m_keys: []
-      m_values: []
   sprite: {fileID: 3300176085997772492}
   shadow: {fileID: 3300176086179347195}
   aura: {fileID: 3300176085770042588}
   id: hellsteel_armor
---- !u!114 &3300176085155077769
+--- !u!114 &1631780345358906843
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,9 +82,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3300176085155077744}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94d8a0ecfc2c09c47b602bc911554cba, type: 3}
+  m_Script: {fileID: 11500000, guid: 094c97879ebd89e498defb326f96e70a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  relic: 7
 --- !u!1 &3300176085770042591
 GameObject:
   m_ObjectHideFlags: 0

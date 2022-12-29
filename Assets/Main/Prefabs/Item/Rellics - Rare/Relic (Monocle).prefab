@@ -284,6 +284,7 @@ GameObject:
   - component: {fileID: 103531380624495082}
   - component: {fileID: 103531380624495081}
   - component: {fileID: 103531380624495080}
+  - component: {fileID: -8606873338756185587}
   m_Layer: 6
   m_Name: Relic (Monocle)
   m_TagString: Untagged
@@ -341,17 +342,20 @@ MonoBehaviour:
     name: Monocle
     description: +5 crit chance, +0.5 crit damage
     type: 1
-    upgradable: 1
-    statModifiers:
-      m_keys:
-      - critChance
-      - critDamage
-      m_values:
-      - operation: 1
-        amount: 5
-      - operation: 1
-        amount: 0.5
   sprite: {fileID: 103531379210326442}
   shadow: {fileID: 103531379566294429}
   aura: {fileID: 103531379972453306}
   id: monocle
+--- !u!114 &-8606873338756185587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103531380624494870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c97879ebd89e498defb326f96e70a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  relic: 9

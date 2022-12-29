@@ -284,6 +284,7 @@ GameObject:
   - component: {fileID: 3311128173664598095}
   - component: {fileID: 3311128173664598092}
   - component: {fileID: 3311128173664598093}
+  - component: {fileID: -8118263183663776663}
   m_Layer: 6
   m_Name: Relic (Orange Juice)
   m_TagString: Untagged
@@ -341,14 +342,20 @@ MonoBehaviour:
     name: Orange Juice
     description: +1 attack speed
     type: 0
-    upgradable: 1
-    statModifiers:
-      m_keys:
-      - attackSpeed
-      m_values:
-      - operation: 1
-        amount: 1
   sprite: {fileID: 3311128172452431353}
   shadow: {fileID: 3311128173189714531}
   aura: {fileID: 480864626400758647}
   id: orange_juice
+--- !u!114 &-8118263183663776663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3311128173664598091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c97879ebd89e498defb326f96e70a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  relic: 3

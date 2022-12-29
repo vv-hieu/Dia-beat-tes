@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 5113967160840126231}
   - component: {fileID: 5113967160840126228}
   - component: {fileID: 5113967160840126229}
-  - component: {fileID: 5113967160840126315}
+  - component: {fileID: -5716054781632922751}
   m_Layer: 7
   m_Name: Relic (Silver Bullet)
   m_TagString: Untagged
@@ -175,15 +175,11 @@ MonoBehaviour:
     description: +2 attack damage to undead enemy, -2 attack damage to other types
       of enemy
     type: 2
-    upgradable: 0
-    statModifiers:
-      m_keys: []
-      m_values: []
   sprite: {fileID: 5113967161164137568}
   shadow: {fileID: 5113967160935970614}
   aura: {fileID: 5113967160691599358}
   id: silver_bullet
---- !u!114 &5113967160840126315
+--- !u!114 &-5716054781632922751
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -192,9 +188,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5113967160840126314}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f4f738e24f23d343b3376c4796bd0ee, type: 3}
+  m_Script: {fileID: 11500000, guid: 094c97879ebd89e498defb326f96e70a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  relic: 19
 --- !u!1 &5113967160935970615
 GameObject:
   m_ObjectHideFlags: 0

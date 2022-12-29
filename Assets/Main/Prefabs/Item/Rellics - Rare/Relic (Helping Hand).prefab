@@ -116,6 +116,7 @@ GameObject:
   - component: {fileID: 6230663137364770562}
   - component: {fileID: 6230663137364770561}
   - component: {fileID: 6230663137364770560}
+  - component: {fileID: 2546525788996990469}
   m_Layer: 6
   m_Name: Relic (Helping Hand)
   m_TagString: Untagged
@@ -173,17 +174,23 @@ MonoBehaviour:
     name: Helping Hand
     description: +1 reload speed
     type: 1
-    upgradable: 1
-    statModifiers:
-      m_keys:
-      - reloadSpeed
-      m_values:
-      - operation: 1
-        amount: 1
   sprite: {fileID: 6230663138752462658}
   shadow: {fileID: 6230663138453379957}
   aura: {fileID: 6230663136712121682}
   id: helping_hand
+--- !u!114 &2546525788996990469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6230663137364770814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c97879ebd89e498defb326f96e70a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  relic: 15
 --- !u!1 &6230663138453379956
 GameObject:
   m_ObjectHideFlags: 0

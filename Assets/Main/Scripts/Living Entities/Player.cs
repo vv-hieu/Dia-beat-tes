@@ -9,19 +9,43 @@ public class Player : MonoBehaviour
     [SerializeField] private float      bulletLifetime = 1.0f;
 
     [SerializeField] private SpriteRenderer sprite;
-    [SerializeField] private Sprite playerNormal;
-    [SerializeField] private Sprite playerPartialFat;
-    [SerializeField] private Sprite playerFullyFat;
+    [SerializeField] private Sprite         playerNormal;
+    [SerializeField] private Sprite         playerPartialFat;
+    [SerializeField] private Sprite         playerFullyFat;
 
     [SerializeField] private GameObject sweatVFX;
     [SerializeField] private Transform  sweatVFXSpawnPosition;
 
-    private LivingEntity                   m_livingEntity;
-    private Rigidbody2D                    m_rigidbody;
-    private float                          m_fatMeter        = 0.0f;
-    private float                          m_sweatSpawnTimer = 0.0f;
-    private Dictionary<string, RelicEntry> m_relics          = new Dictionary<string, RelicEntry>();
-    
+    // Temp, remove later
+    [SerializeField] private Info info;
+    [System.Serializable]
+    public struct Info
+    {
+         public float health;
+         public float shield;
+         public float speed;
+         public float luck;
+         public float attackDamage;
+         public float attackSpeed;
+         public float critChance;
+         public float critDamage;
+         public float bulletCount;
+         public float bulletPrecision;
+         public float bulletSpeed;
+         public float bulletLifeTime;
+         public float bulletCapacity;
+         public float reloadSpeed;
+    }
+
+    private LivingEntity                                    m_livingEntity;
+    private Rigidbody2D                                     m_rigidbody;
+    private float                                           m_fatMeter                     = 0.0f;
+    private float                                           m_sweatSpawnTimer              = 0.0f;
+    private Dictionary<string, RelicEntry>                  m_relics                       = new Dictionary<string, RelicEntry>();
+    private Dictionary<string, LivingEntity.StatModifier>   m_relicStatModifiers           = new Dictionary<string, LivingEntity.StatModifier>();
+    private Dictionary<string, LivingEntity.AttackModifier> m_relicAttackDealtModifiers    = new Dictionary<string, LivingEntity.AttackModifier>();
+    private Dictionary<string, LivingEntity.AttackModifier> m_relicAttackReceivedModifiers = new Dictionary<string, LivingEntity.AttackModifier>();
+
     public int commonRelicCount { get; private set; } = 0;
     public int rareRelicCount   { get; private set; } = 0;
     public int cursedRelicCount { get; private set; } = 0;
@@ -51,8 +75,6 @@ public class Player : MonoBehaviour
 
     public void AddRelic(string id, Relic.Property relicProperty)
     {
-        int count = 1;
-
         switch (relicProperty.type)
         {
             case Relic.Type.Common:
@@ -75,22 +97,20 @@ public class Player : MonoBehaviour
                 }
         }
 
-        if (m_relics.ContainsKey(id))
+        int count = 0;
+        if (m_relics.TryGetValue(id, out RelicEntry entry))
         {
-            RelicEntry entry = m_relics[id];
-            count = ++entry.count;
-            m_relics[id] = entry;
+            count = entry.count;
         }
-        else
-        {
-            m_relics[id] = new RelicEntry(relicProperty, 1);
-        }
+        m_relics[id] = new RelicEntry(relicProperty, count + 1);
 
         string modifierId = id + "_" + count;
-        foreach (var p in relicProperty.statModifiers)
-        {
-            m_livingEntity.statSet.AddModifier(p.Key, modifierId, p.Value);
-        }
+
+        m_relicStatModifiers[modifierId]           = relicProperty.statModifierGenerator(GameManager.instance.GetGameContext());
+        m_relicAttackDealtModifiers[modifierId]    = relicProperty.attackDealtModifierGenerator(GameManager.instance.GetGameContext());
+        m_relicAttackReceivedModifiers[modifierId] = relicProperty.attackReceivedModifierGenerator(GameManager.instance.GetGameContext());
+
+        m_livingEntity.statSet.AddModifier(modifierId, m_relicStatModifiers[modifierId]);
     }
 
     public bool CanPickUp(Collectible.CollectibleType collectibleType)
@@ -109,12 +129,14 @@ public class Player : MonoBehaviour
 
         SetFatness(0.0f);
 
-        m_livingEntity.attackDealtModifier    = p_ModifyAttackDealt;
-        m_livingEntity.attackReceivedModifier = p_ModifyAttackReceived;
+        m_livingEntity.attackDealtModifier    = new PlayerAttackModifier(this, true);
+        m_livingEntity.attackReceivedModifier = new PlayerAttackModifier(this, false);
     }
 
     private void Update()
     {
+        p_UpdateInfo();
+
         float dt = Time.deltaTime;
 
         if (Input.GetMouseButtonDown(0) && bullet != null)
@@ -159,6 +181,24 @@ public class Player : MonoBehaviour
         m_rigidbody.MovePosition(position + input * p_Speed() * Time.fixedDeltaTime);
     }
 
+    private void p_UpdateInfo()
+    {
+        info.health          = m_livingEntity.statSet.GetValue("health");
+        info.shield          = m_livingEntity.statSet.GetValue("shield");
+        info.speed           = m_livingEntity.statSet.GetValue("speed");
+        info.luck            = m_livingEntity.statSet.GetValue("luck");
+        info.attackDamage    = m_livingEntity.statSet.GetValue("attackDamage");
+        info.attackSpeed     = m_livingEntity.statSet.GetValue("attackSpeed");
+        info.critChance      = m_livingEntity.statSet.GetValue("critChance");
+        info.critDamage      = m_livingEntity.statSet.GetValue("critDamage");
+        info.bulletCount     = m_livingEntity.statSet.GetValue("bulletCount");
+        info.bulletPrecision = m_livingEntity.statSet.GetValue("bulletPrecision");
+        info.bulletSpeed     = m_livingEntity.statSet.GetValue("bulletSpeed");
+        info.bulletLifeTime  = m_livingEntity.statSet.GetValue("bulletLifeTime");
+        info.bulletCapacity  = m_livingEntity.statSet.GetValue("bulletCapacity");
+        info.reloadSpeed     = m_livingEntity.statSet.GetValue("reloadSpeed");
+}
+
     private float p_Speed()
     {
         if (m_livingEntity != null && m_livingEntity.statSet.TryGetValue("speed", out float speed))
@@ -169,36 +209,14 @@ public class Player : MonoBehaviour
         return 0.0f;
     }
 
-    private void p_ModifyAttackDealt(LivingEntity.AttackInfo attackInfo, LivingEntity receiver)
-    {
-        foreach (var p in m_relics)
-        {
-            if (p.Value.relicProperty.attackDealtModifier != null)
-            {
-                p.Value.relicProperty.attackDealtModifier(attackInfo, receiver);
-            }
-        }
-    }
-    
-    private void p_ModifyAttackReceived(LivingEntity.AttackInfo attackInfo, LivingEntity attacker)
-    {
-        foreach (var p in m_relics)
-        {
-            if (p.Value.relicProperty.attackReceivedModifier != null)
-            {
-                p.Value.relicProperty.attackReceivedModifier(attackInfo, attacker);
-            }
-        }
-    }
-
     private void p_OnBulletHit(LivingEntity entity, Projectile bullet)
     {
-        LivingEntity.HandleAttack(bullet.owner, entity, 10.0f, 1.0f, LivingEntity.AttackInfo.NewAttackInfo()
+        LivingEntity.HandleAttack(bullet.owner, entity, LivingEntity.AttackInfo.NewAttackInfo()
             .SetKnockbackDirection(bullet.velocity)
-            .SetKnockback(2.0f)
-            .SetDamage(1.0f)
-            .SetInvulnerableTime(0.4f)
-            .SetStunTime(0.35f));
+            .SetKnockback(1.0f)
+            .SetDamage(m_livingEntity.statSet.GetValue("attackDamage"))
+            .SetInvulnerableTime(0.3f)
+            .SetStunTime(0.2f));
         Destroy(bullet.gameObject);
     }
 
@@ -211,6 +229,38 @@ public class Player : MonoBehaviour
         {
             this.relicProperty = relicProperty;
             this.count         = count;
+        }
+    }
+
+    private class PlayerAttackModifier : LivingEntity.AttackModifier
+    {
+        private Player player;
+        private bool   isAttacker;
+
+        public PlayerAttackModifier(Player player, bool isAttacker)
+        {
+            this.player    = player;
+            this.isAttacker = isAttacker;
+        }
+
+        public override List<LivingEntity.AttackModifyingOperation> Modify(LivingEntity.AttackInfo attackInfo, LivingEntity.AttackContext attackContext)
+        {
+            List<LivingEntity.AttackModifyingOperation> res = new List<LivingEntity.AttackModifyingOperation>();
+            if (isAttacker)
+            {
+                foreach (var p in player.m_relicAttackDealtModifiers.Values)
+                {
+                    res.AddRange(p.Modify(attackInfo, attackContext));
+                }
+            }
+            else
+            {
+                foreach (var p in player.m_relicAttackReceivedModifiers.Values)
+                {
+                    res.AddRange(p.Modify(attackInfo, attackContext));
+                }
+            }
+            return res;
         }
     }
 }
