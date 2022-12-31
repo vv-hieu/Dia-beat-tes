@@ -8,39 +8,20 @@ public class Player : MonoBehaviour
     [SerializeField] private float      bulletSpeed    = 1.0f;
     [SerializeField] private float      bulletLifetime = 1.0f;
 
+    [Header("Appearance")]
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Sprite         playerNormal;
     [SerializeField] private Sprite         playerPartialFat;
     [SerializeField] private Sprite         playerFullyFat;
 
+    [Header("VFX")]
     [SerializeField] private GameObject sweatVFX;
-    [SerializeField] private Transform  sweatVFXSpawnPosition;
-
-    // Temp, remove later
-    [SerializeField] private Info info;
-    [System.Serializable]
-    public struct Info
-    {
-         public float health;
-         public float shield;
-         public float speed;
-         public float luck;
-         public float attackDamage;
-         public float attackSpeed;
-         public float critChance;
-         public float critDamage;
-         public float bulletCount;
-         public float bulletPrecision;
-         public float bulletSpeed;
-         public float bulletLifeTime;
-         public float bulletCapacity;
-         public float reloadSpeed;
-    }
 
     private LivingEntity                                    m_livingEntity;
     private Rigidbody2D                                     m_rigidbody;
     private float                                           m_fatMeter                     = 0.0f;
-    private float                                           m_sweatSpawnTimer              = 0.0f;
+    private float                                           m_fatSpeed                     = 1.0f;
+    private GameObject                                      m_sweatVFX;
     private Dictionary<string, RelicEntry>                  m_relics                       = new Dictionary<string, RelicEntry>();
     private Dictionary<string, LivingEntity.StatModifier>   m_relicStatModifiers           = new Dictionary<string, LivingEntity.StatModifier>();
     private Dictionary<string, LivingEntity.AttackModifier> m_relicAttackDealtModifiers    = new Dictionary<string, LivingEntity.AttackModifier>();
@@ -57,15 +38,27 @@ public class Player : MonoBehaviour
         if (m_fatMeter < 0.5f)
         {
             sprite.sprite = playerNormal;
+            if (m_sweatVFX != null)
+            {
+                Destroy(m_sweatVFX);
+                m_sweatVFX = null;
+            }
         }
         else if (m_fatMeter < 1.0f)
         {
             sprite.sprite = playerPartialFat;
+            if (m_sweatVFX != null)
+            {
+                Destroy(m_sweatVFX);
+                m_sweatVFX = null;
+            }
         }
         else
         {
             sprite.sprite = playerFullyFat;
+            m_sweatVFX = Instantiate(sweatVFX, m_livingEntity.VFXPivot());
         }
+        m_fatSpeed = 1.0f - Mathf.Floor(m_fatMeter * 2.0f) * 0.25f;
     }
 
     public void AddFatness(float amount)
@@ -135,8 +128,6 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        p_UpdateInfo();
-
         float dt = Time.deltaTime;
 
         if (Input.GetMouseButtonDown(0) && bullet != null)
@@ -151,26 +142,9 @@ public class Player : MonoBehaviour
             projectile.Init(m_livingEntity, bulletLifetime, bulletSpeed, p1 - p0, new string[] { "Hostile" }, p_OnBulletHit);
         }
 
-        if (m_fatMeter >= 1.0f && sweatVFX != null)
+        if (Input.GetKeyDown("space"))
         {
-            if (m_sweatSpawnTimer >= 1.0f)
-            {
-                m_sweatSpawnTimer = 0.0f;
-            }
-            if (m_sweatSpawnTimer <= 0.0f)
-            {
-                Vector3 pos = transform.position;
-                if (sweatVFXSpawnPosition != null)
-                {
-                    pos = sweatVFXSpawnPosition.position;
-                }
-                Instantiate(sweatVFX, pos, Quaternion.identity, transform);
-            }
-            m_sweatSpawnTimer += dt;
-        }
-        else
-        {
-            m_sweatSpawnTimer = 0.0f;
+            m_livingEntity.AddStatusEffect(StatusEffectManager.FrenzyEffect(m_livingEntity, 10.0f));
         }
     }
 
@@ -178,45 +152,22 @@ public class Player : MonoBehaviour
     {
         Vector2 input    = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
         Vector2 position = new Vector2(transform.position.x, transform.position.y);
-        m_rigidbody.MovePosition(position + input * p_Speed() * Time.fixedDeltaTime);
-    }
-
-    private void p_UpdateInfo()
-    {
-        info.health          = m_livingEntity.statSet.GetValue("health");
-        info.shield          = m_livingEntity.statSet.GetValue("shield");
-        info.speed           = m_livingEntity.statSet.GetValue("speed");
-        info.luck            = m_livingEntity.statSet.GetValue("luck");
-        info.attackDamage    = m_livingEntity.statSet.GetValue("attackDamage");
-        info.attackSpeed     = m_livingEntity.statSet.GetValue("attackSpeed");
-        info.critChance      = m_livingEntity.statSet.GetValue("critChance");
-        info.critDamage      = m_livingEntity.statSet.GetValue("critDamage");
-        info.bulletCount     = m_livingEntity.statSet.GetValue("bulletCount");
-        info.bulletPrecision = m_livingEntity.statSet.GetValue("bulletPrecision");
-        info.bulletSpeed     = m_livingEntity.statSet.GetValue("bulletSpeed");
-        info.bulletLifeTime  = m_livingEntity.statSet.GetValue("bulletLifeTime");
-        info.bulletCapacity  = m_livingEntity.statSet.GetValue("bulletCapacity");
-        info.reloadSpeed     = m_livingEntity.statSet.GetValue("reloadSpeed");
-}
-
-    private float p_Speed()
-    {
-        if (m_livingEntity != null && m_livingEntity.statSet.TryGetValue("speed", out float speed))
-        {
-            // Speed is affected by weight
-            return speed * (m_fatMeter < 0.5f ? 1.0f : m_fatMeter < 1.0f ? 0.75f : 0.5f);
-        }
-        return 0.0f;
+        m_rigidbody.MovePosition(position + input * m_livingEntity.statSet.GetValue("speed") * m_fatSpeed * Time.fixedDeltaTime);
     }
 
     private void p_OnBulletHit(LivingEntity entity, Projectile bullet)
     {
-        LivingEntity.HandleAttack(bullet.owner, entity, LivingEntity.AttackInfo.NewAttackInfo()
-            .SetKnockbackDirection(bullet.velocity)
-            .SetKnockback(1.0f)
-            .SetDamage(m_livingEntity.statSet.GetValue("attackDamage"))
-            .SetInvulnerableTime(0.3f)
-            .SetStunTime(0.2f));
+        LivingEntity.HandleAttack(bullet.owner, entity, LivingEntity.AttackInfo.Create()
+            .KnockbackDirection(bullet.velocity)
+            .Knockback(1.0f)
+            .Damage(m_livingEntity.statSet.GetValue("attackDamage"))
+            .InvulnerableTime(0.3f)
+            .StunTime(0.2f)
+            .Tags(new string[] { "Projectile" })
+        );
+
+        entity.AddStatusEffect(StatusEffectManager.BurnEffect(bullet.owner, 5.0f, 0.1f, 0.25f));
+
         Destroy(bullet.gameObject);
     }
 

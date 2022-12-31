@@ -16,14 +16,15 @@ public class Projectile : MonoBehaviour
 
     public LivingEntity owner { get; private set; }
 
-    private SpriteRenderer m_spriteRenderer;
-    private TrailRenderer  m_trailRenderer;
-    private Rigidbody2D    m_rigidbody;
-    private Collider2D     m_collider;
-    private string[]       m_affectTags;
-    private OnHit          m_onHit;
-    private bool           m_init                            = false;
-    private bool           m_interactWithDestructibleTilemap = false;
+    private SpriteRenderer        m_spriteRenderer;
+    private TrailRenderer         m_trailRenderer;
+    private Rigidbody2D           m_rigidbody;
+    private Collider2D            m_collider;
+    private string[]              m_affectTags;
+    private OnHit                 m_onHit;
+    private bool                  m_init                            = false;
+    private bool                  m_interactWithDestructibleTilemap = false;
+    private HashSet<LivingEntity> m_hitEntities                     = new HashSet<LivingEntity>();
 
     public void Init(LivingEntity owner, float lifeTime, float speed, Vector2 direction, string[] affectedTags, OnHit onHit)
     {
@@ -94,7 +95,7 @@ public class Projectile : MonoBehaviour
     {
         if (collision.TryGetComponent(out LivingEntity entity) && m_onHit != null)
         {
-            if (entity.HasTagsAny(m_affectTags))
+            if (m_hitEntities.Add(entity) && entity.HasTagsAny(m_affectTags))
             {
                 m_onHit(entity, this);
             }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -35,8 +34,9 @@ public class LivingEntity : MonoBehaviour
     [SerializeField] private SpriteRenderer m_sprite;
 
     [Header("Visual")]
-    [SerializeField] private Material defaultMaterial;
-    [SerializeField] private Material hitMaterial;
+    [SerializeField] private Transform vfxPivot;
+    [SerializeField] private Material  defaultMaterial;
+    [SerializeField] private Material  hitMaterial;
 
     public AttackModifier attackDealtModifier;
     public AttackModifier attackReceivedModifier;
@@ -48,24 +48,24 @@ public class LivingEntity : MonoBehaviour
     public bool    isHurt        { get; private set; } = false;
     public bool    isFacingRight { get; private set; } = true;
 
-    private NavMeshAgent m_navMeshAgent;
-    private Rigidbody2D  m_rigidbody;
-    private float        m_shieldTime       = 0.0f;
-    private float        m_invulnerableTime = 0.0f;
-    private float        m_stunTime         = 0.0f;
-    private float        m_knockbackTime    = 0.0f;
-    private float        m_hurtTime         = 0.0f;
-    private float        m_frenzyTime       = 0.0f;
-    private bool         m_isKnockedback    = false;
-    private Vector2      m_knockbackDir     = Vector2.zero;
-    private Vector2      m_knockbackOrigin  = Vector2.zero;
-    private Vector2      m_previousPosition = Vector2.zero;
+    private NavMeshAgent                     m_navMeshAgent;
+    private Rigidbody2D                      m_rigidbody;
+    private float                            m_shieldTime       = 0.0f;
+    private float                            m_invulnerableTime = 0.0f;
+    private float                            m_stunTime         = 0.0f;
+    private float                            m_knockbackTime    = 0.0f;
+    private float                            m_hurtTime         = 0.0f;
+    private bool                             m_isKnockedback    = false;
+    private Vector2                          m_knockbackDir     = Vector2.zero;
+    private Vector2                          m_knockbackOrigin  = Vector2.zero;
+    private Vector2                          m_previousPosition = Vector2.zero;
+    private Dictionary<string, StatusEffect> m_statusEffects    = new Dictionary<string, StatusEffect>();
 
     private static float         SHIELD_REGENERATE_TIME = 2.0f;
     private static float         HURT_TIME              = 0.1f;
     private static System.Random RANDOM                 = new System.Random();
 
-    public static void HandleAttack(LivingEntity attacker, LivingEntity target, AttackInfo attackInfo)
+    public static void HandleAttack(LivingEntity attacker, LivingEntity target, AttackInfo attackInfo, bool enableCrit = true)
     {
         if (target != null)
         {
@@ -75,7 +75,7 @@ public class LivingEntity : MonoBehaviour
                 critChance = attacker.statSet.GetValue("critChance");
             }
             attackInfo.critDamage = 0.0f;
-            if ((float)RANDOM.NextDouble() * 100.0f <= critChance)
+            if ((float)RANDOM.NextDouble() * 100.0f <= critChance && enableCrit)
             {
                 attackInfo.critDamage = attacker.statSet.GetValue("critDamage");
                 attackInfo.damage += attackInfo.critDamage;
@@ -234,6 +234,40 @@ public class LivingEntity : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth + amount, 0.0f, maxHealth);
     }
 
+    public void AddStatusEffect(StatusEffect effect)
+    {
+        StatusEffect existingEffect = null;
+        if (m_statusEffects.TryGetValue(effect.id, out StatusEffect e))
+        {
+            existingEffect = e;
+        }
+        if (effect.CanOverride(existingEffect))
+        {
+            existingEffect?.ForceRemove(this);
+            m_statusEffects[effect.id] = effect;
+        }
+    }
+
+    public void RemoveStatusEffect(string effectId)
+    {
+        StatusEffect existingEffect = null;
+        if (m_statusEffects.TryGetValue(effectId, out StatusEffect e))
+        {
+            existingEffect = e;
+        }
+        existingEffect?.ForceRemove(this);
+        m_statusEffects.Remove(effectId);
+    }
+
+    public Transform VFXPivot()
+    {
+        if (vfxPivot != null)
+        {
+            return vfxPivot;
+        }
+        return transform;
+    }
+
     private void Start()
     {
         // Get components
@@ -301,7 +335,7 @@ public class LivingEntity : MonoBehaviour
         m_stunTime         = Mathf.Max(0.0f, m_stunTime - dt);
         if (m_navMeshAgent != null)
         {
-            m_navMeshAgent.enabled = (m_stunTime <= 0.0f);
+            m_navMeshAgent.enabled = (m_stunTime <= 0.0f && currentHealth > 0.0f);
         }
 
         isHurt = (m_hurtTime > 0.0f);
@@ -309,12 +343,22 @@ public class LivingEntity : MonoBehaviour
 
         m_sprite.material = (isHurt ? hitMaterial : defaultMaterial);
 
-        if (m_frenzyTime > 0.0f)
+        foreach (StatusEffect effect in m_statusEffects.Values)
         {
-
+            effect.Update(this, dt);
         }
-
-        m_frenzyTime = Mathf.Max(0.0f, m_frenzyTime - dt);
+        List<string> finishedEffectIds = new List<string>();
+        foreach (var p in m_statusEffects)
+        {
+            if (p.Value.ShouldBeRemoved())
+            {
+                finishedEffectIds.Add(p.Key);
+            }
+        }
+        foreach (string effectId in finishedEffectIds)
+        {
+            m_statusEffects.Remove(effectId);
+        }
     }
 
     private void FixedUpdate()
@@ -369,14 +413,12 @@ public class LivingEntity : MonoBehaviour
 
     private void p_ReceiveAttack(AttackInfo attackInfo)
     {
-        // Skip if target is invulnerabe
         if (m_invulnerableTime > 0.0f)
         {
             return;
         }
         m_invulnerableTime = attackInfo.invulnerableTime;
 
-        // Damage
         float damage = attackInfo.damage;
         if (currentShield > 0.0f)
         {
@@ -393,15 +435,12 @@ public class LivingEntity : MonoBehaviour
             currentHealth -= damage;
         }
 
-        // Stun
         m_stunTime = Mathf.Max(m_stunTime, attackInfo.stunTime);
 
-        // Knockback
         m_isKnockedback   = true;
         m_knockbackDir    = attackInfo.knockbackDirection.normalized * attackInfo.knockback;
         m_knockbackOrigin = new Vector2(transform.position.x, transform.position.y);
 
-        // Hurt
         m_hurtTime = HURT_TIME;
     }
 
@@ -653,60 +692,56 @@ public class LivingEntity : MonoBehaviour
         public float           stunTime           = 0.0f;
         public float           invulnerableTime   = 0.0f;
         public float           critDamage         = 0.0f;
-        public bool            carryOverDamage    = false;
+        public bool            carryOverDamage    = true;
+        public bool            isBlacklist        = false;
         public Vector2         knockbackDirection = Vector2.zero;
         public HashSet<string> tags               = new HashSet<string>();
 
-        public static AttackInfo NewAttackInfo()
+        public static AttackInfo Create()
         {
             return new AttackInfo();
         }
 
-        public AttackInfo SetDamage(float value)
+        public AttackInfo Damage(float value)
         {
             damage = value;
             return this;
         }
 
-        public AttackInfo SetStunTime(float value)
+        public AttackInfo StunTime(float value)
         {
             stunTime = value;
             return this;
         }
 
-        public AttackInfo SetInvulnerableTime(float value)
+        public AttackInfo InvulnerableTime(float value)
         {
             invulnerableTime = value;
             return this;
         }
 
-        public AttackInfo SetKnockback(float value)
+        public AttackInfo Knockback(float value)
         {
             knockback = value;
             return this;
         }
 
-        public AttackInfo SetKnockbackDirection(Vector2 value)
+        public AttackInfo KnockbackDirection(Vector2 value)
         {
             knockbackDirection = value;
             return this;
         }
 
-        public AttackInfo SetCarryOverDamage(bool value)
+        public AttackInfo CarryOverDamage(bool value)
         {
             carryOverDamage = value;
             return this;
         }
 
-        public AttackInfo AddTag(string tag)
+        public AttackInfo Tags(IEnumerable<string> tags)
         {
-            tags.Add(tag);
-            return this;
-        }
-
-        public AttackInfo RemoveTag(string tag)
-        {
-            tags.Remove(tag);
+            this.tags.Clear();
+            this.tags.AddRange(tags);
             return this;
         }
     }
@@ -843,6 +878,100 @@ public class LivingEntity : MonoBehaviour
             float rand01     = (float)random.NextDouble();
             float finalCount = Mathf.Pow(rand01, Mathf.Pow(2.0f, luck)) * (count.y - count.x + 0.99f) + count.x;
             return (int)finalCount;
+        }
+    }
+
+    public class StatusEffect
+    {
+        public string       id        { get; private set; }
+        public LivingEntity inflictor { get; private set; }
+
+        private float m_timeLeft;
+        private bool  m_initialized = false;
+        private bool  m_finished    = false;
+
+        protected StatusEffect(string id, LivingEntity inflictor, float time)
+        {
+            this.id        = id;
+            this.inflictor = inflictor;
+
+            this.m_timeLeft = Mathf.Max(time, 0.0f);
+        }
+
+        public bool CanOverride(StatusEffect existingEffect)
+        {
+            if (existingEffect == null)
+            {
+                return true;
+            }
+            return m_timeLeft > existingEffect.m_timeLeft;
+        }
+
+        public bool ShouldBeRemoved()
+        {
+            return m_finished;
+        }
+
+        public void Update(LivingEntity target, float dt)
+        {
+            if (m_timeLeft > 0.0f)
+            {
+                if (!m_initialized)
+                {
+                    m_initialized = true;
+                    if (target != null)
+                    {
+                        OnApply(target);
+                        target.statSet.AddModifier(id, GetStatModifier());
+                    }
+                }
+
+                if (target != null)
+                {
+                    OnUpdate(target, dt);
+                }
+                m_timeLeft = Mathf.Max(0.0f, m_timeLeft - dt);
+            }
+            else
+            {
+                if (!m_finished)
+                {
+                    m_finished = true;
+                    if (target != null)
+                    {
+                        target.statSet.RemoveModifier(id);
+                        OnRemove(target);
+                    }
+                }
+            }
+        }
+
+        public void ForceRemove(LivingEntity target)
+        {
+            m_timeLeft = 0.0f;
+            m_finished = true;
+            if (target != null)
+            {
+                target.statSet.RemoveModifier(id);
+                OnRemove(target);
+            }
+        }
+
+        public virtual void OnApply(LivingEntity target)
+        {
+        }
+
+        public virtual void OnRemove(LivingEntity target)
+        {
+        }
+
+        public virtual void OnUpdate(LivingEntity target, float dt)
+        {
+        }
+
+        public virtual StatModifier GetStatModifier()
+        {
+            return new StatModifier();
         }
     }
 }

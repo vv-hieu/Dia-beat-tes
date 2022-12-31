@@ -188,295 +188,295 @@ public class DefaultRelicEffect : RelicEffect
         LeadBullet,
         AluminiumBullet
     }
+}
 
-    public class FixedStatModifier : LivingEntity.StatModifier
+public class FixedStatModifier : LivingEntity.StatModifier
+{
+    private List<LivingEntity.StatModifyingOperation> m_operations = new List<LivingEntity.StatModifyingOperation>();
+
+    public override List<LivingEntity.StatModifyingOperation> Modify()
     {
-        private List<LivingEntity.StatModifyingOperation> m_operations = new List<LivingEntity.StatModifyingOperation>();
-
-        public override List<LivingEntity.StatModifyingOperation> Modify()
-        {
-            List<LivingEntity.StatModifyingOperation> res = new List<LivingEntity.StatModifyingOperation>();
-            res.AddRange(m_operations);
-            return res;
-        }
-
-        private FixedStatModifier(GameManager.GameContext context)
-        {
-        }
-
-        public static FixedStatModifier Create(GameManager.GameContext context)
-        {
-            return new FixedStatModifier(context);
-        }
-    
-        public FixedStatModifier AdditionPercent(string stat, float amount)
-        {
-            m_operations.Add(LivingEntity.StatModifyingOperation.AdditionPercent(stat, amount));
-            return this;
-        }
-
-        public FixedStatModifier AdditionValue(string stat, float amount)
-        {
-            m_operations.Add(LivingEntity.StatModifyingOperation.AdditionValue(stat, amount));
-            return this;
-        }
-
-        public FixedStatModifier Multiplication(string stat, float amount)
-        {
-            m_operations.Add(LivingEntity.StatModifyingOperation.Multiplication(stat, amount));
-            return this;
-        }
+        List<LivingEntity.StatModifyingOperation> res = new List<LivingEntity.StatModifyingOperation>();
+        res.AddRange(m_operations);
+        return res;
     }
 
-    public class HellsteelStatModifier : Relic.PlayerAwaredStatModifier
+    private FixedStatModifier(GameManager.GameContext context)
     {
-        private List<LivingEntity.StatModifyingOperation> m_operations = new List<LivingEntity.StatModifyingOperation>();
-
-        public override List<LivingEntity.StatModifyingOperation> Modify()
-        {
-            List<LivingEntity.StatModifyingOperation> res = new List<LivingEntity.StatModifyingOperation>();
-
-            int curseRelicCount = p_CurseRelicCount();
-            foreach (LivingEntity.StatModifyingOperation operation in m_operations)
-            {
-                LivingEntity.StatModifyingOperation o = operation;
-                o.amount *= curseRelicCount;
-                res.Add(o);
-            }
-            return res;
-        }
-
-        private HellsteelStatModifier(GameManager.GameContext context) : base(context.player)
-        {
-        }
-    
-        public static HellsteelStatModifier Create(GameManager.GameContext context)
-        {
-            return new HellsteelStatModifier(context);
-        }
-
-        public HellsteelStatModifier AdditionPercent(string stat, float amount)
-        {
-            m_operations.Add(LivingEntity.StatModifyingOperation.AdditionPercent(stat, amount));
-            return this;
-        }
-
-        public HellsteelStatModifier AdditionValue(string stat, float amount)
-        {
-            m_operations.Add(LivingEntity.StatModifyingOperation.AdditionValue(stat, amount));
-            return this;
-        }
-
-        public HellsteelStatModifier Multiplication(string stat, float amount)
-        {
-            m_operations.Add(LivingEntity.StatModifyingOperation.Multiplication(stat, amount));
-            return this;
-        }
-
-        private int p_CurseRelicCount()
-        {
-            return player.cursedRelicCount;
-        }
     }
 
-    public class FixedAttackModifier : LivingEntity.AttackModifier
+    public static FixedStatModifier Create(GameManager.GameContext context)
     {
-        private List<LivingEntity.AttackModifyingOperation> m_operations = new List<LivingEntity.AttackModifyingOperation>();
-
-        public override List<LivingEntity.AttackModifyingOperation> Modify(LivingEntity.AttackInfo attackInfo, LivingEntity.AttackContext attackContext)
-        {
-            return m_operations;
-        }
-
-        private FixedAttackModifier(GameManager.GameContext context)
-        {
-        }
-
-        public static FixedAttackModifier Create(GameManager.GameContext context)
-        {
-            return new FixedAttackModifier(context);
-        }
-
-        public FixedAttackModifier CritNegation()
-        {
-            m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.CritNegation));
-            return this;
-        }
-
-        public FixedAttackModifier CarryOverDamage(bool enabled)
-        {
-            m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.CarryOverDamage, enabled ? 1.0f : 0.0f));
-            return this;
-        }
-
-        public FixedAttackModifier DamageAdditionPercent(float amount)
-        {
-            m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.DamageAdditionPercent, amount));
-            return this;
-        }
-
-        public FixedAttackModifier DamageAdditionValue(float amount)
-        {
-            m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.DamageAdditionValue, amount));
-            return this;
-        }
-
-        public FixedAttackModifier DamageMultiplication(float amount)
-        {
-            m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.DamageMultiplication, amount));
-            return this;
-        }
-
-        public FixedAttackModifier KnockbackAdditionPercent(float amount)
-        {
-            m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.KnockbackAdditionPercent, amount));
-            return this;
-        }
-
-        public FixedAttackModifier KnockbackAdditionValue(float amount)
-        {
-            m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.KnockbackAdditionValue, amount));
-            return this;
-        }
-
-        public FixedAttackModifier KnockbackMultiplication(float amount)
-        {
-            m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.KnockbackMultiplication, amount));
-            return this;
-        }
-
-        public FixedAttackModifier StunTimeAdditionPercent(float amount)
-        {
-            m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.StunTimeAdditionPercent, amount));
-            return this;
-        }
-
-        public FixedAttackModifier StunTimeAdditionValue(float amount)
-        {
-            m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.StunTimeAdditionValue, amount));
-            return this;
-        }
-
-        public FixedAttackModifier StunTimeMultiplication(float amount)
-        {
-            m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.StunTimeMultiplication, amount));
-            return this;
-        }
+        return new FixedStatModifier(context);
     }
 
-    public class ConditionalAttackModifier : LivingEntity.AttackModifier
+    public FixedStatModifier AdditionPercent(string stat, float amount)
     {
-        private List<KeyValuePair<Condition, FixedAttackModifier>> m_ifModifiers = new List<KeyValuePair<Condition, FixedAttackModifier>>();
-        private FixedAttackModifier                                m_elseModifier;
+        m_operations.Add(LivingEntity.StatModifyingOperation.AdditionPercent(stat, amount));
+        return this;
+    }
 
-        public override List<LivingEntity.AttackModifyingOperation> Modify(LivingEntity.AttackInfo attackInfo, LivingEntity.AttackContext attackContext)
+    public FixedStatModifier AdditionValue(string stat, float amount)
+    {
+        m_operations.Add(LivingEntity.StatModifyingOperation.AdditionValue(stat, amount));
+        return this;
+    }
+
+    public FixedStatModifier Multiplication(string stat, float amount)
+    {
+        m_operations.Add(LivingEntity.StatModifyingOperation.Multiplication(stat, amount));
+        return this;
+    }
+}
+
+public class HellsteelStatModifier : Relic.PlayerAwaredStatModifier
+{
+    private List<LivingEntity.StatModifyingOperation> m_operations = new List<LivingEntity.StatModifyingOperation>();
+
+    public override List<LivingEntity.StatModifyingOperation> Modify()
+    {
+        List<LivingEntity.StatModifyingOperation> res = new List<LivingEntity.StatModifyingOperation>();
+
+        int curseRelicCount = p_CurseRelicCount();
+        foreach (LivingEntity.StatModifyingOperation operation in m_operations)
         {
-            foreach (var p in m_ifModifiers)
+            LivingEntity.StatModifyingOperation o = operation;
+            o.amount *= curseRelicCount;
+            res.Add(o);
+        }
+        return res;
+    }
+
+    private HellsteelStatModifier(GameManager.GameContext context) : base(context.player)
+    {
+    }
+
+    public static HellsteelStatModifier Create(GameManager.GameContext context)
+    {
+        return new HellsteelStatModifier(context);
+    }
+
+    public HellsteelStatModifier AdditionPercent(string stat, float amount)
+    {
+        m_operations.Add(LivingEntity.StatModifyingOperation.AdditionPercent(stat, amount));
+        return this;
+    }
+
+    public HellsteelStatModifier AdditionValue(string stat, float amount)
+    {
+        m_operations.Add(LivingEntity.StatModifyingOperation.AdditionValue(stat, amount));
+        return this;
+    }
+
+    public HellsteelStatModifier Multiplication(string stat, float amount)
+    {
+        m_operations.Add(LivingEntity.StatModifyingOperation.Multiplication(stat, amount));
+        return this;
+    }
+
+    private int p_CurseRelicCount()
+    {
+        return player.cursedRelicCount;
+    }
+}
+
+public class FixedAttackModifier : LivingEntity.AttackModifier
+{
+    private List<LivingEntity.AttackModifyingOperation> m_operations = new List<LivingEntity.AttackModifyingOperation>();
+
+    public override List<LivingEntity.AttackModifyingOperation> Modify(LivingEntity.AttackInfo attackInfo, LivingEntity.AttackContext attackContext)
+    {
+        return m_operations;
+    }
+
+    private FixedAttackModifier(GameManager.GameContext context)
+    {
+    }
+
+    public static FixedAttackModifier Create(GameManager.GameContext context)
+    {
+        return new FixedAttackModifier(context);
+    }
+
+    public FixedAttackModifier CritNegation()
+    {
+        m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.CritNegation));
+        return this;
+    }
+
+    public FixedAttackModifier CarryOverDamage(bool enabled)
+    {
+        m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.CarryOverDamage, enabled ? 1.0f : 0.0f));
+        return this;
+    }
+
+    public FixedAttackModifier DamageAdditionPercent(float amount)
+    {
+        m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.DamageAdditionPercent, amount));
+        return this;
+    }
+
+    public FixedAttackModifier DamageAdditionValue(float amount)
+    {
+        m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.DamageAdditionValue, amount));
+        return this;
+    }
+
+    public FixedAttackModifier DamageMultiplication(float amount)
+    {
+        m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.DamageMultiplication, amount));
+        return this;
+    }
+
+    public FixedAttackModifier KnockbackAdditionPercent(float amount)
+    {
+        m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.KnockbackAdditionPercent, amount));
+        return this;
+    }
+
+    public FixedAttackModifier KnockbackAdditionValue(float amount)
+    {
+        m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.KnockbackAdditionValue, amount));
+        return this;
+    }
+
+    public FixedAttackModifier KnockbackMultiplication(float amount)
+    {
+        m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.KnockbackMultiplication, amount));
+        return this;
+    }
+
+    public FixedAttackModifier StunTimeAdditionPercent(float amount)
+    {
+        m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.StunTimeAdditionPercent, amount));
+        return this;
+    }
+
+    public FixedAttackModifier StunTimeAdditionValue(float amount)
+    {
+        m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.StunTimeAdditionValue, amount));
+        return this;
+    }
+
+    public FixedAttackModifier StunTimeMultiplication(float amount)
+    {
+        m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.StunTimeMultiplication, amount));
+        return this;
+    }
+}
+
+public class ConditionalAttackModifier : LivingEntity.AttackModifier
+{
+    private List<KeyValuePair<Condition, FixedAttackModifier>> m_ifModifiers = new List<KeyValuePair<Condition, FixedAttackModifier>>();
+    private FixedAttackModifier m_elseModifier;
+
+    public override List<LivingEntity.AttackModifyingOperation> Modify(LivingEntity.AttackInfo attackInfo, LivingEntity.AttackContext attackContext)
+    {
+        foreach (var p in m_ifModifiers)
+        {
+            if (p.Key.Check(attackContext))
             {
-                if (p.Key.Check(attackContext))
-                {
-                    return p.Value.Modify(attackInfo, attackContext);
-                }
+                return p.Value.Modify(attackInfo, attackContext);
             }
-            if (m_elseModifier != null)
-            {
-                return m_elseModifier.Modify(attackInfo, attackContext);
-            }
-            return base.Modify(attackInfo, attackContext);
+        }
+        if (m_elseModifier != null)
+        {
+            return m_elseModifier.Modify(attackInfo, attackContext);
+        }
+        return base.Modify(attackInfo, attackContext);
+    }
+
+    private ConditionalAttackModifier(GameManager.GameContext context)
+    {
+    }
+
+    public static ConditionalAttackModifier Create(GameManager.GameContext context)
+    {
+        return new ConditionalAttackModifier(context);
+    }
+
+    public ConditionalAttackModifier If(Condition condition, FixedAttackModifier modifier)
+    {
+        m_ifModifiers.Add(new KeyValuePair<Condition, FixedAttackModifier>(condition, modifier));
+        return this;
+    }
+
+    public ConditionalAttackModifier Else(FixedAttackModifier modifier)
+    {
+        m_elseModifier = modifier;
+        return this;
+    }
+
+    public struct Condition
+    {
+        public Type type;
+        public bool isAttacker;
+        public string[] tags;
+
+        private Condition(bool isAttacker)
+        {
+            this.type = Type.Unknown;
+            this.isAttacker = isAttacker;
+            this.tags = new string[] { };
         }
 
-        private ConditionalAttackModifier(GameManager.GameContext context)
+        public static Condition Attacker()
         {
+            return new Condition(true);
         }
 
-        public static ConditionalAttackModifier Create(GameManager.GameContext context)
+        public static Condition Target()
         {
-            return new ConditionalAttackModifier(context);
+            return new Condition(false);
         }
 
-        public ConditionalAttackModifier If(Condition condition, FixedAttackModifier modifier)
+        public Condition HasTag(string tag)
         {
-            m_ifModifiers.Add(new KeyValuePair<Condition, FixedAttackModifier>(condition, modifier));
+            this.type = Type.Has;
+            this.tags = new string[] { tag };
             return this;
         }
 
-        public ConditionalAttackModifier Else(FixedAttackModifier modifier)
+        public Condition HasAllTags(string[] tags)
         {
-            m_elseModifier = modifier;
+            this.type = Type.HasAll;
+            this.tags = tags;
             return this;
         }
 
-        public struct Condition 
+        public Condition HasAnyTags(string[] tags)
         {
-            public Type     type;
-            public bool     isAttacker;
-            public string[] tags;
+            this.type = Type.HasAny;
+            this.tags = tags;
+            return this;
+        }
 
-            private Condition(bool isAttacker)
+        public bool Check(LivingEntity.AttackContext context)
+        {
+            LivingEntity targetedEntity = isAttacker ? context.attacker : context.target;
+            if (targetedEntity == null)
             {
-                this.type       = Type.Unknown;
-                this.isAttacker = isAttacker;
-                this.tags       = new string[] { };
+                return false;
             }
-
-            public static Condition Attacker()
+            switch (type)
             {
-                return new Condition(true);
-            }
-
-            public static Condition Target()
-            {
-                return new Condition(false);
-            }
-
-            public Condition HasTag(string tag)
-            {
-                this.type = Type.Has;
-                this.tags = new string[] { tag };
-                return this;
-            }
-
-            public Condition HasAllTags(string[] tags)
-            {
-                this.type = Type.HasAll;
-                this.tags = tags;
-                return this;
-            }
-
-            public Condition HasAnyTags(string[] tags)
-            {
-                this.type = Type.HasAny;
-                this.tags = tags;
-                return this;
-            }
-
-            public bool Check(LivingEntity.AttackContext context)
-            {
-                LivingEntity targetedEntity = isAttacker ? context.attacker : context.target;
-                if (targetedEntity == null)
-                {
+                case Type.Has:
+                    return targetedEntity.HasTag(tags[0]);
+                case Type.HasAll:
+                    return targetedEntity.HasTagsAll(tags);
+                case Type.HasAny:
+                    return targetedEntity.HasTagsAny(tags);
+                default:
                     return false;
-                }
-                switch (type)
-                {
-                    case Type.Has:
-                        return targetedEntity.HasTag(tags[0]);
-                    case Type.HasAll:
-                        return targetedEntity.HasTagsAll(tags);
-                    case Type.HasAny:
-                        return targetedEntity.HasTagsAny(tags);
-                    default:
-                        return false;
-                }
             }
+        }
 
-            public enum Type
-            {
-                Unknown = -1,
-                Has,
-                HasAll,
-                HasAny
-            }
+        public enum Type
+        {
+            Unknown = -1,
+            Has,
+            HasAll,
+            HasAny
         }
     }
 }

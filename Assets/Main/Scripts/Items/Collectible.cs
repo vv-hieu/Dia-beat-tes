@@ -19,7 +19,8 @@ public class Collectible : MonoBehaviour
     private Vector3 m_originalScale;
     private float   m_time = 0.0f;
 
-    private static System.Random RANDOM = new System.Random();
+    private static System.Random RANDOM       = new System.Random();
+    private static float         DESPAWN_TIME = 0.5f * 60.0f;
 
     private void Start()
     {
@@ -33,11 +34,23 @@ public class Collectible : MonoBehaviour
         m_time += Time.deltaTime;
         float d = Mathf.Cos(2.0f * m_time);
         sprite.localPosition = m_originalSpritePos + Vector3.up * d * 0.02f;
-        shadow.localScale    = m_originalShadowScale * (1.0f + d * 0.05f);
+        shadow.localScale = m_originalShadowScale * (1.0f + d * 0.05f);
         transform.localScale = m_originalScale * Mathf.Clamp01(m_time * 5.0f);
+
+        if (m_time >= DESPAWN_TIME - 5.0f)
+        {
+            bool enabled = (int)((m_time - DESPAWN_TIME) * 4.0f) % 2 != 0;
+            sprite.gameObject.SetActive(enabled);
+            shadow.gameObject.SetActive(enabled);
+
+            if (m_time >= DESPAWN_TIME)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
