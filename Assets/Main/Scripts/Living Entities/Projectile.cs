@@ -41,13 +41,16 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         m_spriteRenderer = GetComponent<SpriteRenderer>();
-        m_trailRenderer  = GetComponent<TrailRenderer>();
-        m_rigidbody      = GetComponent<Rigidbody2D>();
-        m_collider       = GetComponent<Collider2D>();
+        m_trailRenderer = GetComponent<TrailRenderer>();
+        m_rigidbody = GetComponent<Rigidbody2D>();
+        m_collider = GetComponent<Collider2D>();
+    }
 
+    private void Start()
+    {
         m_spriteRenderer.color            = color;
         m_trailRenderer.widthMultiplier   = trailSize;
         m_trailRenderer.colorGradient     = trailColor;
@@ -58,17 +61,11 @@ public class Projectile : MonoBehaviour
 
     private void OnValidate()
     {
-        if (m_spriteRenderer != null)
-        {
-            m_spriteRenderer.color = color;
-        }
-        if (m_trailRenderer != null)
-        {
-            m_trailRenderer.widthMultiplier = trailSize;
-            m_trailRenderer.colorGradient   = trailColor;
-            m_trailRenderer.time            = trailLifeTime;
-        }
-        transform.localScale = Vector3.one * size;
+        m_spriteRenderer.color          = color;
+        m_trailRenderer.widthMultiplier = trailSize;
+        m_trailRenderer.colorGradient   = trailColor;
+        m_trailRenderer.time            = trailLifeTime;
+        transform.localScale            = Vector3.one * size;
     }
 
     private void Update()

@@ -4,7 +4,7 @@ public class DestructibleTilemapInteraction : MonoBehaviour
 {
     private Collider2D m_collider;
 
-    private void Start()
+    private void Awake()
     {
         m_collider = GetComponent<Collider2D>();
     }

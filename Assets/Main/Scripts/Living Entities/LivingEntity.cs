@@ -268,12 +268,14 @@ public class LivingEntity : MonoBehaviour
         return transform;
     }
 
-    private void Start()
+    private void Awake()
     {
-        // Get components
         m_navMeshAgent = GetComponent<NavMeshAgent>();
         m_rigidbody    = GetComponent<Rigidbody2D>();
+    }
 
+    private void Start()
+    {
         // Build stat set
         statSet = p_BuildStatSet();
 
@@ -305,8 +307,6 @@ public class LivingEntity : MonoBehaviour
 
     private void Update()
     {
-        float dt = Time.deltaTime;
-
         if (m_navMeshAgent != null && statSet != null && statSet.TryGetValue("speed", out float speed))
         {
             m_navMeshAgent.speed = speed;
@@ -317,7 +317,7 @@ public class LivingEntity : MonoBehaviour
 
         if (currentShield < shield)
         {
-            m_shieldTime += dt;
+            m_shieldTime += Time.deltaTime;
             while (m_shieldTime >= SHIELD_REGENERATE_TIME)
             {
                 m_shieldTime -= SHIELD_REGENERATE_TIME;
@@ -331,21 +331,21 @@ public class LivingEntity : MonoBehaviour
             m_shieldTime = 0.0f;
         }
 
-        m_invulnerableTime = Mathf.Max(0.0f, m_invulnerableTime - dt);
-        m_stunTime         = Mathf.Max(0.0f, m_stunTime - dt);
+        m_invulnerableTime = Mathf.Max(0.0f, m_invulnerableTime - Time.deltaTime);
+        m_stunTime         = Mathf.Max(0.0f, m_stunTime - Time.deltaTime);
         if (m_navMeshAgent != null)
         {
             m_navMeshAgent.enabled = (m_stunTime <= 0.0f && currentHealth > 0.0f);
         }
 
         isHurt = (m_hurtTime > 0.0f);
-        m_hurtTime -= dt;
+        m_hurtTime -= Time.deltaTime;
 
         m_sprite.material = (isHurt ? hitMaterial : defaultMaterial);
 
         foreach (StatusEffect effect in m_statusEffects.Values)
         {
-            effect.Update(this, dt);
+            effect.Update(this);
         }
         List<string> finishedEffectIds = new List<string>();
         foreach (var p in m_statusEffects)
@@ -912,7 +912,7 @@ public class LivingEntity : MonoBehaviour
             return m_finished;
         }
 
-        public void Update(LivingEntity target, float dt)
+        public void Update(LivingEntity target)
         {
             if (m_timeLeft > 0.0f)
             {
@@ -928,9 +928,9 @@ public class LivingEntity : MonoBehaviour
 
                 if (target != null)
                 {
-                    OnUpdate(target, dt);
+                    OnUpdate(target);
                 }
-                m_timeLeft = Mathf.Max(0.0f, m_timeLeft - dt);
+                m_timeLeft = Mathf.Max(0.0f, m_timeLeft - Time.deltaTime);
             }
             else
             {
@@ -965,7 +965,7 @@ public class LivingEntity : MonoBehaviour
         {
         }
 
-        public virtual void OnUpdate(LivingEntity target, float dt)
+        public virtual void OnUpdate(LivingEntity target)
         {
         }
 

@@ -99,9 +99,9 @@ public class Player : MonoBehaviour
 
         string modifierId = id + "_" + count;
 
-        m_relicStatModifiers[modifierId]           = relicProperty.statModifierGenerator(GameManager.instance.GetGameContext());
-        m_relicAttackDealtModifiers[modifierId]    = relicProperty.attackDealtModifierGenerator(GameManager.instance.GetGameContext());
-        m_relicAttackReceivedModifiers[modifierId] = relicProperty.attackReceivedModifierGenerator(GameManager.instance.GetGameContext());
+        m_relicStatModifiers[modifierId]           = relicProperty.statModifierGenerator(GameManager.GetGameContext());
+        m_relicAttackDealtModifiers[modifierId]    = relicProperty.attackDealtModifierGenerator(GameManager.GetGameContext());
+        m_relicAttackReceivedModifiers[modifierId] = relicProperty.attackReceivedModifierGenerator(GameManager.GetGameContext());
 
         m_livingEntity.statSet.AddModifier(modifierId, m_relicStatModifiers[modifierId]);
     }
@@ -115,11 +115,14 @@ public class Player : MonoBehaviour
         return true;
     }
 
-    private void Start()
+    private void Awake()
     {
         m_livingEntity = GetComponent<LivingEntity>();
         m_rigidbody    = GetComponent<Rigidbody2D>();
+    }
 
+    private void Start()
+    {
         SetFatness(0.0f);
 
         m_livingEntity.attackDealtModifier    = new PlayerAttackModifier(this, true);
@@ -144,7 +147,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown("space"))
         {
-            m_livingEntity.AddStatusEffect(StatusEffectManager.FrenzyEffect(m_livingEntity, 10.0f));
+            m_livingEntity.AddStatusEffect(StatusEffectManager.FrenzyEffect(m_livingEntity, 1.0f));
         }
     }
 

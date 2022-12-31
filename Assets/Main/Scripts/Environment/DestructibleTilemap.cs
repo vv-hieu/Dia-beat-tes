@@ -59,7 +59,7 @@ public class DestructibleTilemap : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         m_tilemap = GetComponent<Tilemap>();
     }

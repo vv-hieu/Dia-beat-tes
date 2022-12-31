@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public GameContext GetGameContext()
+    public static GameContext GetGameContext()
     {
         Player player = null;
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");

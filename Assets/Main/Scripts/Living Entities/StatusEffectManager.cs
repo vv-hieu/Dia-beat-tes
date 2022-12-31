@@ -72,11 +72,22 @@ public class StatusEffectManager : MonoBehaviour
         {
             if (m_vfxInstance != null)
             {
-                Destroy(m_vfxInstance);
+                ParticleSystem particle = m_vfxInstance.GetComponent<ParticleSystem>();
+                if (particle != null)
+                {
+                    ParticleSystem.MainModule main = particle.main;
+                    particle.Stop();
+                    m_vfxInstance.transform.parent = target.transform.parent;
+                    Destroy(m_vfxInstance, main.duration);
+                }
+                else
+                {
+                    Destroy(m_vfxInstance);
+                }
             }
         }
 
-        public override void OnUpdate(LivingEntity target, float dt)
+        public override void OnUpdate(LivingEntity target)
         {
             if (m_damageOverTimeEnabled)
             {
@@ -88,7 +99,7 @@ public class StatusEffectManager : MonoBehaviour
                 {
                     LivingEntity.HandleAttack(inflictor, target, m_damageOverTimeAttackInfo, m_damageOverTimeCrit);
                 }
-                m_damageOverTimeTime += dt;
+                m_damageOverTimeTime += Time.deltaTime;
             }
         }
 

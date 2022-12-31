@@ -23,9 +23,13 @@ public class Relic : MonoBehaviour
     private float       m_hoverTime = 0.0f;
     private bool        m_hover     = false;
 
-    private void Start()
+    private void Awake()
     {
         m_relicEffect = GetComponent<RelicEffect>();
+    }
+
+    private void Start()
+    {
         if (m_relicEffect != null)
         {
             relicProperty.statModifierGenerator           = m_relicEffect.GenerateStatModifier;
