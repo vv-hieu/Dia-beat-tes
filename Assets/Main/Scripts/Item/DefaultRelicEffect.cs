@@ -80,7 +80,7 @@ public class DefaultRelicEffect : RelicEffect
         if (relic == RelicName.TacticalScope)
         {
             return FixedStatModifier.Create(context)
-                .AdditionValue("bulletPrecision", 5.0f);
+                .AdditionValue("bulletPrecision", 1.0f);
         }
         if (relic == RelicName.ExtendedClip)
         {

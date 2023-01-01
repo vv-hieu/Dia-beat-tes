@@ -16,15 +16,14 @@ public class Projectile : MonoBehaviour
 
     public LivingEntity owner { get; private set; }
 
-    private SpriteRenderer        m_spriteRenderer;
-    private TrailRenderer         m_trailRenderer;
-    private Rigidbody2D           m_rigidbody;
-    private Collider2D            m_collider;
-    private string[]              m_affectTags;
-    private OnHit                 m_onHit;
-    private bool                  m_init                            = false;
-    private bool                  m_interactWithDestructibleTilemap = false;
-    private HashSet<LivingEntity> m_hitEntities                     = new HashSet<LivingEntity>();
+    private SpriteRenderer m_sprite;
+    private TrailRenderer  m_trail;
+    private Rigidbody2D    m_rigidbody;
+    private Collider2D     m_collider;
+    private string[]       m_affectTags;
+    private OnHit          m_onHit;
+    private bool           m_init                            = false;
+    private bool           m_interactWithDestructibleTilemap = false;
 
     public void Init(LivingEntity owner, float lifeTime, float speed, Vector2 direction, string[] affectedTags, OnHit onHit)
     {
@@ -43,29 +42,29 @@ public class Projectile : MonoBehaviour
 
     private void Awake()
     {
-        m_spriteRenderer = GetComponent<SpriteRenderer>();
-        m_trailRenderer = GetComponent<TrailRenderer>();
+        m_sprite    = GetComponent<SpriteRenderer>();
+        m_trail     = GetComponent<TrailRenderer>();
         m_rigidbody = GetComponent<Rigidbody2D>();
-        m_collider = GetComponent<Collider2D>();
+        m_collider  = GetComponent<Collider2D>();
     }
 
     private void Start()
     {
-        m_spriteRenderer.color            = color;
-        m_trailRenderer.widthMultiplier   = trailSize;
-        m_trailRenderer.colorGradient     = trailColor;
-        m_trailRenderer.time              = trailLifeTime;
+        m_sprite.color                    = color;
+        m_trail.widthMultiplier           = trailSize;
+        m_trail.colorGradient             = trailColor;
+        m_trail.time                      = trailLifeTime;
         m_interactWithDestructibleTilemap = TryGetComponent(out DestructibleTilemapInteraction destructibleTilemapInteraction);
         transform.localScale              = Vector3.one * size;
     }
 
     private void OnValidate()
     {
-        m_spriteRenderer.color          = color;
-        m_trailRenderer.widthMultiplier = trailSize;
-        m_trailRenderer.colorGradient   = trailColor;
-        m_trailRenderer.time            = trailLifeTime;
-        transform.localScale            = Vector3.one * size;
+        m_sprite.color          = color;
+        m_trail.widthMultiplier = trailSize;
+        m_trail.colorGradient   = trailColor;
+        m_trail.time            = trailLifeTime;
+        transform.localScale    = Vector3.one * size;
     }
 
     private void Update()
@@ -86,13 +85,14 @@ public class Projectile : MonoBehaviour
         Vector2 oldPos = new Vector2(transform.position.x, transform.position.y);
         Vector2 newPos = oldPos + velocity * Time.fixedDeltaTime;
         p_Move(oldPos, newPos);
+        p_RotateToDir();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out LivingEntity entity) && m_onHit != null)
         {
-            if (m_hitEntities.Add(entity) && entity.HasTagsAny(m_affectTags))
+            if (entity.HasTagsAny(m_affectTags))
             {
                 m_onHit(entity, this);
             }
@@ -143,6 +143,14 @@ public class Projectile : MonoBehaviour
         }
 
         m_rigidbody.MovePosition(to);
+    }
+
+    private void p_RotateToDir()
+    {
+        if (velocity != Vector2.zero)
+        {
+            m_sprite.transform.rotation = Quaternion.LookRotation(Vector3.fwd, velocity);
+        }
     }
 
     public delegate void OnHit(LivingEntity entity, Projectile projectile);

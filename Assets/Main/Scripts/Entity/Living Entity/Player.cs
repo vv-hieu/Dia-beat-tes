@@ -1,12 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class Player : MonoBehaviour
 {
-    [SerializeField] private GameObject bullet;
-    [SerializeField] private float      bulletSpeed    = 1.0f;
-    [SerializeField] private float      bulletLifetime = 1.0f;
+    [SerializeField] private GameObject weapon;
 
     [Header("Appearance")]
     [SerializeField] private SpriteRenderer sprite;
@@ -127,22 +124,20 @@ public class Player : MonoBehaviour
 
         m_livingEntity.attackDealtModifier    = new PlayerAttackModifier(this, true);
         m_livingEntity.attackReceivedModifier = new PlayerAttackModifier(this, false);
+
+        m_livingEntity.SetWeapon(weapon);
     }
 
     private void Update()
     {
         float dt = Time.deltaTime;
 
-        if (Input.GetMouseButtonDown(0) && bullet != null)
+        if (m_livingEntity.isInControl)
         {
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f));
-
-            Vector2 p0 = new Vector2(transform.position.x, transform.position.y);
-            Vector2 p1 = new Vector2(worldPos.x, worldPos.y);
-
-            GameObject go = Instantiate(bullet, transform.position, Quaternion.identity, transform.parent);
-            Projectile projectile = go.GetComponent<Projectile>();
-            projectile.Init(m_livingEntity, bulletLifetime, bulletSpeed, p1 - p0, new string[] { "Hostile" }, p_OnBulletHit);
+            if (Input.GetMouseButtonDown(0))
+            {
+                m_livingEntity.UseWeapon();
+            }
         }
 
         if (Input.GetKeyDown("space"))
@@ -153,25 +148,12 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 input    = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-        Vector2 position = new Vector2(transform.position.x, transform.position.y);
-        m_rigidbody.MovePosition(position + input * m_livingEntity.statSet.GetValue("speed") * m_fatSpeed * Time.fixedDeltaTime);
-    }
-
-    private void p_OnBulletHit(LivingEntity entity, Projectile bullet)
-    {
-        LivingEntity.HandleAttack(bullet.owner, entity, LivingEntity.AttackInfo.Create()
-            .KnockbackDirection(bullet.velocity)
-            .Knockback(1.0f)
-            .Damage(m_livingEntity.statSet.GetValue("attackDamage"))
-            .InvulnerableTime(0.3f)
-            .StunTime(0.2f)
-            .Tags(new string[] { "Projectile" })
-        );
-
-        entity.AddStatusEffect(StatusEffectManager.BurnEffect(bullet.owner, 5.0f, 0.1f, 0.25f));
-
-        Destroy(bullet.gameObject);
+        if (m_livingEntity.isInControl)
+        {
+            Vector2 input    = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+            Vector2 position = new Vector2(transform.position.x, transform.position.y);
+            m_rigidbody.MovePosition(position + input * m_livingEntity.statSet.GetValue("speed") * m_fatSpeed * Time.fixedDeltaTime);
+        }
     }
 
     private struct RelicEntry

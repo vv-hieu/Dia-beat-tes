@@ -20,7 +20,7 @@ public class LivingEntity : MonoBehaviour
     [SerializeField] private Optional<float> bulletCount;
     [SerializeField] private Optional<float> bulletPrecision;
     [SerializeField] private Optional<float> bulletSpeed;
-    [SerializeField] private Optional<float> bulletLifeTime;
+    [SerializeField] private Optional<float> bulletLifetime;
     [SerializeField] private Optional<float> bulletCapacity;
     [SerializeField] private Optional<float> reloadSpeed;
 
@@ -30,13 +30,16 @@ public class LivingEntity : MonoBehaviour
     [Header("Loot")]
     [SerializeField] private List<LootPool> lootTable = new List<LootPool>();
 
-    [Header("Component References")]
-    [SerializeField] private SpriteRenderer m_sprite;
+    [Header("Weapon")]
+    [SerializeField] private Transform weaponPivot;
 
     [Header("Visual")]
     [SerializeField] private Transform vfxPivot;
     [SerializeField] private Material  defaultMaterial;
     [SerializeField] private Material  hitMaterial;
+
+    [Header("Component References")]
+    [SerializeField] private SpriteRenderer m_sprite;
 
     public AttackModifier attackDealtModifier;
     public AttackModifier attackReceivedModifier;
@@ -47,9 +50,11 @@ public class LivingEntity : MonoBehaviour
     public bool    isMoving      { get; private set; } = false;
     public bool    isHurt        { get; private set; } = false;
     public bool    isFacingRight { get; private set; } = true;
+    public bool    isInControl   { get; private set; } = true;
 
     private NavMeshAgent                     m_navMeshAgent;
     private Rigidbody2D                      m_rigidbody;
+    private Weapon                           m_weapon;
     private float                            m_shieldTime       = 0.0f;
     private float                            m_invulnerableTime = 0.0f;
     private float                            m_stunTime         = 0.0f;
@@ -268,6 +273,63 @@ public class LivingEntity : MonoBehaviour
         return transform;
     }
 
+    public Transform WeaponPivot()
+    {
+        if (weaponPivot != null)
+        {
+            return weaponPivot;
+        }
+        return transform;
+    }
+
+    public void SetInControl(bool isInControl)
+    {
+        this.isInControl = isInControl;
+    }
+
+    public void SetWeapon(GameObject weaponObjectPrefab)
+    {
+        if (weaponObjectPrefab != null)
+        {
+            if (weaponObjectPrefab.TryGetComponent(out Weapon w))
+            {
+                GameObject weaponObject = Instantiate(weaponObjectPrefab, WeaponPivot().position, Quaternion.identity, WeaponPivot());
+                Weapon weapon = weaponObject.GetComponent<Weapon>();
+                if (weapon != null)
+                {
+                    weapon.SetUser(this);
+                }
+                if (m_weapon != null)
+                {
+                    Destroy(m_weapon.gameObject);
+                }
+                m_weapon = weapon;
+            }
+        }
+        else
+        {
+            if (m_weapon != null)
+            {
+                Destroy(m_weapon.gameObject);
+            }
+            m_weapon = null;
+        }
+    }
+
+    public Weapon GetWeapon()
+    {
+        return m_weapon;
+    }
+
+    public bool UseWeapon()
+    {
+        if (m_weapon != null)
+        {
+            return m_weapon.Use();
+        }
+        return false;
+    }
+
     private void Awake()
     {
         m_navMeshAgent = GetComponent<NavMeshAgent>();
@@ -276,7 +338,6 @@ public class LivingEntity : MonoBehaviour
 
     private void Start()
     {
-        // Build stat set
         statSet = p_BuildStatSet();
 
         if (statSet.TryGetValue("health", out float h))
@@ -335,7 +396,7 @@ public class LivingEntity : MonoBehaviour
         m_stunTime         = Mathf.Max(0.0f, m_stunTime - Time.deltaTime);
         if (m_navMeshAgent != null)
         {
-            m_navMeshAgent.enabled = (m_stunTime <= 0.0f && currentHealth > 0.0f);
+            m_navMeshAgent.enabled = (m_stunTime <= 0.0f && currentHealth > 0.0f && isInControl);
         }
 
         isHurt = (m_hurtTime > 0.0f);
@@ -395,20 +456,20 @@ public class LivingEntity : MonoBehaviour
     private StatSet p_BuildStatSet()
     {
         return StatSet.NewStatSet()
-            .AddStat("health"         , new Stat( 1.0f,  10.0f, health))
-            .AddStat("shield"         , new Stat( 0.0f,   5.0f, shield))
+            .AddStat("health"         , new Stat( 1.0f,  50.0f, health))
+            .AddStat("shield"         , new Stat( 0.0f,  10.0f, shield))
             .AddStat("speed"          , new Stat( 0.1f,   5.0f, speed))
             .AddStat("luck"           , new Stat(-2.0f,   2.0f, luck))
-            .AddStat("attackDamage"   , new Stat( 0.1f,  50.0f, attackDamage))
-            .AddStat("attackSpeed"    , new Stat( 0.1f,   5.0f, attackSpeed))
+            .AddStat("attackDamage"   , new Stat( 0.0f,  50.0f, attackDamage))
+            .AddStat("attackSpeed"    , new Stat( 0.0f,  10.0f, attackSpeed))
             .AddStat("critChance"     , new Stat( 0.0f, 100.0f, critChance))
-            .AddStat("critDamage"     , new Stat( 0.1f,  50.0f, critDamage))
-            .AddStat("bulletCount"    , new Stat( 1.0f,  20.0f, bulletCount))
-            .AddStat("bulletPrecision", new Stat( 0.0f, 100.0f, bulletPrecision))
-            .AddStat("bulletSpeed"    , new Stat( 1.0f,  50.0f, bulletSpeed))
-            .AddStat("bulletLifeTime" , new Stat( 1.0f,  10.0f, bulletLifeTime))
-            .AddStat("bulletCapacity" , new Stat( 1.0f,  10.0f, bulletCapacity))
-            .AddStat("reloadSpeed"    , new Stat( 0.1f,   5.0f, reloadSpeed));
+            .AddStat("critDamage"     , new Stat( 0.0f,  50.0f, critDamage))
+            .AddStat("bulletCount"    , new Stat( 0.0f,  50.0f, bulletCount))
+            .AddStat("bulletPrecision", new Stat( 0.0f,  10.0f, bulletPrecision))
+            .AddStat("bulletSpeed"    , new Stat( 0.0f,  50.0f, bulletSpeed))
+            .AddStat("bulletLifetime" , new Stat( 0.0f,  10.0f, bulletLifetime))
+            .AddStat("bulletCapacity" , new Stat( 0.0f,  50.0f, bulletCapacity))
+            .AddStat("reloadSpeed"    , new Stat( 0.0f,  10.0f, reloadSpeed));
     }
 
     private void p_ReceiveAttack(AttackInfo attackInfo)
@@ -442,6 +503,19 @@ public class LivingEntity : MonoBehaviour
         m_knockbackOrigin = new Vector2(transform.position.x, transform.position.y);
 
         m_hurtTime = HURT_TIME;
+        List<string> removedEffectIds = new List<string>();
+        foreach (var p in m_statusEffects)
+        {
+            if (p.Value.ShouldBeRemovedOnHurt())
+            {
+                removedEffectIds.Add(p.Key);
+            }
+        }
+        foreach (string effectId in removedEffectIds)
+        {
+            m_statusEffects[effectId].ForceRemove(this);
+            m_statusEffects.Remove(effectId);
+        }
     }
 
     public struct Stat {
@@ -532,34 +606,6 @@ public class LivingEntity : MonoBehaviour
 
         public float baseValue { get; private set; }
 
-        //public float value {
-        //    get
-        //    {
-        //        float a = 1.0f;
-        //        float b = 0.0f;
-        //        float c = 1.0f;
-
-        //        foreach (StatModifier modifier in m_modifiers.Values)
-        //        {
-        //            StatModifyingOperation operation = modifier.Modify();
-        //            if (operation.operation == StatModifyingOperation.Operation.AdditionPercent)
-        //            {
-        //                a += operation.amount;
-        //            }
-        //            else if (operation.operation == StatModifyingOperation.Operation.AdditionValue)
-        //            {
-        //                b += operation.amount;
-        //            }
-        //            else if (operation.operation == StatModifyingOperation.Operation.Multiplication)
-        //            {
-        //                c *= operation.amount;
-        //            }
-        //        }
-
-        //        return stat.Clamp(c * (a * baseValue + b));
-        //    }
-        //}
-
         public StatInstance(Stat stat)
         {
             this.stat      = stat;
@@ -648,10 +694,52 @@ public class LivingEntity : MonoBehaviour
                     }
                 }
 
-                value = c * (a * value + b);
+                value = statInstance.stat.Clamp(c * (a * value + b));
                 return true;
             }
             value = 0.0f;
+            return false;
+        }
+
+        public bool TryGetValueAndCoefficients(string statId, out float value, out float a, out float b, out float c)
+        {
+            if (m_statInstances.TryGetValue(statId, out StatInstance statInstance))
+            {
+                value = statInstance.baseValue;
+
+                a = 1.0f;
+                b = 0.0f;
+                c = 1.0f;
+
+                List<StatModifyingOperation> operations = p_GetOperations();
+                foreach (StatModifyingOperation operation in operations)
+                {
+                    if (operation.statId == statId)
+                    {
+                        switch (operation.operation)
+                        {
+                            case StatModifyingOperation.Operation.AdditionPercent:
+                                a += operation.amount;
+                                break;
+                            case StatModifyingOperation.Operation.AdditionValue:
+                                b += operation.amount;
+                                break;
+                            case StatModifyingOperation.Operation.Multiplication:
+                                c *= operation.amount;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+
+                value = statInstance.stat.Clamp(c * (a * value + b));
+                return true;
+            }
+            value = 0.0f;
+            a = 1.0f;
+            b = 0.0f;
+            c = 1.0f;
             return false;
         }
 
@@ -669,6 +757,16 @@ public class LivingEntity : MonoBehaviour
         {
             float res = float.NaN;
             if (TryGetValue(statId, out float r))
+            {
+                res = r;
+            }
+            return res;
+        }
+
+        public float GetValueAndCoefficients(string statId, out float a, out float b, out float c)
+        {
+            float res = float.NaN;
+            if (TryGetValueAndCoefficients(statId, out float r, out a, out b, out c))
             {
                 res = r;
             }
@@ -738,9 +836,12 @@ public class LivingEntity : MonoBehaviour
             return this;
         }
 
-        public AttackInfo Tags(IEnumerable<string> tags)
+        public AttackInfo Tags(IEnumerable<string> tags, bool overwrite = false)
         {
-            this.tags.Clear();
+            if (overwrite)
+            {
+                this.tags.Clear();
+            }
             this.tags.AddRange(tags);
             return this;
         }
@@ -805,82 +906,6 @@ public class LivingEntity : MonoBehaviour
     }
 
     [Serializable]
-    public struct LootPool 
-    {
-        public float               chance;
-        public int                 rolls;
-        public List<LootPoolEntry> entries;
-
-        public void AddItems(List<string> itemList, System.Random random, float luck)
-        {
-            float totalWeight = p_TotalWeight(luck);
-
-            for (int i = 0; i < rolls; ++i)
-            {
-                float rand = (float)random.NextDouble();
-                if (rand <= chance)
-                {
-                    float cumulativeWeight = 0.0f;
-                    float rand2 = (float)random.NextDouble() * totalWeight;
-
-                    foreach (LootPoolEntry entry in entries)
-                    {
-                        cumulativeWeight += entry.GetWeight(luck);
-                        if (cumulativeWeight >= rand2)
-                        {
-                            int count = entry.GetRandomCount(random, luck);
-                            while (count-- > 0)
-                            {
-                                itemList.Add(entry.item);
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        private float p_TotalWeight(float luck)
-        {
-            float res = 0.0f;
-            foreach (LootPoolEntry entry in entries)
-            {
-                res += entry.GetWeight(luck);
-            }
-            return res;
-        }
-    }
-
-    [Serializable]
-    public struct LootPoolEntry
-    {
-        public string     item;
-        public float      weight;
-        public Vector2Int count;
-        public bool       weightAffectedByLuck;
-        public bool       countAffectedByLuck;
-
-        public float GetWeight(float luck)
-        {
-            if (!weightAffectedByLuck)
-            {
-                luck = 0.0f;
-            }
-            return weight * (1.0f + 0.519f * (float)Math.Tanh((double)luck));
-        }
-
-        public int GetRandomCount(System.Random random, float luck)
-        {
-            if (!countAffectedByLuck)
-            {
-                luck = 0.0f;
-            }
-            float rand01     = (float)random.NextDouble();
-            float finalCount = Mathf.Pow(rand01, Mathf.Pow(2.0f, luck)) * (count.y - count.x + 0.99f) + count.x;
-            return (int)finalCount;
-        }
-    }
-
     public class StatusEffect
     {
         public string       id        { get; private set; }
@@ -957,6 +982,11 @@ public class LivingEntity : MonoBehaviour
             }
         }
 
+        public virtual bool ShouldBeRemovedOnHurt()
+        {
+            return false;
+        }
+
         public virtual void OnApply(LivingEntity target)
         {
         }
@@ -972,6 +1002,84 @@ public class LivingEntity : MonoBehaviour
         public virtual StatModifier GetStatModifier()
         {
             return new StatModifier();
+        }
+    }
+
+    // TODO: Maybe?? status effect modifier (dealt + received)
+
+    public struct LootPool 
+    {
+        public float               chance;
+        public int                 rolls;
+        public List<LootPoolEntry> entries;
+
+        public void AddItems(List<string> itemList, System.Random random, float luck)
+        {
+            float totalWeight = p_TotalWeight(luck);
+
+            for (int i = 0; i < rolls; ++i)
+            {
+                float rand = (float)random.NextDouble();
+                if (rand <= chance)
+                {
+                    float cumulativeWeight = 0.0f;
+                    float rand2 = (float)random.NextDouble() * totalWeight;
+
+                    foreach (LootPoolEntry entry in entries)
+                    {
+                        cumulativeWeight += entry.GetWeight(luck);
+                        if (cumulativeWeight >= rand2)
+                        {
+                            int count = entry.GetRandomCount(random, luck);
+                            while (count-- > 0)
+                            {
+                                itemList.Add(entry.item);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private float p_TotalWeight(float luck)
+        {
+            float res = 0.0f;
+            foreach (LootPoolEntry entry in entries)
+            {
+                res += entry.GetWeight(luck);
+            }
+            return res;
+        }
+    }
+
+    [Serializable]
+    public struct LootPoolEntry
+    {
+        public string     item;
+        public float      weight;
+        public Vector2Int count;
+        public bool       weightAffectedByLuck;
+        public bool       countAffectedByLuck;
+
+        public float GetWeight(float luck)
+        {
+            if (!weightAffectedByLuck)
+            {
+                luck = 0.0f;
+            }
+            return weight * (1.0f + 0.519f * (float)Math.Tanh((double)luck));
+        }
+
+        public int GetRandomCount(System.Random random, float luck)
+        {
+            if (!countAffectedByLuck)
+            {
+                luck = 0.0f;
+            }
+            float rand01     = (float)random.NextDouble();
+            float finalCount = Mathf.Pow(rand01, Mathf.Pow(2.0f, luck)) * (count.y - count.x + 0.99f) + count.x;
+            return (int)finalCount;
         }
     }
 }

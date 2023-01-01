@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4316244215257119499}
   - component: {fileID: 8490726185333541269}
   - component: {fileID: 6417256768766030158}
-  - component: {fileID: -3714356901821491770}
   m_Layer: 0
   m_Name: VFX Loop (Status Effect - Frenzy)
   m_TagString: Untagged
@@ -610,7 +609,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -0.3
+      scalar: -0.2
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -869,7 +868,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 200
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -4815,17 +4814,3 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &-3714356901821491770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2172053163632288020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab025599a63d6104284f1e9dd82154af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onStart: {fileID: 4330566404898234175, guid: 9550648ee1a1ec9498dd8fd895efeb18, type: 3}
-  onDestroy: {fileID: 4330566404898234175, guid: 9550648ee1a1ec9498dd8fd895efeb18, type: 3}

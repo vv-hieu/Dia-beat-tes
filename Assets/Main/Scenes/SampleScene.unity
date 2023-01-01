@@ -123,6 +123,104 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!21 &8705260
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Health Bar (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
+  m_Shader: {fileID: -6465566751694194690, guid: 3ecc57222c88c754f9ae477cf6d19c8c, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 5000
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _CurrentHealth: 20
+    - _CurrentShield: 0
+    - _EdgeWidth: 0.5
+    - _Health: 20
+    - _QueueControl: 1
+    - _QueueOffset: 0
+    - _Shield: 0
+    m_Colors:
+    - _Default_Color: {r: 0, g: 0, b: 0, a: 0}
+    - _Edge_Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Health_Color: {r: 1, g: 0, b: 0, a: 1}
+    - _Health_Color_1: {r: 1, g: 0, b: 0, a: 0}
+    - _Health_Color_2: {r: 0.33962256, g: 0.05574934, b: 0.05574934, a: 0}
+    - _Shield_Color: {r: 0, g: 1, b: 1, a: 1}
+    - _Shield_Color_1: {r: 0, g: 1, b: 1, a: 0}
+    - _Shield_Color_2: {r: 0.059807733, g: 0.28301886, b: 0.28301886, a: 0}
+    - _Size: {r: 0.03, g: 0.2, b: 0, a: 0}
+  m_BuildTextureStacks: []
 --- !u!1 &356921664
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,7 +245,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 356921664}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -185,7 +283,7 @@ Transform:
   - {fileID: 1523164339}
   - {fileID: 1843302755}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
@@ -526,6 +624,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 356921665}
+  - {fileID: 1461047614}
   m_Father: {fileID: 1523164339}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -621,8 +720,39 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 924958239}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.79999995, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1735801200}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1006052601
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1006052602}
+  m_Layer: 8
+  m_Name: Weapon Pivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1006052602
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006052601}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.25, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1735801200}
@@ -638,7 +768,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6783547760590267859, guid: 05f5fab771bbf364f8b13bc4d50302dc, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6783547760590267859, guid: 05f5fab771bbf364f8b13bc4d50302dc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -927,7 +1057,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   burnVFX: {fileID: 2426528009747317367, guid: 167ce99eef82b134eb06157e038bd67c, type: 3}
+  frozenVFX: {fileID: 2430368046078150510, guid: 088a1befbe3142e4fb206e42eca9873d, type: 3}
   frenzyVFX: {fileID: 2172053163632288020, guid: a287c08878bf7bc4b9e7c0f794674906, type: 3}
+--- !u!1 &1461047613
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1461047614}
+  m_Layer: 8
+  m_Name: Weapon Pivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1461047614
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461047613}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.25, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 861022855}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1523164334
 GameObject:
   m_ObjectHideFlags: 0
@@ -963,9 +1125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67205c81e01afa543a70bd8c3221f4c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 4958191083791384701, guid: cd7d92a828790f545b1e394a9b6e1ad4, type: 3}
-  bulletSpeed: 30
-  bulletLifetime: 1
+  weapon: {fileID: 2072977252031268967, guid: e36afa3022e487641a0c73353f05ebc1, type: 3}
   sprite: {fileID: 861022856}
   playerNormal: {fileID: 480276868, guid: 8ca241440e168e041a6428c71f5fa244, type: 3}
   playerPartialFat: {fileID: -1007129710, guid: 8ca241440e168e041a6428c71f5fa244, type: 3}
@@ -1040,10 +1200,10 @@ MonoBehaviour:
     value: 0
   attackDamage:
     enabled: 1
-    value: 1
+    value: 0
   attackSpeed:
     enabled: 1
-    value: 1
+    value: 0
   critChance:
     enabled: 1
     value: 5
@@ -1052,31 +1212,31 @@ MonoBehaviour:
     value: 1
   bulletCount:
     enabled: 1
-    value: 1
+    value: 0
   bulletPrecision:
     enabled: 1
     value: 0
   bulletSpeed:
     enabled: 1
-    value: 1
-  bulletLifeTime:
+    value: 0
+  bulletLifetime:
     enabled: 1
-    value: 1
+    value: 0
   bulletCapacity:
     enabled: 1
-    value: 6
+    value: 0
   reloadSpeed:
     enabled: 1
-    value: 1
+    value: 0
   entityTags:
     m_keys:
     - Player
     - Friendly
-  lootTable: []
-  m_sprite: {fileID: 861022856}
+  weaponPivot: {fileID: 1461047614}
   vfxPivot: {fileID: 356921665}
   defaultMaterial: {fileID: 2100000, guid: 402652d384d5b0443b678775b9efe2d0, type: 2}
   hitMaterial: {fileID: 2100000, guid: 5cee859d7010ca44a92534195d6b9630, type: 2}
+  m_sprite: {fileID: 861022856}
 --- !u!50 &1523164341
 Rigidbody2D:
   serializedVersion: 4
@@ -1221,7 +1381,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1562811737}
+  - {fileID: 8705260}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1263,90 +1423,6 @@ SortingGroup:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_SortAtRoot: 0
---- !u!21 &1562811737
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Health Bar (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance) (Instance) (Instance) (Instance) (Instance) (Instance) (Instance)
-    (Instance)
-  m_Shader: {fileID: -6465566751694194690, guid: 3ecc57222c88c754f9ae477cf6d19c8c, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 5000
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - unity_Lightmaps:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_LightmapsInd:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_ShadowMasks:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats:
-    - _CurrentHealth: 20
-    - _CurrentShield: 5
-    - _EdgeWidth: 0.5
-    - _Health: 20
-    - _QueueControl: 1
-    - _QueueOffset: 0
-    - _Shield: 5
-    m_Colors:
-    - _Default_Color: {r: 0, g: 0, b: 0, a: 0}
-    - _Edge_Color: {r: 1, g: 1, b: 1, a: 0}
-    - _Health_Color: {r: 1, g: 0, b: 0, a: 1}
-    - _Health_Color_1: {r: 1, g: 0, b: 0, a: 0}
-    - _Health_Color_2: {r: 0.33962256, g: 0.05574934, b: 0.05574934, a: 0}
-    - _Shield_Color: {r: 0, g: 1, b: 1, a: 1}
-    - _Shield_Color_1: {r: 0, g: 1, b: 1, a: 0}
-    - _Shield_Color_2: {r: 0.059807733, g: 0.28301886, b: 0.28301886, a: 0}
-    - _Size: {r: 0.03, g: 0.2, b: 0, a: 0}
-  m_BuildTextureStacks: []
 --- !u!1 &1735801199
 GameObject:
   m_ObjectHideFlags: 0
@@ -1378,6 +1454,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 924958240}
+  - {fileID: 1006052602}
   m_Father: {fileID: 1843302755}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1508,7 +1585,7 @@ MonoBehaviour:
     value: 20
   shield:
     enabled: 1
-    value: 5
+    value: 0
   speed:
     enabled: 1
     value: 2
@@ -1517,10 +1594,10 @@ MonoBehaviour:
     value: 0
   attackDamage:
     enabled: 1
-    value: 1
+    value: 0
   attackSpeed:
     enabled: 1
-    value: 1
+    value: 0
   critChance:
     enabled: 1
     value: 5
@@ -1536,7 +1613,7 @@ MonoBehaviour:
   bulletSpeed:
     enabled: 1
     value: 0
-  bulletLifeTime:
+  bulletLifetime:
     enabled: 1
     value: 0
   bulletCapacity:
@@ -1549,34 +1626,11 @@ MonoBehaviour:
     m_keys:
     - Hostile
     - Undead
-  lootTable:
-  - chance: 1
-    rolls: 20
-    entries:
-    - item: cake_piece
-      weight: 1
-      count: {x: 1, y: 2}
-      weightAffectedByLuck: 0
-      countAffectedByLuck: 0
-    - item: cherry
-      weight: 1
-      count: {x: 1, y: 2}
-      weightAffectedByLuck: 0
-      countAffectedByLuck: 0
-    - item: strawberry
-      weight: 1
-      count: {x: 1, y: 2}
-      weightAffectedByLuck: 0
-      countAffectedByLuck: 0
-    - item: energy_drink
-      weight: 1
-      count: {x: 1, y: 2}
-      weightAffectedByLuck: 0
-      countAffectedByLuck: 0
-  m_sprite: {fileID: 1735801201}
+  weaponPivot: {fileID: 1006052602}
   vfxPivot: {fileID: 924958240}
   defaultMaterial: {fileID: 2100000, guid: 402652d384d5b0443b678775b9efe2d0, type: 2}
   hitMaterial: {fileID: 2100000, guid: 5cee859d7010ca44a92534195d6b9630, type: 2}
+  m_sprite: {fileID: 1735801201}
 --- !u!114 &1843302757
 MonoBehaviour:
   m_ObjectHideFlags: 0

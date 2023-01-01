@@ -5,6 +5,7 @@ public class StatusEffectManager : MonoBehaviour
 {
     [Header("VFX")]
     [SerializeField] private GameObject burnVFX;
+    [SerializeField] private GameObject frozenVFX;
     [SerializeField] private GameObject frenzyVFX;
 
     public static StatusEffectManager instance;
@@ -20,6 +21,14 @@ public class StatusEffectManager : MonoBehaviour
         return GeneralStatusEffect.Create("status_effect_burn", inflictor, time)
             .AttachVFX(instance.burnVFX)
             .DamageOverTime(burnDamageAttackInfo, burnCycle, new string[] { "StatusEffect", "Fire" }, false);
+    }
+
+    public static LivingEntity.StatusEffect FrozenEffect(LivingEntity inflictor, float time)
+    {
+        return GeneralStatusEffect.Create("status_effect_frozen", inflictor, time)
+            .AttachVFX(instance.frozenVFX)
+            .RemoveOnHurt()
+            .RemoveTargetControl();
     }
 
     public static LivingEntity.StatusEffect FrenzyEffect(LivingEntity inflictor, float time)
@@ -42,14 +51,20 @@ public class StatusEffectManager : MonoBehaviour
 
     private class GeneralStatusEffect : LivingEntity.StatusEffect
     {
-        private LivingEntity.StatModifier m_statModifier             = new LivingEntity.StatModifier();
-        private GameObject                m_vfx;
-        private GameObject                m_vfxInstance;
-        private bool                      m_damageOverTimeEnabled    = false;
-        private bool                      m_damageOverTimeCrit       = false;
-        private LivingEntity.AttackInfo   m_damageOverTimeAttackInfo = LivingEntity.AttackInfo.Create();
-        private float                     m_damageOverTimeCycle      = 0.0f;
-        private float                     m_damageOverTimeTime       = 0.0f;
+        private LivingEntity.StatModifier m_statModifier = new LivingEntity.StatModifier();
+
+        private bool m_removeOnHurt = false;
+
+        private GameObject m_vfx;
+        private GameObject m_vfxInstance;
+                                        
+        private bool                    m_damageOverTimeEnabled    = false;
+        private bool                    m_damageOverTimeCrit       = false;
+        private LivingEntity.AttackInfo m_damageOverTimeAttackInfo = LivingEntity.AttackInfo.Create();
+        private float                   m_damageOverTimeCycle      = 0.0f;
+        private float                   m_damageOverTimeTime       = 0.0f;
+                                        
+        private bool m_removeTargetControl = false;
 
         private GeneralStatusEffect(string id, LivingEntity inflictor, float time) : base(id, inflictor, time)
         {
@@ -60,11 +75,21 @@ public class StatusEffectManager : MonoBehaviour
             return m_statModifier;
         }
 
+        public override bool ShouldBeRemovedOnHurt()
+        {
+            return m_removeOnHurt;
+        }
+
         public override void OnApply(LivingEntity target)
         {
             if (m_vfx != null)
             {
                 m_vfxInstance = Instantiate(m_vfx, target.VFXPivot());
+            }
+
+            if (m_removeTargetControl)
+            {
+                target.SetInControl(false);
             }
         }
 
@@ -84,6 +109,11 @@ public class StatusEffectManager : MonoBehaviour
                 {
                     Destroy(m_vfxInstance);
                 }
+            }
+
+            if (m_removeTargetControl)
+            {
+                target.SetInControl(true);
             }
         }
 
@@ -120,12 +150,24 @@ public class StatusEffectManager : MonoBehaviour
             return this;
         }
 
+        public GeneralStatusEffect RemoveOnHurt()
+        {
+            m_removeOnHurt = true;
+            return this;
+        }
+
         public GeneralStatusEffect DamageOverTime(LivingEntity.AttackInfo damage, float cycle, IEnumerable<string> tags, bool crit)
         {
             m_damageOverTimeEnabled    = true;
             m_damageOverTimeCrit       = crit;
             m_damageOverTimeCycle      = cycle;
             m_damageOverTimeAttackInfo = damage;
+            return this;
+        }
+    
+        public GeneralStatusEffect RemoveTargetControl()
+        {
+            m_removeTargetControl = true;
             return this;
         }
     }

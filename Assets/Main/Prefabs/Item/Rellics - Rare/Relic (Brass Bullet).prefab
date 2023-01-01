@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 850878250848171078}
   - component: {fileID: 850878250848171072}
-  - component: {fileID: 850878250848171073}
+  - component: {fileID: 5262701522876628897}
   m_Layer: 6
   m_Name: Aura
   m_TagString: Untagged
@@ -253,26 +253,30 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &850878250848171073
-Animator:
-  serializedVersion: 4
+--- !u!114 &5262701522876628897
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 850878250848171075}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7128466d4777d89488d734c5c0e5b038, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c80a3482b5e66044870494b09e4cf10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 1631850990, guid: 25524b2420f34f34ab621bba67a8222e, type: 3}
+  - {fileID: -648420564, guid: 25524b2420f34f34ab621bba67a8222e, type: 3}
+  - {fileID: -1769740864, guid: 25524b2420f34f34ab621bba67a8222e, type: 3}
+  - {fileID: -218455975, guid: 25524b2420f34f34ab621bba67a8222e, type: 3}
+  - {fileID: 216116676, guid: 25524b2420f34f34ab621bba67a8222e, type: 3}
+  - {fileID: -1990955178, guid: 25524b2420f34f34ab621bba67a8222e, type: 3}
+  - {fileID: 209056238, guid: 25524b2420f34f34ab621bba67a8222e, type: 3}
+  - {fileID: -2085576265, guid: 25524b2420f34f34ab621bba67a8222e, type: 3}
+  loop: 1
+  playOnAwake: 1
+  duration: 1
 --- !u!1 &850878251563652844
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,7 +312,7 @@ Transform:
   - {fileID: 850878250439914087}
   - {fileID: 850878250848171078}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &850878251563652627
 CircleCollider2D:

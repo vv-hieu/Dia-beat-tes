@@ -16,7 +16,7 @@ TagManager:
   - LivingEntity
   - Projectile
   - Hitbox
-  - 
+  - Melee
   - 
   - MapWall
   - MapWalkable
