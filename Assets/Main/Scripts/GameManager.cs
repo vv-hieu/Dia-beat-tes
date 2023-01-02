@@ -13,7 +13,14 @@ public class GameManager : MonoBehaviour
             player = playerObj.GetComponent<Player>();
         }
 
-        GameContext res = new GameContext(player);
+        Map map = null;
+        GameObject mapObj = GameObject.FindGameObjectWithTag("Map");
+        if (mapObj != null)
+        {
+            map = mapObj.GetComponent<Map>();
+        }
+
+        GameContext res = new GameContext(player, map);
 
         return res;
     }
@@ -34,12 +41,13 @@ public class GameManager : MonoBehaviour
 
     public struct GameContext
     {
-        public Player player;
-        // Timer, world, ... sum shid like dat
+        public Player player { get; private set; }
+        public Map    map    { get; private set; }
 
-        public GameContext(Player player)
+        public GameContext(Player player, Map map)
         {
             this.player = player;
+            this.map    = map;
         }
     }
 }
