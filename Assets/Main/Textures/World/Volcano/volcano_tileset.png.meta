@@ -878,8 +878,8 @@ TextureImporter:
       name: volcano_tileset_36
       rect:
         serializedVersion: 2
-        x: 0
-        y: 32
+        x: 64
+        y: 48
         width: 16
         height: 16
       alignment: 0
@@ -899,8 +899,8 @@ TextureImporter:
       name: volcano_tileset_37
       rect:
         serializedVersion: 2
-        x: 16
-        y: 32
+        x: 80
+        y: 48
         width: 16
         height: 16
       alignment: 0
@@ -920,8 +920,8 @@ TextureImporter:
       name: volcano_tileset_38
       rect:
         serializedVersion: 2
-        x: 0
-        y: 16
+        x: 96
+        y: 48
         width: 16
         height: 16
       alignment: 0
@@ -937,6 +937,426 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: volcano_tileset_39
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 419a9c32c91a4c74a9214de4bac9c285
+      internalID: 369874449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: volcano_tileset_40
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48ad301b35ac94f4d80cc20c42503915
+      internalID: 25671962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: volcano_tileset_41
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38474119e9e20be4ea79b3019feb0f55
+      internalID: -1101611338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: volcano_tileset_42
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42a15305c222b8645b44d7c7102833ba
+      internalID: -871221560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: volcano_tileset_43
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7a1149e22ce75843986c912d5183715
+      internalID: 2011591610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: volcano_tileset_44
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ffee2ec5b6472740a8560d88d449a19
+      internalID: -301442821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: volcano_tileset_45
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b88964bc5b2375f4bb52d0c28d8e3553
+      internalID: -388123411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: volcano_tileset_46
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5dbb9e0e2df4fb849aa6bd1ec6f2e0c7
+      internalID: -619242406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: volcano_tileset_47
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b51cf5301ddba74a96ee57df4c9dd5f
+      internalID: -1572169330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: volcano_tileset_48
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc0f0a598f0fcee4bb3e702f5d14c1d3
+      internalID: -329362053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: volcano_tileset_49
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72160455096cce449a72aaaf37706893
+      internalID: -1162822531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: volcano_tileset_50
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65c3a47906d60cd45830c81607b5c0f8
+      internalID: -1406434121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: volcano_tileset_51
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02151dd9e531f6648888130beb3bbbea
+      internalID: -102080728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: volcano_tileset_52
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88e47458b6bbb6b4f987e16e101ffbf7
+      internalID: 450584153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: volcano_tileset_53
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0415d85024598224983f66d17b825ecc
+      internalID: -1834600896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: volcano_tileset_54
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7b5de04fe7562a4bb94843758fdaf4b
+      internalID: -1007205138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: volcano_tileset_55
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 155887d3d1432a545a2de5ff5817d8be
+      internalID: 1101134564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: volcano_tileset_56
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 603e7a81ab20a38489738393b3737145
+      internalID: -1348793609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: volcano_tileset_57
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81ed72b7369554f47ba9d36321b7e9e6
+      internalID: 392615578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: volcano_tileset_58
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: adb52209c410b5c4bafdb515d3d56b0e
+      internalID: -1091702220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -948,45 +1368,65 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      volcano_tileset_45: -388123411
       volcano_tileset_23: -2023673090
       volcano_tileset_35: -1233696458
-      volcano_tileset_3: -1548766799
+      volcano_tileset_52: 450584153
       volcano_tileset_11: 1049354988
-      volcano_tileset_0: 815870282
-      volcano_tileset_31: 765826336
+      volcano_tileset_40: 25671962
       volcano_tileset_36: -522909798
-      volcano_tileset_4: 350416811
       volcano_tileset_8: 359130743
+      volcano_tileset_56: -1348793609
+      volcano_tileset_32: 207120385
+      volcano_tileset_7: -205608708
+      volcano_tileset_47: -1572169330
+      volcano_tileset_27: 1397499678
+      volcano_tileset_15: -1831888240
+      volcano_tileset_48: -329362053
+      volcano_tileset_49: -1162822531
+      volcano_tileset_37: -65579414
+      volcano_tileset_30: 1635482438
+      volcano_tileset_26: -1891320983
+      volcano_tileset_16: 225319167
+      volcano_tileset_5: -1739894650
+      volcano_tileset_13: -999275603
+      volcano_tileset_42: -871221560
+      volcano_tileset_43: 2011591610
+      volcano_tileset_57: 392615578
+      volcano_tileset_41: -1101611338
+      volcano_tileset_3: -1548766799
+      volcano_tileset_44: -301442821
+      volcano_tileset_39: 369874449
+      volcano_tileset_0: 815870282
+      volcano_tileset_58: -1091702220
+      volcano_tileset_51: -102080728
+      volcano_tileset_46: -619242406
+      volcano_tileset_31: 765826336
+      volcano_tileset_53: -1834600896
+      volcano_tileset_50: -1406434121
+      volcano_tileset_4: 350416811
       volcano_tileset_34: 195747659
       volcano_tileset_14: 1440458933
       volcano_tileset_25: -1104403334
       volcano_tileset_38: -1728743341
       volcano_tileset_12: 1361998108
       volcano_tileset_6: 1766156207
-      volcano_tileset_32: 207120385
-      volcano_tileset_7: -205608708
       volcano_tileset_18: 852832834
       volcano_tileset_24: 1957925433
       volcano_tileset_22: 144551436
       volcano_tileset_9: -786996382
       volcano_tileset_2: -413235717
       volcano_tileset_17: 1212555801
-      volcano_tileset_27: 1397499678
-      volcano_tileset_15: -1831888240
-      volcano_tileset_37: -65579414
       volcano_tileset_29: -1644870872
       volcano_tileset_28: -163293607
       volcano_tileset_1: 430757183
       volcano_tileset_10: -773012179
-      volcano_tileset_26: -1891320983
-      volcano_tileset_30: 1635482438
-      volcano_tileset_16: 225319167
+      volcano_tileset_55: 1101134564
       volcano_tileset_33: -586276283
       volcano_tileset_20: 1199110835
-      volcano_tileset_5: -1739894650
-      volcano_tileset_13: -999275603
       volcano_tileset_19: -591898337
       volcano_tileset_21: 1772164998
+      volcano_tileset_54: -1007205138
   spritePackingTag: 
   pSDRemoveMatte: 0
   userData: 

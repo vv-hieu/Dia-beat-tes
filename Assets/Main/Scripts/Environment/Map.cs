@@ -26,6 +26,7 @@ public class Map : MonoBehaviour
     [SerializeField] private float         terrainFalloffStrength;
     [SerializeField] private float         pathScale;
     [SerializeField] private float         pathThreshold;
+    [SerializeField] private Vector2Int    spawnStructureSize;
 
     [Header("Tiles")]
     [SerializeField] private TilesWeighted    groundTiles;
@@ -33,6 +34,7 @@ public class Map : MonoBehaviour
     [SerializeField] private TilesDirectional bridgeTiles;
     [SerializeField] private Tiles16          wallTiles;
     [SerializeField] private Tiles16          pathTiles;
+    [SerializeField] private TilesNineSlice   spawnStructureTiles;
 
     public int seed { get; private set; }
 
@@ -118,6 +120,19 @@ public class Map : MonoBehaviour
             }
         }
 
+        // Place spawn structure
+
+        for (int x = -spawnStructureSize.x - 1; x <= spawnStructureSize.x + 1; ++x)
+        {
+            for (int y = -spawnStructureSize.y - 1; y <= spawnStructureSize.y + 1; ++y)
+            {
+                if (p_InBound(x, y))
+                {
+                    m_map[x + mapSize.x, y + mapSize.y] = TileType.SpawnStructure;
+                }
+            }
+        }
+
         // Remove small island
 
         bool[,] scanned = new bool[2 * mapSize.x + 1, 2 * mapSize.y + 1];
@@ -151,7 +166,7 @@ public class Map : MonoBehaviour
                             Vector2Int adjTile = currentTile + direction;
                             if (p_InBound(adjTile))
                             {
-                                if (p_GetTile(adjTile) == TileType.Ground && !scanned[adjTile.x + mapSize.x, adjTile.y + mapSize.y] && !p.Contains(adjTile))
+                                if ((p_GetTile(adjTile) == TileType.Ground || p_GetTile(adjTile) == TileType.SpawnStructure) && !scanned[adjTile.x + mapSize.x, adjTile.y + mapSize.y] && !p.Contains(adjTile))
                                 {
                                     p.Add(adjTile);
                                     scanned[adjTile.x + mapSize.x, adjTile.y + mapSize.y] = true;
@@ -341,8 +356,9 @@ public class Map : MonoBehaviour
 
     private void p_PlaceTiles()
     {
-        float[,] whiteNoiseMap1 = Noise.WhiteNoiseMap(2 * mapSize + Vector2Int.one, seed + 69420);
-        float[,] whiteNoiseMap2 = Noise.WhiteNoiseMap(2 * mapSize + Vector2Int.one, seed - 69420);
+        float[,] whiteNoiseMap1 = Noise.WhiteNoiseMap(2 * mapSize + Vector2Int.one, seed);
+        float[,] whiteNoiseMap2 = Noise.WhiteNoiseMap(2 * mapSize + Vector2Int.one, seed + 69420);
+        float[,] whiteNoiseMap3 = Noise.WhiteNoiseMap(2 * mapSize + Vector2Int.one, seed - 69420);
 
         walkableTilemap.ClearAllTiles();
         wallTilemap.ClearAllTiles();
@@ -364,19 +380,19 @@ public class Map : MonoBehaviour
                     case TileType.Wall:
                         {
                             int index = 0;
-                            if (p_GetTile(x, y + 1) == TileType.Ground)
+                            if (p_GetTile(x, y + 1) == TileType.Ground || p_GetTile(x, y + 1) == TileType.SpawnStructure)
                             {
                                 index += 1;
                             }
-                            if (p_GetTile(x + 1, y) == TileType.Ground)
+                            if (p_GetTile(x + 1, y) == TileType.Ground || p_GetTile(x + 1, y) == TileType.SpawnStructure)
                             {
                                 index += 2;
                             }
-                            if (p_GetTile(x, y - 1) == TileType.Ground)
+                            if (p_GetTile(x, y - 1) == TileType.Ground || p_GetTile(x, y - 1) == TileType.SpawnStructure)
                             {
                                 index += 4;
                             }
-                            if (p_GetTile(x - 1, y) == TileType.Ground)
+                            if (p_GetTile(x - 1, y) == TileType.Ground || p_GetTile(x - 1, y) == TileType.SpawnStructure)
                             {
                                 index += 8;
                             }
@@ -396,23 +412,28 @@ public class Map : MonoBehaviour
                     case TileType.Path:
                         {
                             int index = 0;
-                            if (p_GetTile(x, y + 1) == TileType.Ground)
+                            if (p_GetTile(x, y + 1) == TileType.Ground || p_GetTile(x, y + 1) == TileType.SpawnStructure)
                             {
                                 index += 1;
                             }
-                            if (p_GetTile(x + 1, y) == TileType.Ground)
+                            if (p_GetTile(x + 1, y) == TileType.Ground || p_GetTile(x + 1, y) == TileType.SpawnStructure)
                             {
                                 index += 2;
                             }
-                            if (p_GetTile(x, y - 1) == TileType.Ground)
+                            if (p_GetTile(x, y - 1) == TileType.Ground || p_GetTile(x, y - 1) == TileType.SpawnStructure)
                             {
                                 index += 4;
                             }
-                            if (p_GetTile(x - 1, y) == TileType.Ground)
+                            if (p_GetTile(x - 1, y) == TileType.Ground || p_GetTile(x - 1, y) == TileType.SpawnStructure)
                             {
                                 index += 8;
                             }
                             walkableTilemap.SetTile(cell, pathTiles.GetList()[index]);
+                            break;
+                        }
+                    case TileType.SpawnStructure:
+                        {
+                            walkableTilemap.SetTile(cell, spawnStructureTiles.Get(new Vector2Int(x, y), -spawnStructureSize - Vector2Int.one, spawnStructureSize + Vector2Int.one, whiteNoiseMap3[x + mapSize.x, y + mapSize.y]));
                             break;
                         }
                     default:
@@ -508,7 +529,8 @@ public class Map : MonoBehaviour
         Wall,
         BridgeHorizontal,
         BridgeVertical,
-        Path
+        Path,
+        SpawnStructure
     }
 
     private class Island
@@ -632,6 +654,49 @@ public class Map : MonoBehaviour
         {
             public Tile  tile;
             public float weight;
+        }
+    }
+
+    [Serializable]
+    public struct TilesNineSlice 
+    {
+        public Tile          left;
+        public Tile          right;
+        public Tile          bottom;
+        public Tile          top;
+        public Tile          bottomLeft;
+        public Tile          bottomRight;
+        public Tile          topLeft;
+        public Tile          topRight;
+        public TilesWeighted center;
+
+        public Tile Get(Vector2Int pos, Vector2Int min, Vector2Int max, float sample)
+        {
+            if (max.x < min.x)
+            {
+                int temp = max.x;
+                max.x = min.x;
+                min.x = temp;
+            }
+            if (max.y < min.y)
+            {
+                int temp = max.y;
+                max.y = min.y;
+                min.y = temp;
+            }
+            if (pos.x >= min.x && pos.x <= max.x && pos.y >= min.y && pos.y <= max.y)
+            {
+                if (pos.x == min.x)
+                {
+                    return pos.y == min.y ? bottomLeft : pos.y == max.y ? topLeft : left;
+                }
+                if (pos.x == max.x)
+                {
+                    return pos.y == min.y ? bottomRight : pos.y == max.y ? topRight : right;
+                }
+                return pos.y == min.y ? bottom : pos.y == max.y ? top : center.Get(sample);
+            }
+            return null;
         }
     }
 
