@@ -116,7 +116,7 @@ Transform:
   - {fileID: 5954292122039861451}
   - {fileID: 8077909480956459379}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2072977252031268968
 MonoBehaviour:
@@ -133,12 +133,12 @@ MonoBehaviour:
   sprite: {fileID: 3210394014827086981}
   projectile: {fileID: 4958191083791384701, guid: cd7d92a828790f545b1e394a9b6e1ad4, type: 3}
   projectileSpawnPosition: {fileID: 8077909480956459379}
-  recoil: 0.5
+  recoil: 0.2
   damage: 1
   knockback: 1
   stunTime: 0.2
   fireRate: 1
-  reloadTime: 2
+  reloadTime: 1
   bulletCount: 1
   bulletSpread: 90
   bulletSpeed: 30

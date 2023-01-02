@@ -6,6 +6,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private SpriteRenderer sprite;
 
     private LivingEntity m_user;
+    private Vector2      m_target;
     private bool         m_flipped             = false;
     private bool         m_rotating            = false;
     private bool         m_offseting           = false;
@@ -38,6 +39,11 @@ public class Weapon : MonoBehaviour
     public LivingEntity GetUser()
     {
         return m_user;
+    }
+
+    public void AimAt(Vector2 target)
+    {
+        m_target = target;
     }
 
     protected void SetAngle(float angle)
@@ -219,12 +225,9 @@ public class Weapon : MonoBehaviour
 
     private void p_RotateToDir()
     {
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f));
+        Vector2 pos = new Vector2(transform.position.x, transform.position.y);
 
-        Vector2 p0 = new Vector2(transform.position.x, transform.position.y);
-        Vector2 p1 = new Vector2(worldPos.x, worldPos.y);
-
-        Vector3 dir = (p1 - p0).normalized;
+        Vector3 dir = (m_target - pos).normalized;
         direction = dir;
         if (sprite != null)
         {

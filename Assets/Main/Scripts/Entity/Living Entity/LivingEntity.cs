@@ -330,6 +330,14 @@ public class LivingEntity : MonoBehaviour
         return false;
     }
 
+    public void AimWeaponAt(Vector2 target)
+    {
+        if (m_weapon != null)
+        {
+            m_weapon.AimAt(target);
+        }
+    }
+
     private void Awake()
     {
         m_navMeshAgent = GetComponent<NavMeshAgent>();
@@ -542,7 +550,7 @@ public class LivingEntity : MonoBehaviour
         {
             this.minValue     = minValue;
             this.maxValue     = maxValue;
-            this.defaultValue = defaultValue.Enabled ? defaultValue.Value : minValue;
+            this.defaultValue = defaultValue.enabled ? defaultValue.value : minValue;
         }
 
         public float Clamp(float value)

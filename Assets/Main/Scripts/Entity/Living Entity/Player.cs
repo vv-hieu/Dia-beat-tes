@@ -134,6 +134,9 @@ public class Player : MonoBehaviour
 
         if (m_livingEntity.isInControl)
         {
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f));
+        
+            m_livingEntity.AimWeaponAt(new Vector2(worldPos.x, worldPos.y));
             if (Input.GetMouseButtonDown(0))
             {
                 m_livingEntity.UseWeapon();

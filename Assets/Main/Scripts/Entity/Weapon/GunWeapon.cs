@@ -23,7 +23,9 @@ public class GunWeapon : RangedWeapon
     [SerializeField] private string[] tags;
 
     private int   m_currentBulletCount;
-    private float m_time = 0.0f;
+    private float m_time         = 0.0f;
+    private float m_reloadRotate = 360.0f;
+    private bool  m_reloaded     = false;
 
     public override void OnStart()
     {
@@ -37,6 +39,7 @@ public class GunWeapon : RangedWeapon
     public override void OnCoolDown()
     {
         OffsetTo(0.0f, 0.5f / p_FireRate());
+        m_reloaded = false;
     }
 
     public override void OnUse()
@@ -65,6 +68,16 @@ public class GunWeapon : RangedWeapon
 
     public override void CoolingDown()
     {
+        if (m_currentBulletCount <= 0)
+        {
+            if (!m_reloaded && m_time >= 0.5f / p_FireRate())
+            {
+                m_reloaded = true;
+                RotateTo(GetAngle() + m_reloadRotate, p_ReloadTime());
+                m_reloadRotate *= -1.0f;
+            }
+        }
+
         m_time += Time.deltaTime;
     }
 
@@ -85,7 +98,7 @@ public class GunWeapon : RangedWeapon
             return false;
         }
 
-        if (m_time >= p_ReloadTime())
+        if (m_time >= p_ReloadTime() + 0.5f / p_FireRate())
         {
             p_Reload();
             m_time = 0.0f;
@@ -178,7 +191,7 @@ public class GunWeapon : RangedWeapon
         {
             userBulletPrecision = GetUser().statSet.GetValue("bulletPrecision");
         }
-        return bulletSpread * (1.0f - userBulletPrecision * 0.09f);
+        return bulletSpread * (1.0f - userBulletPrecision * 0.08f);
     }
 
     private float p_BulletSpeed()

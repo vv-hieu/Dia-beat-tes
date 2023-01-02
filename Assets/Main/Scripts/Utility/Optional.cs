@@ -5,27 +5,27 @@ using UnityEditor;
 [Serializable]
 public struct Optional<T>
 {
-    [SerializeField] private bool enabled;
-    [SerializeField] private T value;
+    [SerializeField] private bool m_enabled;
+    [SerializeField] private T    m_value;
 
-    public bool Enabled => enabled;
-    public T Value => value;
+    public bool enabled => m_enabled;
+    public T value => m_value;
 
     public Optional(T initialValue)
     {
-        enabled = true;
-        value = initialValue;
+        m_enabled = true;
+        m_value = initialValue;
     }
 }
 
-namespace Editor
+namespace MyEditor
 {
     [CustomPropertyDrawer(typeof(Optional<>))]
     public class OptionalPropertyDrawer : PropertyDrawer
     {
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            var valueProperty = property.FindPropertyRelative("value");
+            var valueProperty = property.FindPropertyRelative("m_value");
             return EditorGUI.GetPropertyHeight(valueProperty);
         }
 
@@ -35,8 +35,8 @@ namespace Editor
             GUIContent label
         )
         {
-            var valueProperty = property.FindPropertyRelative("value");
-            var enabledProperty = property.FindPropertyRelative("enabled");
+            var valueProperty = property.FindPropertyRelative("m_value");
+            var enabledProperty = property.FindPropertyRelative("m_enabled");
 
             EditorGUI.BeginProperty(position, label, property);
             position.width -= 24;

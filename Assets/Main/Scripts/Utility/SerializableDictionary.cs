@@ -260,7 +260,7 @@ public class SerializableDictionary<TKey, TValue, TValueStorage> : SerializableD
 	}
 }
 
-namespace Editor
+namespace MyEditor
 {
 	[CustomPropertyDrawer(typeof(SerializableDictionaryBase), true)]
 #if NET_4_6 || NET_STANDARD_2_0

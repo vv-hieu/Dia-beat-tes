@@ -1,243 +1,223 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Graph
 {
     public HashSet<Vector2Int> vertices { get; private set; } = new HashSet<Vector2Int>();
-    public HashSet<KeyValuePair<Vector2Int, Vector2Int>> edges { get; private set; } = new HashSet<KeyValuePair<Vector2Int, Vector2Int>>();
+    public HashSet<Edge>       edges    { get; private set; } = new HashSet<Edge>();
 
-    public void AddEdge(Vector2Int v0, Vector2Int v1)
+    public void Clear()
     {
-        vertices.Add(v0);
-        vertices.Add(v1);
-
-        if (v0.x > v1.x || (v0.x == v1.x && v0.y > v1.y))
-        {
-            Vector2Int temp = v0;
-            v0 = v1;
-            v1 = temp;
-        }
-        else if (v0.x == v1.x && v0.y == v1.y)
-        {
-            return;
-        }
-
-        edges.Add(new KeyValuePair<Vector2Int, Vector2Int>(v0, v1));
+        vertices.Clear();
+        edges.Clear();
     }
 
-    public void RemoveEdge(Vector2Int v0, Vector2Int v1)
+    public void AddVertex(Vector2Int v)
     {
-        if (v0.x > v1.x || (v0.x == v1.x && v0.y > v1.y))
-        {
-            Vector2Int temp = v0;
-            v0 = v1;
-            v1 = temp;
-        }
-        else if (v0.x == v1.x && v0.y == v1.y)
-        {
-            return;
-        }
-
-        if (edges.Remove(new KeyValuePair<Vector2Int, Vector2Int>(v0, v1)))
-        {
-            bool b0 = false;
-            bool b1 = false;
-            foreach (KeyValuePair<Vector2Int, Vector2Int> edge in edges)
-            {
-                if (edge.Key == v0 || edge.Value == v0)
-                {
-                    b0 = true;
-                }
-                if (edge.Key == v1 || edge.Value == v1)
-                {
-                    b1 = true;
-                }
-                if (b0 && b1)
-                {
-                    break;
-                }
-            }
-            if (!b0)
-            {
-                vertices.Remove(v0);
-            }
-            if (!b1)
-            {
-                vertices.Remove(v1);
-            }
-        }
-    }
-
-    public void SplitEdge(Vector2Int v0, Vector2Int v1, Vector2Int v)
-    {
-        if (v0.x > v1.x || (v0.x == v1.x && v0.y > v1.y))
-        {
-            Vector2Int temp = v0;
-            v0 = v1;
-            v1 = temp;
-        }
-        else if (v0.x == v1.x && v0.y == v1.y)
-        {
-            return;
-        }
-        else if (v.x == v0.x && v.y == v0.y)
-        {
-            return;
-        }
-        else if (v.x == v1.x && v.y == v1.y)
-        {
-            return;
-        }
-
-        if (edges.Remove(new KeyValuePair<Vector2Int, Vector2Int>(v0, v1)))
-        {
-            AddEdge(v, v0);
-            AddEdge(v, v1);
-        }
+        vertices.Add(v);
     }
 
     public void RemoveVertex(Vector2Int v)
     {
         if (vertices.Remove(v))
         {
-            HashSet<KeyValuePair<Vector2Int, Vector2Int>> newEdges = new HashSet<KeyValuePair<Vector2Int, Vector2Int>>();
-            foreach (KeyValuePair<Vector2Int, Vector2Int> edge in edges)
+            List<Edge> removedEdges = new List<Edge>();
+            foreach (Edge e in edges)
             {
-                if (edge.Key != v && edge.Value != v)
+                if (e.ContainsVertex(v))
                 {
-                    newEdges.Add(edge);
+                    removedEdges.Add(e);
                 }
             }
-            edges = newEdges;
+            foreach (Edge e in removedEdges)
+            {
+                edges.Remove(e);
+            }
+        }
+    }
+
+    public void AddEdge(Edge edge)
+    {
+        if (edge.v1 == edge.v2)
+        {
+            return;
         }
 
-        HashSet<Vector2Int> newVertices = new HashSet<Vector2Int>();
-        foreach (Vector2Int vertex in vertices)
+        vertices.Add(edge.v1);
+        vertices.Add(edge.v2);
+
+        edges.Add(edge);
+    }
+
+    public void AddEdge(Vector2Int v1, Vector2Int v2)
+    {
+        AddEdge(new Edge(v1, v2));
+    }
+
+    public void AddEdge(Vector2Int v1, Vector2Int v2, float length)
+    {
+        AddEdge(new Edge(v1, v2, length));
+    }
+
+    public void RemoveEdge(Edge edge)
+    {
+        edges.Remove(edge);
+    }
+
+    public void RemoveEdge(Vector2Int v1, Vector2Int v2)
+    {
+        RemoveEdge(new Edge(v1, v2));
+    }
+
+    public bool IsConnected(Vector2Int v1, Vector2Int v2)
+    {
+        List<Vector2Int> scannedVertices = new List<Vector2Int>();
+        scannedVertices.Add(v1);
+        int i = 0;
+
+        while (i < scannedVertices.Count)
         {
-            bool hanging = true;
-            foreach (KeyValuePair<Vector2Int, Vector2Int> edge in edges)
+            Vector2Int currentVertex = scannedVertices[i];
+            foreach (Edge e in edges)
             {
-                if (edge.Key == vertex || edge.Value == vertex)
+                if (e.ContainsVertex(currentVertex, out Vector2Int otherVertex) && !scannedVertices.Contains(otherVertex))
                 {
-                    hanging = false;
+                    if (otherVertex == v2)
+                    {
+                        return true;
+                    }
+                    scannedVertices.Add(otherVertex);
+                }
+            }
+            ++i;
+        }
+
+        return false;
+    }
+
+    public Graph MinSpanTree()
+    {
+        Graph res = new Graph();
+
+        if (vertices.Count <= 1)
+        {
+            foreach (Vector2Int v in vertices)
+            {
+                res.AddVertex(v);
+            }
+            return res;
+        }
+
+        List<Edge> sortedEdges = new List<Edge>(edges);
+        sortedEdges.Sort(delegate (Edge c1, Edge c2) 
+        { 
+            return (c1.length < c2.length ? -1 : c1.length > c2.length ? 1 : 0); 
+        });
+
+        foreach (Edge e in sortedEdges)
+        {
+            if (!res.IsConnected(e.v1, e.v2))
+            {
+                res.AddEdge(e);
+                if (res.edges.Count >= vertices.Count - 1)
+                {
                     break;
                 }
-            }
-            if (!hanging)
-            {
-                newVertices.Add(vertex);
-            }
-        }
-        vertices = newVertices;
-    }
-
-    public void AddSubgraph(Graph subgraph)
-    {
-        foreach (KeyValuePair<Vector2Int, Vector2Int> edge in subgraph.edges)
-        {
-            AddEdge(edge.Key, edge.Value);
-        }
-    }
-
-    public List<Graph> ConnectedComponents()
-    {
-        List<Graph> res = new List<Graph>();
-
-        HashSet<Vector2Int> scanned = new HashSet<Vector2Int>();
-
-        foreach (Vector2Int vertex in vertices)
-        {
-            if (!scanned.Contains(vertex))
-            {
-                Graph component = new Graph();
-                scanned.Add(vertex);
-
-                HashSet<Vector2Int> componentVertices = new HashSet<Vector2Int>();
-                componentVertices.Add(vertex);
-
-                while (true)
-                {
-                    bool complete = true;
-
-                    HashSet<Vector2Int> additionalComponentVertices = new HashSet<Vector2Int>();
-                    foreach (Vector2Int componentVertex in componentVertices)
-                    {
-                        foreach (KeyValuePair<Vector2Int, Vector2Int> edge in edges)
-                        {
-                            if (edge.Key == componentVertex || edge.Value == componentVertex)
-                            {
-                                additionalComponentVertices.Add(edge.Key);
-                                additionalComponentVertices.Add(edge.Value);
-                            }
-                        }
-                    }
-                    foreach (Vector2Int additionalComponentVertex in additionalComponentVertices)
-                    {
-                        scanned.Add(additionalComponentVertex);
-                        if (componentVertices.Add(additionalComponentVertex))
-                        {
-                            complete = false;
-                        }
-                    }
-
-                    if (complete)
-                    {
-                        foreach (Vector2Int componentVertex in componentVertices)
-                        {
-                            foreach (KeyValuePair<Vector2Int, Vector2Int> edge in edges)
-                            {
-                                if (edge.Key == componentVertex || edge.Value == componentVertex)
-                                {
-                                    component.AddEdge(edge.Key, edge.Value);
-                                }
-                            }
-                        }
-                        break;
-                    }
-                }
-
-                res.Add(component);
             }
         }
 
         return res;
     }
 
-    public bool IsConnected(Vector2Int a, Vector2Int b)
+    public void Draw(Color vertexColor, Color edgeColor, float z)
     {
-        List<Vector2Int> connectedVertices = new List<Vector2Int>();
-        connectedVertices.Add(a);
-        int i = 0;
-        while (i < connectedVertices.Count)
+        foreach (Edge e in edges)
         {
-            foreach (KeyValuePair<Vector2Int, Vector2Int> edge in edges)
-            {
-                if (edge.Key == connectedVertices[i])
-                {
-                    if (edge.Value == b)
-                    {
-                        return true;
-                    }
-                    if (!connectedVertices.Contains(edge.Value))
-                    {
-                        connectedVertices.Add(edge.Value);
-                    }
-                }
-                else if (edge.Value == connectedVertices[i])
-                {
-                    if (edge.Key == b)
-                    {
-                        return true;
-                    }
-                    if (!connectedVertices.Contains(edge.Key))
-                    {
-                        connectedVertices.Add(edge.Key);
-                    }
-                }
-            }
-            ++i;
+            Vector3 v1 = new Vector3(e.v1.x, e.v1.y, z);
+            Vector3 v2 = new Vector3(e.v2.x, e.v2.y, z);
+            Debug.DrawLine(v1, v2, edgeColor, 0.0f);
         }
-        return false;
+
+        Color temp = Gizmos.color;
+        Gizmos.color = vertexColor;
+        foreach (Vector2Int v in vertices)
+        {
+            Gizmos.DrawSphere(new Vector3(v.x, v.y, z), 0.3f);
+        }
+        Gizmos.color = temp;
+    }
+
+    public struct Edge
+    {
+        public Vector2Int v1     { get; private set; }
+        public Vector2Int v2     { get; private set; }
+        public float      length { get; private set; }
+
+        public override bool Equals(object obj)
+        {
+            Edge other = (Edge)obj;
+            return v1 == other.v1 && v2 == other.v2;
+        }
+
+        public override int GetHashCode()
+        {
+            return new Vector4(v1.x, v1.y, v2.x, v2.y).GetHashCode();
+        }
+
+        public Edge(Vector2Int v1, Vector2Int v2)
+        {
+            if (s_Compare(v1, v2))
+            {
+                this.v1 = v1;
+                this.v2 = v2;
+            }
+            else
+            {
+                this.v1 = v2;
+                this.v2 = v1;
+            }
+            length = Vector2.Distance(v1, v2);
+        }
+
+        public Edge(Vector2Int v1, Vector2Int v2, float length)
+        {
+            if (s_Compare(v1, v2))
+            {
+                this.v1 = v1;
+                this.v2 = v2;
+            }
+            else
+            {
+                this.v1 = v2;
+                this.v2 = v1;
+            }
+            this.length = length;
+        }
+
+        public bool ContainsVertex(Vector2Int v)
+        {
+            return v == v1 || v == v2;
+        }
+
+        public bool ContainsVertex(Vector2Int v, out Vector2Int other)
+        {
+            if (v == v1)
+            {
+                other = v2;
+                return true;
+            }
+            if (v == v2)
+            {
+                other = v1;
+                return true;
+            }
+            other = Vector2Int.zero;
+            return false;
+        }
+
+        private static bool s_Compare(Vector2Int a, Vector2Int b)
+        {
+            return (a.x < b.x) || (a.x == b.x && a.y <= b.y);
+        }
     }
 }
