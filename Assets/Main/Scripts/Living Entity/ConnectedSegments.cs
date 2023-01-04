@@ -9,8 +9,18 @@ public class ConnectedSegments : MonoBehaviour
     private Vector3[] m_segmentPositions;
     private Vector3[] m_segmentVelocities;
 
-    public Transform[] GetSegments()
+    public Transform[] GetSegments(bool includeSelf = false)
     {
+        if (includeSelf)
+        {
+            Transform[] res = new Transform[segments.Length + 1];
+            res[0] = transform;
+            for (int i = 0; i < segments.Length; i++)
+            {
+                res[i + 1] = segments[i];
+            }
+            return res;
+        }
         return segments;
     }
 

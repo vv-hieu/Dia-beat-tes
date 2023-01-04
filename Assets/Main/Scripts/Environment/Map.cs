@@ -69,6 +69,13 @@ public class Map : MonoBehaviour
         navigationMesh.BuildNavMesh();
     }
 
+    public bool IsWalkable(Vector2 pos)
+    {
+        Vector3 cell = new Vector3(pos.x, pos.y, 0.0f);
+        TileBase tile = walkableTilemap.GetTile(walkableTilemap.WorldToCell(cell));
+        return tile != null;
+    }
+
     private void Start()
     {
         Generate();

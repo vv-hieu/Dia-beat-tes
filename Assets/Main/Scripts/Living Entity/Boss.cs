@@ -6,6 +6,12 @@ public class Boss : MonoBehaviour
 {
     protected LivingEntity livingEntity { get; private set; }
 
+    private bool m_died = false;
+
+    protected virtual void OnAwake()
+    {
+    }
+
     protected virtual void OnStart()
     {
     }
@@ -14,13 +20,19 @@ public class Boss : MonoBehaviour
     {
     }
 
+    protected virtual void OnDeath()
+    {
+    }
+
     private void Awake()
     {
         livingEntity = GetComponent<LivingEntity>();
+        OnAwake();
     }
 
     private void Start()
     {
+        livingEntity.onDeath = OnDeath;
         OnStart();
     }
 

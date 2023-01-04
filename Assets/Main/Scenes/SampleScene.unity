@@ -1012,14 +1012,16 @@ MonoBehaviour:
     m_keys:
     - Player
     - Friendly
+  lootTable: []
   weaponPivot: {fileID: 1461047614}
   vfxPivot: {fileID: 356921665}
   defaultMaterial: {fileID: 2100000, guid: 402652d384d5b0443b678775b9efe2d0, type: 2}
   hitMaterial: {fileID: 2100000, guid: 5cee859d7010ca44a92534195d6b9630, type: 2}
   colliders: []
   sprites:
-  - {fileID: 861022856}
-  isDirectional: 0
+    m_keys:
+    - {fileID: 861022856}
+    m_values: 01
 --- !u!50 &1523164341
 Rigidbody2D:
   serializedVersion: 4

@@ -512,15 +512,15 @@ MonoBehaviour:
   entityTags:
     m_keys:
     - Hostile
-    - Undead
   weaponPivot: {fileID: 7597460274067344432}
   vfxPivot: {fileID: 7597460273854387946}
   defaultMaterial: {fileID: 2100000, guid: 402652d384d5b0443b678775b9efe2d0, type: 2}
   hitMaterial: {fileID: 2100000, guid: 5cee859d7010ca44a92534195d6b9630, type: 2}
   colliders: []
   sprites:
-  - {fileID: 7597460274662871483}
-  isDirectional: 1
+    m_keys:
+    - {fileID: 7597460274662871483}
+    m_values: 01
 --- !u!114 &7597460274769344934
 MonoBehaviour:
   m_ObjectHideFlags: 0

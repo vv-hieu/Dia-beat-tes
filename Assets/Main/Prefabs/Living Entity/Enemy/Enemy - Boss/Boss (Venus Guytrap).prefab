@@ -96,7 +96,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -351,10 +351,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health:
     m_enabled: 1
-    m_value: 15
+    m_value: 50
   shield:
     m_enabled: 1
-    m_value: 2
+    m_value: 0
   speed:
     m_enabled: 1
     m_value: 0
@@ -395,6 +395,7 @@ MonoBehaviour:
     m_keys:
     - Hostile
     - Boss
+  lootTable: []
   weaponPivot: {fileID: 1749531922698606947}
   vfxPivot: {fileID: 0}
   defaultMaterial: {fileID: 2100000, guid: 402652d384d5b0443b678775b9efe2d0, type: 2}
@@ -402,10 +403,11 @@ MonoBehaviour:
   colliders:
   - {fileID: 1749531922815691306}
   sprites:
-  - {fileID: 1749531923809133573}
-  - {fileID: 1749531924146369334}
-  - {fileID: 1749531922190728652}
-  isDirectional: 0
+    m_keys:
+    - {fileID: 1749531923809133573}
+    - {fileID: 1749531924146369334}
+    - {fileID: 1749531922190728652}
+    m_values: 010000
 --- !u!114 &1749531922943260978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -801,7 +803,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

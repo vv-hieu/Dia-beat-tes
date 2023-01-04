@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using Unity.VisualScripting;
 
-[ExecuteInEditMode]
 [IncludeInSettings(true)]
 public class LivingEntity : MonoBehaviour
 {
@@ -39,12 +38,12 @@ public class LivingEntity : MonoBehaviour
     [SerializeField] private Material  hitMaterial;
 
     [Header("Component References")]
-    [SerializeField] private Collider2D[]     colliders;
-    [SerializeField] private SpriteRenderer[] sprites;
-    [SerializeField] private bool             isDirectional;
+    [SerializeField] private Collider2D[]                                 colliders;
+    [SerializeField] private SerializableDictionary<SpriteRenderer, bool> sprites = new SerializableDictionary<SpriteRenderer, bool>();
 
     public AttackModifier attackDealtModifier;
     public AttackModifier attackReceivedModifier;
+    public DeathCallback  onDeath;
 
     public float   currentHealth { get; private set; } = 0.0f;
     public float   currentShield { get; private set; } = 0.0f;
@@ -63,6 +62,7 @@ public class LivingEntity : MonoBehaviour
     private float                            m_knockbackTime    = 0.0f;
     private float                            m_hurtTime         = 0.0f;
     private bool                             m_isKnockedback    = false;
+    private bool                             m_died             = false;
     private Vector2                          m_knockbackDir     = Vector2.zero;
     private Vector2                          m_knockbackOrigin  = Vector2.zero;
     private Vector2                          m_previousPosition = Vector2.zero;
@@ -436,9 +436,9 @@ public class LivingEntity : MonoBehaviour
         isHurt = (m_hurtTime > 0.0f);
         m_hurtTime -= Time.deltaTime;
 
-        foreach (SpriteRenderer sprite in sprites)
+        foreach (var sprite in sprites)
         {
-            sprite.material = (isHurt ? hitMaterial : defaultMaterial);
+            sprite.Key.material = (isHurt ? hitMaterial : defaultMaterial);
         }
 
         foreach (StatusEffect effect in m_statusEffects.Values)
@@ -456,6 +456,16 @@ public class LivingEntity : MonoBehaviour
         foreach (string effectId in finishedEffectIds)
         {
             m_statusEffects.Remove(effectId);
+        }
+
+        if (currentHealth <= 0.01f && !m_died)
+        {
+            m_died = true;
+            OnDeath();
+            if (onDeath != null)
+            {
+                onDeath();
+            }
         }
     }
 
@@ -484,11 +494,11 @@ public class LivingEntity : MonoBehaviour
         {
             isFacingRight = true;
         }
-        if (isDirectional)
+        foreach (var sprite in sprites)
         {
-            foreach (SpriteRenderer sprite in sprites)
+            if (sprite.Value)
             {
-                sprite.flipX = isFacingRight;
+                sprite.Key.flipX = isFacingRight;
             }
         }
         float d = v.magnitude / dt;
@@ -1058,6 +1068,7 @@ public class LivingEntity : MonoBehaviour
 
     // TODO: Maybe?? status effect modifier (dealt + received)
 
+    [Serializable]
     public struct LootPool 
     {
         public float               chance;
@@ -1133,4 +1144,6 @@ public class LivingEntity : MonoBehaviour
             return (int)finalCount;
         }
     }
+
+    public delegate void DeathCallback();
 }

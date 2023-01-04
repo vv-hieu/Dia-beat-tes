@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8f6e893228260814e8a52c747243bb59, type: 2}
+  - {fileID: 2100000, guid: 5cee859d7010ca44a92534195d6b9630, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -457,8 +457,9 @@ MonoBehaviour:
   hitMaterial: {fileID: 2100000, guid: 5cee859d7010ca44a92534195d6b9630, type: 2}
   colliders: []
   sprites:
-  - {fileID: 687147476091258611}
-  isDirectional: 1
+    m_keys:
+    - {fileID: 687147476091258611}
+    m_values: 01
 --- !u!114 &687147476247998190
 MonoBehaviour:
   m_ObjectHideFlags: 0

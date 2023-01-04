@@ -164,16 +164,15 @@ public class VenusGuytrap : Boss
         {
             m_time += Time.deltaTime;
         }
+    }
 
-        if (livingEntity.currentHealth <= 0.0f)
+    protected override void OnDeath()
+    {
+        if (explodeVFX != null)
         {
-            livingEntity.OnDeath();
-            if (explodeVFX != null)
-            {
-                Instantiate(explodeVFX, transform.position, Quaternion.identity, transform.parent);
-            }
-            Destroy(gameObject);
+            Instantiate(explodeVFX, transform.position, Quaternion.identity, transform.parent);
         }
+        Destroy(gameObject);
     }
 
     private void p_SelectPosition()

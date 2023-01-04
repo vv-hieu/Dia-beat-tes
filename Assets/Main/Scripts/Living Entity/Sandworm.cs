@@ -6,12 +6,16 @@ public class Sandworm : Boss
     [SerializeField] private float              wanderRange;
     [SerializeField] private float              attackRadius;
     [SerializeField] private float              rotateSpeed;
+    [SerializeField] private float              explodeTime;
     [SerializeField] private RadialDamageZone[] damageZones;
     [SerializeField] private GameObject         explodeVFX;
 
-    private Player  m_player;
-    private State   m_state = State.Starting;
-    private Vector2 m_target;
+    private Player      m_player;
+    private State       m_state = State.Starting;
+    private Vector2     m_target;
+    private float       m_time  = 0.0f;
+    private Transform[] m_segments;
+    private int         m_segmentIndex = 0;
 
     private void OnDrawGizmos()
     {
@@ -81,32 +85,53 @@ public class Sandworm : Boss
                     m_state = State.Wandering;
                 }
                 break;
+            case State.Dying:
+                if (m_time >= explodeTime)
+                {
+                    m_time = 0.0f;
+                }
+                if (m_time <= 0.0f)
+                {
+                    Instantiate(explodeVFX, m_segments[m_segmentIndex].position, Quaternion.identity, transform.parent);
+                    Destroy(m_segments[m_segmentIndex].gameObject);
+                    ++m_segmentIndex;
+                    if (m_segmentIndex >= m_segments.Length)
+                    {
+                        Destroy(gameObject);
+                    }
+                }
+                m_time += Time.deltaTime;
+                break;
             default:
                 break;
         }
 
-        float distToTarget = Vector2.Distance(new Vector2(head.position.x, head.position.y), m_target);
-        if (distToTarget > 0.05f)
+        if (m_state != State.Dying)
         {
-            Vector2 direction = (m_target - new Vector2(head.position.x, head.position.y)).normalized;
-            head.rotation = Quaternion.RotateTowards(head.rotation, Quaternion.LookRotation(Vector3.forward, direction), (1.0f / distToTarget + 1.0f) * rotateSpeed * Time.deltaTime);
-            float d = 0.5f * (1.0f + Vector2.Dot(direction.normalized, new Vector2(head.up.x, head.up.y)));
-            transform.Translate(head.up * p_Speed() * d * Time.deltaTime);
-        }
-
-        if (livingEntity.currentHealth <= 0.0f)
-        {
-            livingEntity.OnDeath();
-            ConnectedSegments connectedSegments = head.GetComponent<ConnectedSegments>();
-            if (connectedSegments != null)
+            float distToTarget = Vector2.Distance(new Vector2(head.position.x, head.position.y), m_target);
+            if (distToTarget > 0.05f)
             {
-                foreach (Transform segment in connectedSegments.GetSegments())
-                {
-                    Instantiate(explodeVFX, segment.position, Quaternion.identity, transform.parent);
-                }
+                Vector2 direction = (m_target - new Vector2(head.position.x, head.position.y)).normalized;
+                head.rotation = Quaternion.RotateTowards(head.rotation, Quaternion.LookRotation(Vector3.forward, direction), (1.0f / distToTarget + 1.0f) * rotateSpeed * Time.deltaTime);
+                float d = 0.5f * (1.0f + Vector2.Dot(direction.normalized, new Vector2(head.up.x, head.up.y)));
+                transform.Translate(head.up * p_Speed() * d * Time.deltaTime);
             }
-            Destroy(gameObject);
         }
+    }
+
+    protected override void OnDeath()
+    {
+        m_state = State.Dying;
+        m_segments = head.GetComponent<ConnectedSegments>().GetSegments(true);
+        //ConnectedSegments connectedSegments = head.GetComponent<ConnectedSegments>();
+        //if (connectedSegments != null)
+        //{
+        //    foreach (Transform segment in connectedSegments.GetSegments())
+        //    {
+        //        Instantiate(explodeVFX, segment.position, Quaternion.identity, transform.parent);
+        //    }
+        //}
+        //Destroy(gameObject);
     }
 
     private void p_OnWander()
@@ -154,6 +179,7 @@ public class Sandworm : Boss
         Wandering,
         Approaching,
         Charging,
-        PostCharging
+        PostCharging,
+        Dying
     }
 }

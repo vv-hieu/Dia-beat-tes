@@ -457,8 +457,9 @@ MonoBehaviour:
   hitMaterial: {fileID: 2100000, guid: 5cee859d7010ca44a92534195d6b9630, type: 2}
   colliders: []
   sprites:
-  - {fileID: 4306740918603302020}
-  isDirectional: 1
+    m_keys:
+    - {fileID: 4306740918603302020}
+    m_values: 00
 --- !u!114 &4306740918760107161
 MonoBehaviour:
   m_ObjectHideFlags: 0
