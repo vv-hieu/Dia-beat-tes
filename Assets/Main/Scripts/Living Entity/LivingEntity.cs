@@ -438,7 +438,7 @@ public class LivingEntity : MonoBehaviour
 
         foreach (var sprite in sprites)
         {
-            sprite.Key.material = (isHurt ? hitMaterial : defaultMaterial);
+            sprite.Key.material = ((isHurt && currentHealth > 0.0f) ? hitMaterial : defaultMaterial);
         }
 
         foreach (StatusEffect effect in m_statusEffects.Values)
@@ -577,6 +577,8 @@ public class LivingEntity : MonoBehaviour
             m_statusEffects[effectId].ForceRemove(this);
             m_statusEffects.Remove(effectId);
         }
+
+        m_shieldTime = 0.0f;
     }
 
     public struct Stat {

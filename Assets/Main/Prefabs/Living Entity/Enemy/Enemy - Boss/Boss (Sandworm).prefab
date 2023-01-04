@@ -1279,7 +1279,7 @@ MonoBehaviour:
     m_value: 5
   speed:
     m_enabled: 1
-    m_value: 5
+    m_value: 10
   luck:
     m_enabled: 1
     m_value: 0

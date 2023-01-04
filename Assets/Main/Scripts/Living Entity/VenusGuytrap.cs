@@ -180,7 +180,18 @@ public class VenusGuytrap : Boss
         if (m_player != null)
         {
             float random = Random.Range(0.0f, 360.0f);
-            transform.position = new Vector3(m_player.transform.position.x + Mathf.Cos(random) * attackRadius, m_player.transform.position.y + Mathf.Sin(random) * attackRadius, 0.0f);
+            Vector3 newPos = new Vector3(m_player.transform.position.x + Mathf.Cos(random * Mathf.Deg2Rad) * attackRadius, m_player.transform.position.y + Mathf.Sin(random * Mathf.Deg2Rad) * attackRadius, 0.0f);
+            int attempt = 10;
+            while (!GameManager.GetGameContext().map.IsWalkable(new Vector2(newPos.x, newPos.y)) && attempt > 0)
+            {
+                --attempt;
+                random = Random.Range(0.0f, 360.0f);
+                newPos = new Vector3(m_player.transform.position.x + Mathf.Cos(random * Mathf.Deg2Rad) * attackRadius, m_player.transform.position.y + Mathf.Sin(random * Mathf.Deg2Rad) * attackRadius, 0.0f);
+            }
+            if (attempt > 0)
+            {
+                transform.position = newPos;
+            }
         }
     }
 
