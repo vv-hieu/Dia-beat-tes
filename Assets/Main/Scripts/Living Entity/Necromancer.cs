@@ -14,17 +14,18 @@ public class Necromancer : Boss
     [SerializeField] private int                maxSummons;
     [SerializeField] private float              summonDistance;
     [SerializeField] private float              summonCooldown;
-
-    [SerializeField] private State currentState;
+    [SerializeField] private GameObject         staff;
 
     private NavMeshAgent     m_navMeshAgent;
     private Player           m_player;
     private Vector2          m_wanderTarget;
+    private bool             m_init           = false;
     private bool             m_hasTarget      = false;
     private float            m_skullOffset    = 0.0f;
     private float            m_summonCooldown = 0.0f;
     private State            m_state          = State.Starting;
     private List<GameObject> m_summons        = new List<GameObject>();
+    private Optional<float>  m_reach;
 
     private void OnDrawGizmos()
     {
@@ -53,24 +54,61 @@ public class Necromancer : Boss
         {
             damageZone.Init(livingEntity, 1.0f, 0.1f, 0.1f, 0.15f, new string[] { }, new string[] { "Friendly" }, false, false);
         }
+
+        livingEntity.SetWeapon(staff);
+
+        Weapon w = livingEntity.GetWeapon();
+        if (w != null)
+        {
+            m_reach = w.ReachDistance();
+        }
     }
 
     protected override void OnUpdate()
     {
         m_player = GameManager.GetGameContext().player;
 
+        int attempt = 0;
         switch (m_state)
         {
             case State.Starting:
-                m_state = State.Summoning;
+                if (!m_init)
+                {
+                    m_init = true;
+                    m_state = State.Summoning;
+                }
+                else
+                {
+                    attempt = 10;
+                    if (m_player != null)
+                    {
+                        m_wanderTarget = new Vector2(Random.Range(-wanderRange, wanderRange) + m_player.transform.position.x, Random.Range(-wanderRange, wanderRange) + m_player.transform.position.y);
+                        while (!GameManager.GetGameContext().map.IsWalkable(m_wanderTarget) && attempt > 0)
+                        {
+                            --attempt;
+                            m_wanderTarget = new Vector2(Random.Range(-wanderRange, wanderRange) + m_player.transform.position.x, Random.Range(-wanderRange, wanderRange) + m_player.transform.position.y);
+                        }
+                    }
+                    else
+                    {
+                        m_wanderTarget = new Vector2(Random.Range(-wanderRange, wanderRange) + transform.position.x, Random.Range(-wanderRange, wanderRange) + transform.position.y);
+                        while (!GameManager.GetGameContext().map.IsWalkable(m_wanderTarget) && attempt > 0)
+                        {
+                            --attempt;
+                            m_wanderTarget = new Vector2(Random.Range(-wanderRange, wanderRange) + transform.position.x, Random.Range(-wanderRange, wanderRange) + transform.position.y);
+                        }
+                    }
+                    m_hasTarget = attempt > 0;
+                    m_state = State.Wandering;
+                }
                 break;
             case State.Wandering:
                 if (m_hasTarget)
                 {
                     m_navMeshAgent.SetDestination(m_wanderTarget);
-                    if (p_DistanceToTarget() < 0.2f)
+                    if (p_DistanceToTarget() < 0.5f)
                     {
-                        m_state = State.Summoning;
+                        m_state = m_summonCooldown > 0.0f ? State.Starting : State.Summoning;
                     }
                 }
                 else
@@ -80,37 +118,46 @@ public class Necromancer : Boss
                 break;
             case State.Summoning:
                 p_Summon();
-                int attempt2 = 10;
+                attempt = 10;
                 if (m_player != null)
                 {
                     m_wanderTarget = new Vector2(Random.Range(-wanderRange, wanderRange) + m_player.transform.position.x, Random.Range(-wanderRange, wanderRange) + m_player.transform.position.y);
-                    while (!GameManager.GetGameContext().map.IsWalkable(m_wanderTarget) && attempt2 > 0)
+                    while (!GameManager.GetGameContext().map.IsWalkable(m_wanderTarget) && attempt > 0)
                     {
-                        --attempt2;
+                        --attempt;
                         m_wanderTarget = new Vector2(Random.Range(-wanderRange, wanderRange) + m_player.transform.position.x, Random.Range(-wanderRange, wanderRange) + m_player.transform.position.y);
                     }
                 }
                 else
                 {
                     m_wanderTarget = new Vector2(Random.Range(-wanderRange, wanderRange) + transform.position.x, Random.Range(-wanderRange, wanderRange) + transform.position.y);
-                    while (!GameManager.GetGameContext().map.IsWalkable(m_wanderTarget) && attempt2 > 0)
+                    while (!GameManager.GetGameContext().map.IsWalkable(m_wanderTarget) && attempt > 0)
                     {
-                        --attempt2;
+                        --attempt;
                         m_wanderTarget = new Vector2(Random.Range(-wanderRange, wanderRange) + transform.position.x, Random.Range(-wanderRange, wanderRange) + transform.position.y);
                     }
                 }
-                m_hasTarget = attempt2 > 0;
-                m_state = State.Wandering;
+                m_hasTarget = attempt > 0;
+                m_state = State.Starting;
                 break;
             default:
                 break;
         }
 
+
         p_SetSkullPositions();
         m_skullOffset += skullOrbitSpeed * Time.deltaTime;
         m_summonCooldown = Mathf.Max(0.0f, m_summonCooldown - Time.deltaTime);
 
-        currentState = m_state;
+        if (m_player != null)
+        {
+            Vector2 targetPos = new Vector2(m_player.transform.position.x, m_player.transform.position.y);
+            livingEntity.AimWeaponAt(targetPos);
+            if (!m_reach.enabled || (m_reach.enabled && p_DistanceToTarget() < m_reach.value))
+            {
+                livingEntity.UseWeapon(new string[] { "Friendly" });
+            }
+        }
     }
 
     private void p_SetSkullPositions()
@@ -155,7 +202,7 @@ public class Necromancer : Boss
                 while (!GameManager.GetGameContext().map.IsWalkable(pos) && attempt > 0)
                 {
                     --attempt;
-                    pos = Random.insideUnitCircle * summonDistance;
+                    pos = new Vector2(transform.position.x, transform.position.y) + Random.insideUnitCircle * summonDistance;
                 }
                 if (attempt > 0)
                 {

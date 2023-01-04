@@ -4,18 +4,25 @@ using UnityEngine;
 public class HealthBar : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private LivingEntity m_livingEntity;
+    [SerializeField] private LivingEntity livingEntity;
+    [SerializeField] private Material     material;
 
+    private Renderer m_renderer;
     private Material m_material;
     private int      m_healthId        = 0;
     private int      m_shieldId        = 0;
     private int      m_currentHealthId = 0;
     private int      m_currentShieldId = 0;
 
+    private void Awake()
+    {
+        m_renderer          = GetComponent<Renderer>();
+        m_renderer.material = Instantiate(material);
+    }
+
     private void Start()
     {
-        m_material = GetComponent<Renderer>().material;
-        m_material.renderQueue = 5000;
+        m_material = m_renderer.material;
 
         m_healthId        = Shader.PropertyToID("_Health");
         m_shieldId        = Shader.PropertyToID("_Shield");
@@ -33,25 +40,25 @@ public class HealthBar : MonoBehaviour
 
     private float p_CurrentHealth()
     {
-        if (m_livingEntity != null)
+        if (livingEntity != null)
         {
-            return m_livingEntity.currentHealth;
+            return livingEntity.currentHealth;
         }
         return 0.0f;
     }
 
     private float p_CurrentShield()
     {
-        if (m_livingEntity != null)
+        if (livingEntity != null)
         {
-            return m_livingEntity.currentShield;
+            return livingEntity.currentShield;
         }
         return 0.0f;
     }
 
     private float p_Health()
     {
-        if (m_livingEntity != null && m_livingEntity.statSet.TryGetValue("health", out float health))
+        if (livingEntity != null && livingEntity.statSet.TryGetValue("health", out float health))
         {
             return health;
         }
@@ -60,7 +67,7 @@ public class HealthBar : MonoBehaviour
 
     private float p_Shield()
     {
-        if (m_livingEntity != null && m_livingEntity.statSet.TryGetValue("shield", out float shield))
+        if (livingEntity != null && livingEntity.statSet.TryGetValue("shield", out float shield))
         {
             return shield;
         }

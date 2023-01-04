@@ -28,8 +28,7 @@ Transform:
   m_LocalPosition: {x: 0, y: -0.13, z: 0}
   m_LocalScale: {x: 1.2, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2006285160038878991}
+  m_Children: []
   m_Father: {fileID: 2006285159798261194}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -225,6 +224,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2006285159619456473}
+  - {fileID: 2006285160038878991}
   - {fileID: 2006285159479002162}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -408,6 +408,25 @@ MonoBehaviour:
     m_keys:
     - Hostile
     - Undead
+  lootTable:
+  - chance: 0.1
+    rolls: 1
+    entries:
+    - item: cherry
+      weight: 8
+      count: {x: 0, y: 1}
+      weightAffectedByLuck: 0
+      countAffectedByLuck: 1
+    - item: strawberry
+      weight: 1
+      count: {x: 0, y: 1}
+      weightAffectedByLuck: 1
+      countAffectedByLuck: 1
+    - item: energy_drink
+      weight: 1
+      count: {x: 0, y: 1}
+      weightAffectedByLuck: 1
+      countAffectedByLuck: 1
   weaponPivot: {fileID: 2006285160634413139}
   vfxPivot: {fileID: 2006285160421976713}
   defaultMaterial: {fileID: 2100000, guid: 402652d384d5b0443b678775b9efe2d0, type: 2}
@@ -459,11 +478,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2006285160038878988}
   m_LocalRotation: {x: -0, y: 0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 3.8249998, z: -1}
-  m_LocalScale: {x: 0.125, y: 1, z: 0.024999997}
+  m_LocalPosition: {x: 0, y: 1.4, z: -1}
+  m_LocalScale: {x: 0.15, y: 1, z: 0.009999999}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2006285159479002162}
+  m_Father: {fileID: 2006285159798261194}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: -90, y: 180, z: 0}
 --- !u!33 &2006285160038878976
@@ -494,7 +513,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8f6e893228260814e8a52c747243bb59, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -556,7 +575,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37e1a3f44b373204998d4654e8731b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_livingEntity: {fileID: 2006285159798261197}
+  livingEntity: {fileID: 2006285159798261197}
+  material: {fileID: 2100000, guid: 8f6e893228260814e8a52c747243bb59, type: 2}
 --- !u!1 &2006285160421976758
 GameObject:
   m_ObjectHideFlags: 0

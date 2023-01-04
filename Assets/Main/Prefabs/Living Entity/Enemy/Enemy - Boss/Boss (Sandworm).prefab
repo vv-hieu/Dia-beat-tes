@@ -1231,7 +1231,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4812985429002452162}
   - {fileID: 4812985427933143055}
   - {fileID: 4812985428499355492}
   - {fileID: 4812985428901100049}
@@ -1244,6 +1243,7 @@ Transform:
   - {fileID: 4812985427946745792}
   - {fileID: 4812985428754684621}
   - {fileID: 4812985429509234722}
+  - {fileID: 4812985429002452162}
   - {fileID: 2835866713854608509}
   - {fileID: 5679210620846341159}
   - {fileID: 4974696557507618098}
@@ -2509,7 +2509,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8f6e893228260814e8a52c747243bb59, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2571,7 +2571,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37e1a3f44b373204998d4654e8731b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_livingEntity: {fileID: 4812985427966350155}
+  livingEntity: {fileID: 4812985427966350155}
+  material: {fileID: 2100000, guid: 8f6e893228260814e8a52c747243bb59, type: 2}
 --- !u!1 &4812985429387884913
 GameObject:
   m_ObjectHideFlags: 0

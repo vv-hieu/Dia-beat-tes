@@ -519,7 +519,7 @@ public class LivingEntity : MonoBehaviour
         return StatSet.NewStatSet()
             .AddStat("health"         , new Stat( 1.0f,  50.0f, health))
             .AddStat("shield"         , new Stat( 0.0f,  10.0f, shield))
-            .AddStat("speed"          , new Stat( 0.0f,   5.0f, speed))
+            .AddStat("speed"          , new Stat( 0.0f,  10.0f, speed))
             .AddStat("luck"           , new Stat(-2.0f,   2.0f, luck))
             .AddStat("attackDamage"   , new Stat( 0.0f,  50.0f, attackDamage))
             .AddStat("attackSpeed"    , new Stat( 0.0f,  10.0f, attackSpeed))

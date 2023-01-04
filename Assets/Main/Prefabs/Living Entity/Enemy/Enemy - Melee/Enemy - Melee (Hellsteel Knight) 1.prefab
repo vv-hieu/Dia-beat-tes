@@ -91,11 +91,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8257956401916396945}
   m_LocalRotation: {x: -0, y: 0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0.9, z: -1}
-  m_LocalScale: {x: 0.15, y: 1, z: 0.009999999}
+  m_LocalPosition: {x: 0, y: 1.4, z: -1}
+  m_LocalScale: {x: 0.15, y: 1, z: 0.009999998}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8257956402302281540}
+  m_Father: {fileID: 8257956402191617879}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: -90, y: 180, z: 0}
 --- !u!33 &8257956401916396957
@@ -126,7 +126,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8f6e893228260814e8a52c747243bb59, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -188,7 +188,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37e1a3f44b373204998d4654e8731b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_livingEntity: {fileID: 8257956402191617872}
+  livingEntity: {fileID: 8257956402191617872}
+  material: {fileID: 2100000, guid: 8f6e893228260814e8a52c747243bb59, type: 2}
 --- !u!1 &8257956402191617878
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,6 +227,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8257956402302281540}
+  - {fileID: 8257956401916396946}
   - {fileID: 8257956402409033391}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -408,6 +410,15 @@ MonoBehaviour:
   entityTags:
     m_keys:
     - Hostile
+  lootTable:
+  - chance: 0.8
+    rolls: 6
+    entries:
+    - item: cake_piece
+      weight: 1
+      count: {x: 0, y: 1}
+      weightAffectedByLuck: 0
+      countAffectedByLuck: 1
   weaponPivot: {fileID: 8257956401421417166}
   vfxPivot: {fileID: 8257956401493860372}
   defaultMaterial: {fileID: 2100000, guid: 402652d384d5b0443b678775b9efe2d0, type: 2}
@@ -462,7 +473,6 @@ Transform:
   m_Children:
   - {fileID: 8257956401493860372}
   - {fileID: 8257956401421417166}
-  - {fileID: 8257956401916396946}
   m_Father: {fileID: 8257956402191617879}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

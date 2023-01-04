@@ -248,8 +248,8 @@ TextureImporter:
       name: weapon_6
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 48
+        y: 16
         width: 16
         height: 16
       alignment: 0
@@ -269,7 +269,7 @@ TextureImporter:
       name: weapon_7
       rect:
         serializedVersion: 2
-        x: 16
+        x: 0
         y: 0
         width: 16
         height: 16
@@ -282,6 +282,27 @@ TextureImporter:
       bones: []
       spriteID: 027402140fea3394393de6d4dc53ff99
       internalID: -461366806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: weapon_8
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7beed906ed824045ad711afb8aeb576
+      internalID: -2051081136
       vertices: []
       indices: 
       edges: []
@@ -303,6 +324,7 @@ TextureImporter:
       weapon_7: -461366806
       weapon_3: -255138821
       weapon_4: -1864042516
+      weapon_8: -2051081136
       weapon_5: -1356914388
       weapon_6: -1287061927
   spritePackingTag: 

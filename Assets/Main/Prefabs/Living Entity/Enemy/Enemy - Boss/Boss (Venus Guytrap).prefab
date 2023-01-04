@@ -184,9 +184,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1749531923547586474}
   - {fileID: 1749531922698606947}
   - {fileID: 1749531923809133572}
+  - {fileID: 1749531923547586474}
   - {fileID: 1749531922940272263}
   m_Father: {fileID: 1749531922943260976}
   m_RootOrder: -1
@@ -528,7 +528,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8f6e893228260814e8a52c747243bb59, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -590,7 +590,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37e1a3f44b373204998d4654e8731b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_livingEntity: {fileID: 1749531922943260977}
+  livingEntity: {fileID: 1749531922943260977}
+  material: {fileID: 2100000, guid: 8f6e893228260814e8a52c747243bb59, type: 2}
 --- !u!1 &1749531923809133571
 GameObject:
   m_ObjectHideFlags: 0

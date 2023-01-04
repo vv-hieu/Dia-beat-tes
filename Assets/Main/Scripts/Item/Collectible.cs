@@ -52,43 +52,45 @@ public class Collectible : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        LivingEntity livingEntity = LivingEntity.FromCollider(collision);
+        if (livingEntity != null)
         {
-            LivingEntity livingEntity = collision.GetComponent<LivingEntity>();
-            Player       player       = collision.GetComponent<Player>();
-
-            if (player.CanPickUp(type))
+            Player player = livingEntity.GetComponent<Player>();
+            if (player != null)
             {
-                if (pickupEffect != null)
+                if (player.CanPickUp(type))
                 {
-                    Instantiate(pickupEffect, player.transform.position, Quaternion.identity, player.transform);
-                }
-                switch (type)
-                {
-                    case CollectibleType.CakePiece:
-                        {
-                            player?.AddFatness(0.05f);
-                            break;
-                        }
-                    case CollectibleType.Cherry:
-                        {
-                            livingEntity.Heal((float)RANDOM.NextDouble() * 2.0f + 1.0f);
-                            break;
-                        }
-                    case CollectibleType.Strawberry:
-                        {
-                            livingEntity.Heal((float)RANDOM.NextDouble() * 2.0f + 3.0f);
-                            break;
-                        }
-                    case CollectibleType.EnergyDrink:
-                        {
+                    if (pickupEffect != null)
+                    {
+                        Instantiate(pickupEffect, player.transform.position, Quaternion.identity, player.transform);
+                    }
+                    switch (type)
+                    {
+                        case CollectibleType.CakePiece:
+                            {
+                                player?.AddFatness(0.05f);
+                                break;
+                            }
+                        case CollectibleType.Cherry:
+                            {
+                                livingEntity.Heal((float)RANDOM.NextDouble() * 2.0f + 1.0f);
+                                break;
+                            }
+                        case CollectibleType.Strawberry:
+                            {
+                                livingEntity.Heal((float)RANDOM.NextDouble() * 2.0f + 3.0f);
+                                break;
+                            }
+                        case CollectibleType.EnergyDrink:
+                            {
 
+                                break;
+                            }
+                        default:
                             break;
-                        }
-                    default:
-                        break;
+                    }
+                    Destroy(gameObject);
                 }
-                Destroy(gameObject);
             }
         }
     }

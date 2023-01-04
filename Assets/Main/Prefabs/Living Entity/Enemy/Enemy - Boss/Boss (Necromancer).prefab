@@ -126,7 +126,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8f6e893228260814e8a52c747243bb59, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -188,7 +188,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37e1a3f44b373204998d4654e8731b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_livingEntity: {fileID: 2744052212936511590}
+  livingEntity: {fileID: 2744052212936511590}
+  material: {fileID: 2100000, guid: 8f6e893228260814e8a52c747243bb59, type: 2}
 --- !u!1 &2744052212685541784
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,13 +311,13 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2744052213111076978}
-  - {fileID: 2744052212121213604}
   - {fileID: 7857116772364584867}
   - {fileID: 7857116772609538384}
   - {fileID: 7857116771813102359}
   - {fileID: 7857116770993576400}
   - {fileID: 7857116772242972081}
   - {fileID: 7857116771401732203}
+  - {fileID: 2744052212121213604}
   - {fileID: 2744052212685541785}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -545,10 +546,10 @@ MonoBehaviour:
   - {fileID: 5082660890556403860, guid: 948155c75cddcf041a81fb817305860d, type: 3}
   - {fileID: 4306740918760107159, guid: 0c0b8367d128c144194ef2aab632e7c8, type: 3}
   minSummons: 2
-  maxSummons: 6
+  maxSummons: 4
   summonDistance: 5
-  summonCooldown: 2
-  currentState: 0
+  summonCooldown: 5
+  staff: {fileID: 6216792163489216744, guid: b709557ff9aad1744975e6aad8f17782, type: 3}
 --- !u!1 &2744052213111076973
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,13 +3,20 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("Weapon")]
     [SerializeField] private GameObject weapon;
 
+    [Header("References")]
+    [SerializeField] private SpriteRenderer   sprite;
+    [SerializeField] private GameObject       defaultState;
+    [SerializeField] private GameObject       rollingState;
+    [SerializeField] private RadialDamageZone rollingDamageZone;
+
     [Header("Appearance")]
-    [SerializeField] private SpriteRenderer sprite;
-    [SerializeField] private Sprite         playerNormal;
-    [SerializeField] private Sprite         playerPartialFat;
-    [SerializeField] private Sprite         playerFullyFat;
+    [SerializeField] private Sprite playerNormal;
+    [SerializeField] private Sprite playerPartialFat;
+    [SerializeField] private Sprite playerFullyFat;
+    [SerializeField] private float  rollSpeed;
 
     [Header("VFX")]
     [SerializeField] private GameObject sweatVFX;
@@ -23,6 +30,10 @@ public class Player : MonoBehaviour
     private Dictionary<string, LivingEntity.StatModifier>   m_relicStatModifiers           = new Dictionary<string, LivingEntity.StatModifier>();
     private Dictionary<string, LivingEntity.AttackModifier> m_relicAttackDealtModifiers    = new Dictionary<string, LivingEntity.AttackModifier>();
     private Dictionary<string, LivingEntity.AttackModifier> m_relicAttackReceivedModifiers = new Dictionary<string, LivingEntity.AttackModifier>();
+    private bool                                            m_rolling                      = false;
+    private float                                           m_rollTime                     = 0.0f;
+    private float                                           m_rollAngle                    = 0.0f;
+    private Vector2                                         m_rollDirection                = Vector2.right;
 
     public int commonRelicCount { get; private set; } = 0;
     public int rareRelicCount   { get; private set; } = 0;
@@ -126,36 +137,62 @@ public class Player : MonoBehaviour
         m_livingEntity.attackReceivedModifier = new PlayerAttackModifier(this, false);
 
         m_livingEntity.SetWeapon(weapon);
+
+        if (rollingDamageZone != null)
+        {
+            rollingDamageZone.Init(m_livingEntity, 1.0f, 0.3f, 0.4f, 0.5f, new string[] { "Roll" }, new string[] { "Hostile" }, true, true);
+        }
     }
 
     private void Update()
     {
-        float dt = Time.deltaTime;
-
-        if (m_livingEntity.isInControl)
+        if (m_livingEntity.isInControl && m_rollTime <= 0.0f)
         {
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f));
         
             m_livingEntity.AimWeaponAt(new Vector2(worldPos.x, worldPos.y));
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0))
             {
                 m_livingEntity.UseWeapon(new string[] { "Hostile" });
             }
         }
 
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown("space") && m_rollTime <= 0.0f) 
         {
-            m_livingEntity.AddStatusEffect(StatusEffectManager.FrenzyEffect(m_livingEntity, 1.0f));
+            SetFatness(0.0f);
+            m_rolling = true;
+            m_rollTime  = 2.0f;
+            m_rollAngle = 0.0f;
+            defaultState.SetActive(false);
+            rollingState.SetActive(true);
         }
+
+        if (m_rollTime <= 0.0f && m_rolling)
+        {
+            m_rolling = false;
+            defaultState.SetActive(true);
+            rollingState.SetActive(false);
+        }
+        else if (m_rollTime > 0.0f)
+        {
+            rollingState.transform.localEulerAngles = new Vector3(0.0f, 0.0f, (m_livingEntity.isFacingRight ? m_rollAngle : -m_rollAngle));
+            m_rollAngle += rollSpeed * Time.deltaTime;
+        }
+
+        m_rollTime = Mathf.Max(0.0f, m_rollTime - Time.deltaTime);
     }
 
     private void FixedUpdate()
     {
         if (m_livingEntity.isInControl)
         {
-            Vector2 input    = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+            Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+            if (input != Vector2.zero)
+            {
+                m_rollDirection = input;
+            }
             Vector2 position = new Vector2(transform.position.x, transform.position.y);
-            m_rigidbody.MovePosition(position + input * m_livingEntity.statSet.GetValue("speed") * m_fatSpeed * Time.fixedDeltaTime);
+            m_rigidbody.MovePosition(position + (m_rollTime > 0.0f ? m_rollDirection : input) * m_livingEntity.statSet.GetValue("speed") * (m_rollTime > 0.0f ? 1.0f : m_fatSpeed) * Time.fixedDeltaTime);
         }
     }
 

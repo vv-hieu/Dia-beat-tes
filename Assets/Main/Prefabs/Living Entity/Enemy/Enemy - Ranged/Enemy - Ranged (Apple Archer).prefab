@@ -470,6 +470,25 @@ MonoBehaviour:
     m_keys:
     - Hostile
     - Undead
+  lootTable:
+  - chance: 0.5
+    rolls: 1
+    entries:
+    - item: cherry
+      weight: 8
+      count: {x: 0, y: 1}
+      weightAffectedByLuck: 0
+      countAffectedByLuck: 1
+    - item: strawberry
+      weight: 1
+      count: {x: 0, y: 1}
+      weightAffectedByLuck: 1
+      countAffectedByLuck: 1
+    - item: energy_drink
+      weight: 1
+      count: {x: 0, y: 1}
+      weightAffectedByLuck: 1
+      countAffectedByLuck: 1
   weaponPivot: {fileID: 1111454029074291}
   vfxPivot: {fileID: 1111453822145961}
   defaultMaterial: {fileID: 2100000, guid: 402652d384d5b0443b678775b9efe2d0, type: 2}
@@ -556,7 +575,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8f6e893228260814e8a52c747243bb59, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -618,4 +637,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37e1a3f44b373204998d4654e8731b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_livingEntity: {fileID: 1111455273319149}
+  livingEntity: {fileID: 1111455273319149}
+  material: {fileID: 2100000, guid: 8f6e893228260814e8a52c747243bb59, type: 2}
