@@ -39,7 +39,9 @@ public class LivingEntity : MonoBehaviour
     [SerializeField] private Material  hitMaterial;
 
     [Header("Component References")]
-    [SerializeField] private SpriteRenderer m_sprite;
+    [SerializeField] private Collider2D[]     colliders;
+    [SerializeField] private SpriteRenderer[] sprites;
+    [SerializeField] private bool             isDirectional;
 
     public AttackModifier attackDealtModifier;
     public AttackModifier attackReceivedModifier;
@@ -66,14 +68,29 @@ public class LivingEntity : MonoBehaviour
     private Vector2                          m_previousPosition = Vector2.zero;
     private Dictionary<string, StatusEffect> m_statusEffects    = new Dictionary<string, StatusEffect>();
 
-    private static float         SHIELD_REGENERATE_TIME = 2.0f;
-    private static float         HURT_TIME              = 0.1f;
-    private static System.Random RANDOM                 = new System.Random();
+    private static float                                SHIELD_REGENERATE_TIME = 2.0f;
+    private static float                                HURT_TIME              = 0.1f;
+    private static System.Random                        RANDOM                 = new System.Random();
+    private static Dictionary<Collider2D, LivingEntity> ENTITY_FROM_COLLIDER   = new Dictionary<Collider2D, LivingEntity>();
+
+    public static LivingEntity FromCollider(Collider2D collider)
+    {
+        if (ENTITY_FROM_COLLIDER.TryGetValue(collider, out LivingEntity entity)) 
+        {
+            return entity;
+        }
+        return null;
+    }
 
     public static void HandleAttack(LivingEntity attacker, LivingEntity target, AttackInfo attackInfo, bool enableCrit = true)
     {
         if (target != null)
         {
+            if (target.m_invulnerableTime > 0.0f)
+            {
+                return;
+            }
+
             float critChance = 0.0f;
             if (attacker != null)
             {
@@ -358,6 +375,15 @@ public class LivingEntity : MonoBehaviour
         }
 
         m_previousPosition = new Vector2(transform.position.x, transform.position.y);
+
+        foreach (Collider2D collider in colliders)
+        {
+            ENTITY_FROM_COLLIDER[collider] = this;
+        }
+        if (TryGetComponent(out Collider2D selfCollider))
+        {
+            ENTITY_FROM_COLLIDER[selfCollider] = this;
+        }
     }
 
     private void OnValidate()
@@ -410,7 +436,10 @@ public class LivingEntity : MonoBehaviour
         isHurt = (m_hurtTime > 0.0f);
         m_hurtTime -= Time.deltaTime;
 
-        m_sprite.material = (isHurt ? hitMaterial : defaultMaterial);
+        foreach (SpriteRenderer sprite in sprites)
+        {
+            sprite.material = (isHurt ? hitMaterial : defaultMaterial);
+        }
 
         foreach (StatusEffect effect in m_statusEffects.Values)
         {
@@ -455,10 +484,24 @@ public class LivingEntity : MonoBehaviour
         {
             isFacingRight = true;
         }
-        m_sprite.flipX = isFacingRight;
+        if (isDirectional)
+        {
+            foreach (SpriteRenderer sprite in sprites)
+            {
+                sprite.flipX = isFacingRight;
+            }
+        }
         float d = v.magnitude / dt;
         isMoving = (d >= 0.001f);
         m_previousPosition = new Vector2(transform.position.x, transform.position.y);
+    }
+
+    private void OnDestroy()
+    {
+        foreach (Collider2D collider in colliders)
+        {
+            ENTITY_FROM_COLLIDER.Remove(collider);
+        }
     }
 
     private StatSet p_BuildStatSet()

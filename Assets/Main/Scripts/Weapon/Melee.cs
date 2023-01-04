@@ -74,7 +74,8 @@ public class Melee : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out LivingEntity entity) && m_onHit != null)
+        LivingEntity entity = LivingEntity.FromCollider(collision);
+        if (entity != null && m_onHit != null)
         {
             if (m_hitEntities.Add(entity) && entity.HasTagsAny(m_affectTags))
             {
