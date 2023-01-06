@@ -100,6 +100,11 @@ public class Projectile : MonoBehaviour
                 m_onHit(entity, this);
             }
         }
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("ProjectileBlocking"))
+        {
+            Destroy(gameObject);
+        }   
     }
 
     private void p_Move(Vector2 from, Vector2 to)

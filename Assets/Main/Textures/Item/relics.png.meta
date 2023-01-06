@@ -206,8 +206,8 @@ TextureImporter:
       name: relics_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 32
+        x: 32
+        y: 56
         width: 8
         height: 8
       alignment: 0
@@ -227,8 +227,8 @@ TextureImporter:
       name: relics_5
       rect:
         serializedVersion: 2
-        x: 8
-        y: 32
+        x: 40
+        y: 56
         width: 8
         height: 8
       alignment: 0
@@ -248,8 +248,8 @@ TextureImporter:
       name: relics_6
       rect:
         serializedVersion: 2
-        x: 16
-        y: 32
+        x: 48
+        y: 56
         width: 8
         height: 8
       alignment: 0
@@ -269,8 +269,8 @@ TextureImporter:
       name: relics_7
       rect:
         serializedVersion: 2
-        x: 24
-        y: 32
+        x: 56
+        y: 56
         width: 8
         height: 8
       alignment: 0
@@ -290,7 +290,7 @@ TextureImporter:
       name: relics_8
       rect:
         serializedVersion: 2
-        x: 32
+        x: 0
         y: 32
         width: 8
         height: 8
@@ -311,7 +311,7 @@ TextureImporter:
       name: relics_9
       rect:
         serializedVersion: 2
-        x: 40
+        x: 8
         y: 32
         width: 8
         height: 8
@@ -332,7 +332,7 @@ TextureImporter:
       name: relics_10
       rect:
         serializedVersion: 2
-        x: 48
+        x: 16
         y: 32
         width: 8
         height: 8
@@ -353,8 +353,8 @@ TextureImporter:
       name: relics_11
       rect:
         serializedVersion: 2
-        x: 0
-        y: 24
+        x: 24
+        y: 32
         width: 8
         height: 8
       alignment: 0
@@ -374,8 +374,8 @@ TextureImporter:
       name: relics_12
       rect:
         serializedVersion: 2
-        x: 8
-        y: 24
+        x: 32
+        y: 32
         width: 8
         height: 8
       alignment: 0
@@ -395,8 +395,8 @@ TextureImporter:
       name: relics_13
       rect:
         serializedVersion: 2
-        x: 16
-        y: 24
+        x: 40
+        y: 32
         width: 8
         height: 8
       alignment: 0
@@ -416,8 +416,8 @@ TextureImporter:
       name: relics_14
       rect:
         serializedVersion: 2
-        x: 24
-        y: 24
+        x: 48
+        y: 32
         width: 8
         height: 8
       alignment: 0
@@ -437,8 +437,8 @@ TextureImporter:
       name: relics_15
       rect:
         serializedVersion: 2
-        x: 32
-        y: 24
+        x: 56
+        y: 32
         width: 8
         height: 8
       alignment: 0
@@ -459,7 +459,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 8
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -480,7 +480,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 8
-        y: 8
+        y: 24
         width: 8
         height: 8
       alignment: 0
@@ -500,7 +500,7 @@ TextureImporter:
       name: relics_18
       rect:
         serializedVersion: 2
-        x: 16
+        x: 0
         y: 8
         width: 8
         height: 8
@@ -521,7 +521,7 @@ TextureImporter:
       name: relics_19
       rect:
         serializedVersion: 2
-        x: 24
+        x: 8
         y: 8
         width: 8
         height: 8
@@ -542,7 +542,7 @@ TextureImporter:
       name: relics_20
       rect:
         serializedVersion: 2
-        x: 32
+        x: 16
         y: 8
         width: 8
         height: 8
@@ -563,7 +563,7 @@ TextureImporter:
       name: relics_21
       rect:
         serializedVersion: 2
-        x: 40
+        x: 24
         y: 8
         width: 8
         height: 8
@@ -576,6 +576,48 @@ TextureImporter:
       bones: []
       spriteID: 18dfa6cc284dddd40b5be185530cc30b
       internalID: -1112559262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relics_22
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f13698d25bdf79440879f9274cb718e8
+      internalID: 1803538130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relics_23
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ede88eca2a499834780fcd9f4679a304
+      internalID: 762811155
       vertices: []
       indices: 
       edges: []
@@ -601,7 +643,9 @@ TextureImporter:
       relics_7: 1539347697
       relics_13: 893669229
       relics_18: 1606905873
+      relics_23: 762811155
       relics_11: -931591698
+      relics_22: 1803538130
       relics_4: 269733690
       relics_10: -1440948370
       relics_21: -1112559262

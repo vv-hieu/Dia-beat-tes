@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af35ad52357e1f4cb8b1daab9790cfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: Rock
+  weaponSprite: {fileID: -531796295, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
   sprite: {fileID: 1534018865940609019}
   projectile: {fileID: 7058502800172763490, guid: dc74a630f84d4524fa81dd37cfe7fdc9, type: 3}
   projectileSpawnPosition: {fileID: 5322706656793414157}
@@ -60,7 +62,8 @@ MonoBehaviour:
   bulletSpeed: 10
   bulletLifetime: 1
   bulletCapacity: 1
-  tags: []
+  tags:
+  - Projectile
 --- !u!1 &3591192882642789794
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,8 +136,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: -2051081136, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -531796295, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

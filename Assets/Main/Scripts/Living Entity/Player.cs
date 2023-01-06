@@ -6,12 +6,6 @@ public class Player : MonoBehaviour
     [Header("Weapon")]
     [SerializeField] private GameObject weapon;
 
-    [Header("References")]
-    [SerializeField] private SpriteRenderer   sprite;
-    [SerializeField] private GameObject       defaultState;
-    [SerializeField] private GameObject       rollingState;
-    [SerializeField] private RadialDamageZone rollingDamageZone;
-
     [Header("Appearance")]
     [SerializeField] private Sprite playerNormal;
     [SerializeField] private Sprite playerPartialFat;
@@ -20,6 +14,16 @@ public class Player : MonoBehaviour
 
     [Header("VFX")]
     [SerializeField] private GameObject sweatVFX;
+
+    [Header("Interacting")]
+    [SerializeField] private float interactRadius;
+
+    [Header("References")]
+    [SerializeField] private SpriteRenderer   sprite;
+    [SerializeField] private GameObject       defaultState;
+    [SerializeField] private GameObject       rollingState;
+    [SerializeField] private RadialDamageZone rollingDamageZone;
+    [SerializeField] private SpriteRenderer   rollingSprite;
 
     private LivingEntity                                    m_livingEntity;
     private Rigidbody2D                                     m_rigidbody;
@@ -34,11 +38,23 @@ public class Player : MonoBehaviour
     private float                                           m_rollTime                     = 0.0f;
     private float                                           m_rollAngle                    = 0.0f;
     private Vector2                                         m_rollDirection                = Vector2.right;
+    private HashSet<Interactable>                           m_interactables                = new HashSet<Interactable>();
+    private bool                                            m_inputEnabled                 = true;
 
     public int commonRelicCount { get; private set; } = 0;
     public int rareRelicCount   { get; private set; } = 0;
     public int cursedRelicCount { get; private set; } = 0;
     public int totalRelicCount  { get; private set; } = 0;
+
+    public void EnableInput()
+    {
+        m_inputEnabled = true;
+    }
+
+    public void DisableInput()
+    {
+        m_inputEnabled = false;
+    }
 
     public void SetFatness(float amount)
     {
@@ -146,25 +162,28 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (m_livingEntity.isInControl && m_rollTime <= 0.0f)
+        if (m_livingEntity.isInControl && m_inputEnabled)
         {
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f));
-        
-            m_livingEntity.AimWeaponAt(new Vector2(worldPos.x, worldPos.y));
-            if (Input.GetMouseButton(0))
+            if (m_rollTime <= 0.0f)
             {
-                m_livingEntity.UseWeapon(new string[] { "Hostile" });
-            }
-        }
+                Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f));
 
-        if (Input.GetKeyDown("space") && m_rollTime <= 0.0f) 
-        {
-            SetFatness(0.0f);
-            m_rolling = true;
-            m_rollTime  = 2.0f;
-            m_rollAngle = 0.0f;
-            defaultState.SetActive(false);
-            rollingState.SetActive(true);
+                m_livingEntity.AimWeaponAt(new Vector2(worldPos.x, worldPos.y));
+                if (Input.GetMouseButton(0))
+                {
+                    m_livingEntity.UseWeapon(new string[] { "Hostile" });
+                }
+            }
+
+            if (Input.GetKeyDown("space") && m_rollTime <= 0.0f)
+            {
+                SetFatness(0.0f);
+                m_rolling = true;
+                m_rollTime = 2.0f;
+                m_rollAngle = 0.0f;
+                defaultState.SetActive(false);
+                rollingState.SetActive(true);
+            }
         }
 
         if (m_rollTime <= 0.0f && m_rolling)
@@ -175,16 +194,44 @@ public class Player : MonoBehaviour
         }
         else if (m_rollTime > 0.0f)
         {
-            rollingState.transform.localEulerAngles = new Vector3(0.0f, 0.0f, (m_livingEntity.isFacingRight ? m_rollAngle : -m_rollAngle));
+            rollingSprite.transform.localEulerAngles = new Vector3(0.0f, 0.0f, (m_livingEntity.isFacingRight ? m_rollAngle : -m_rollAngle));
             m_rollAngle += rollSpeed * Time.deltaTime;
         }
-
         m_rollTime = Mathf.Max(0.0f, m_rollTime - Time.deltaTime);
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, interactRadius);
+        HashSet<Interactable> set = new HashSet<Interactable>();
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.TryGetComponent(out Interactable interactable))
+            {
+                if (m_interactables.Add(interactable))
+                {
+                    interactable.OnApproach(this);
+                }
+                set.Add(interactable);
+            }
+        }
+        foreach (Interactable interactable in m_interactables)
+        {
+            if (!set.Contains(interactable))
+            {
+                interactable.OnLeave(this);
+            }
+        }
+        m_interactables = set;
+        if (m_livingEntity.isInControl && m_inputEnabled && m_rollTime <= 0.0f && Input.GetKeyDown("f"))
+        {
+            foreach (Interactable interactable in m_interactables)
+            {
+                interactable.OnInteract(this);
+            }
+        }
     }
 
     private void FixedUpdate()
     {
-        if (m_livingEntity.isInControl)
+        if (m_livingEntity.isInControl && m_inputEnabled)
         {
             Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
             if (input != Vector2.zero)

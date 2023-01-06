@@ -28,6 +28,28 @@ public class DefaultRelicEffect : RelicEffect
             return FixedStatModifier.Create(context)
                 .AdditionValue("attackSpeed", 1.0f);
         }
+        if (relic == RelicName.LuckyClover)
+        {
+            return FixedStatModifier.Create(context)
+                .AdditionValue("luck", 1.0f);
+        }
+        if (relic == RelicName.BrassBullet)
+        {
+            return FixedStatModifier.Create(context)
+                .AdditionValue("bulletCount", 1.0f);
+        }
+        if (relic == RelicName.Monocle)
+        {
+            return FixedStatModifier.Create(context)
+                .AdditionValue("critChance", 1.0f)
+                .AdditionValue("critDamage", 0.1f);
+        }
+        if (relic == RelicName.AmuletOfForce)
+        {
+            return FixedStatModifier.Create(context)
+                .AdditionValue("attackDamage", 1.0f)
+                .AdditionValue("meleeRange", 1.0f);
+        }
 
         // Rare relics
         if (relic == RelicName.GoldenApple)
@@ -55,27 +77,6 @@ public class DefaultRelicEffect : RelicEffect
             return HellsteelStatModifier.Create(context)
                 .AdditionValue("critChance", 2.0f)
                 .AdditionValue("critDamage", 0.25f);
-        }
-        if (relic == RelicName.Monocle)
-        {
-            return FixedStatModifier.Create(context)
-                .AdditionValue("critChance", 5.0f)
-                .AdditionValue("critDamage", 0.5f);
-        }
-        if (relic == RelicName.LuckyClover)
-        {
-            return FixedStatModifier.Create(context)
-                .AdditionValue("luck", 1.0f);
-        }
-        if (relic == RelicName.AmuletOfForce)
-        {
-            return FixedStatModifier.Create(context)
-                .AdditionValue("attackDamage", 1.0f);
-        }
-        if (relic == RelicName.BrassBullet)
-        {
-            return FixedStatModifier.Create(context)
-                .AdditionValue("bulletCount", 1.0f);
         }
         if (relic == RelicName.TacticalScope)
         {
@@ -151,6 +152,17 @@ public class DefaultRelicEffect : RelicEffect
                         .DamageAdditionValue(-2.0f)
                 );
         }
+        if (relic == RelicName.EternalFlame)
+        {
+            return FixedAttackModifier.Create(context)
+                .InflictStatusEffect("status_effect_burn", 2.0f, 1);
+        }
+        if (relic == RelicName.PermafrostIceCube)
+        {
+            return FixedAttackModifier.Create(context)
+                .InflictStatusEffect("status_effect_frozen", 0.5f, 1);
+        }
+
         return base.GenerateAttackDealtModifier(context);
     }
 
@@ -167,19 +179,21 @@ public class DefaultRelicEffect : RelicEffect
         Milk,
         Candy,
         OrangeJuice,
+        LuckyClover,
+        BrassBullet,
+        Monocle,
+        AmuletOfForce,
 
         GoldenApple,
         ChainmailArmor,
         HellsteelBlade,
         HellsteelArmor,
         HellsteelDagger,
-        Monocle,
-        LuckyClover,
-        AmuletOfForce,
-        BrassBullet,
         TacticalScope,
         ExtendedClip,
         HelpingHand,
+        EternalFlame,
+        PermafrostIceCube,
 
         DoubleTrouble,
         DullNeedle,
@@ -361,6 +375,12 @@ public class FixedAttackModifier : LivingEntity.AttackModifier
     public FixedAttackModifier StunTimeMultiplication(float amount)
     {
         m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.StunTimeMultiplication, amount));
+        return this;
+    }
+
+    public FixedAttackModifier InflictStatusEffect(string effectId, float time, int level)
+    {
+        m_operations.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.InflictStatusEffect, effectId, time, level));
         return this;
     }
 }

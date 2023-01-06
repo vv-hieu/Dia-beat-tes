@@ -103,8 +103,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: -1864042516, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -1356914388, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -161,6 +161,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af35ad52357e1f4cb8b1daab9790cfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: Shotgun
+  weaponSprite: {fileID: -1356914388, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
   sprite: {fileID: 7354191291283010570}
   projectile: {fileID: 3383687889652752435, guid: 305b7ce513456764983bade8f793ddeb, type: 3}
   projectileSpawnPosition: {fileID: 4222324233123236348}
@@ -175,4 +177,5 @@ MonoBehaviour:
   bulletSpeed: 25
   bulletLifetime: 0.2
   bulletCapacity: 6
-  tags: []
+  tags:
+  - Projectile

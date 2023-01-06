@@ -22,12 +22,13 @@ public class LivingEntity : MonoBehaviour
     [SerializeField] private Optional<float> bulletLifetime;
     [SerializeField] private Optional<float> bulletCapacity;
     [SerializeField] private Optional<float> reloadSpeed;
+    [SerializeField] private Optional<float> meleeRange;
 
     [Header("Entity Tags")]
     [SerializeField] private SerializableHashSet<string> entityTags = new SerializableHashSet<string>();
 
     [Header("Loot")]
-    [SerializeField] private List<LootPool> lootTable = new List<LootPool>();
+    [SerializeField] private LootTable lootTable;
 
     [Header("Weapon")]
     [SerializeField] private Transform weaponPivot;
@@ -53,20 +54,22 @@ public class LivingEntity : MonoBehaviour
     public bool    isFacingRight { get; private set; } = true;
     public bool    isInControl   { get; private set; } = true;
 
-    private NavMeshAgent                     m_navMeshAgent;
-    private Rigidbody2D                      m_rigidbody;
-    private Weapon                           m_weapon;
-    private float                            m_shieldTime       = 0.0f;
-    private float                            m_invulnerableTime = 0.0f;
-    private float                            m_stunTime         = 0.0f;
-    private float                            m_knockbackTime    = 0.0f;
-    private float                            m_hurtTime         = 0.0f;
-    private bool                             m_isKnockedback    = false;
-    private bool                             m_died             = false;
-    private Vector2                          m_knockbackDir     = Vector2.zero;
-    private Vector2                          m_knockbackOrigin  = Vector2.zero;
-    private Vector2                          m_previousPosition = Vector2.zero;
-    private Dictionary<string, StatusEffect> m_statusEffects    = new Dictionary<string, StatusEffect>();
+    private NavMeshAgent                       m_navMeshAgent;
+    private Rigidbody2D                        m_rigidbody;
+    private Weapon                             m_weapon;
+    private float                              m_shieldTime                          = 0.0f;
+    private float                              m_invulnerableTime                    = 0.0f;
+    private float                              m_stunTime                            = 0.0f;
+    private float                              m_knockbackTime                       = 0.0f;
+    private float                              m_hurtTime                            = 0.0f;
+    private bool                               m_isKnockedback                       = false;
+    private bool                               m_died                                = false;
+    private Vector2                            m_knockbackDir                        = Vector2.zero;
+    private Vector2                            m_knockbackOrigin                     = Vector2.zero;
+    private Vector2                            m_previousPosition                    = Vector2.zero;
+    private Dictionary<string, StatusEffect>   m_statusEffects                       = new Dictionary<string, StatusEffect>();
+    private Dictionary<string, AttackModifier> m_statusEffectAttackDealtModifiers    = new Dictionary<string, AttackModifier>();
+    private Dictionary<string, AttackModifier> m_statusEffectAttackReceivedModifiers = new Dictionary<string, AttackModifier>();
 
     private static float                                SHIELD_REGENERATE_TIME = 2.0f;
     private static float                                HURT_TIME              = 0.1f;
@@ -106,13 +109,24 @@ public class LivingEntity : MonoBehaviour
             AttackContext context = new AttackContext(attacker, target);
             List<AttackModifyingOperation> operations = new List<AttackModifyingOperation>();
 
-            if (attacker != null && attacker.attackDealtModifier != null)
+            if (attacker != null)
             {
-                operations.AddRange(attacker.attackDealtModifier.Modify(attackInfo, context));
+                if (attacker.attackDealtModifier != null)
+                {
+                    operations.AddRange(attacker.attackDealtModifier.Modify(attackInfo, context));
+                }
+                foreach (AttackModifier attackModifier in attacker.m_statusEffectAttackDealtModifiers.Values)
+                {
+                    operations.AddRange(attackModifier.Modify(attackInfo, context));
+                }
             }
             if (target.attackReceivedModifier != null)
             {
                 operations.AddRange(target.attackReceivedModifier.Modify(attackInfo, context));
+            }
+            foreach (AttackModifier attackModifier in target.m_statusEffectAttackReceivedModifiers.Values)
+            {
+                operations.AddRange(attackModifier.Modify(attackInfo, context));
             }
 
             bool negateCrit = false;
@@ -167,6 +181,12 @@ public class LivingEntity : MonoBehaviour
                     case AttackModifyingOperation.Operation.StunTimeMultiplication:
                         c2 *= operation.amount;
                         break;
+                    case AttackModifyingOperation.Operation.InflictStatusEffect:
+                        if (!attackInfo.tags.Contains("StatusEffect"))
+                        {
+                            attackInfo.ApplyEffect(operation.effectId, operation.amount, operation.level);
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -183,7 +203,7 @@ public class LivingEntity : MonoBehaviour
             attackInfo.knockback = Mathf.Max(0.0f, c1 * (a1 * attackInfo.knockback + b1));
             attackInfo.stunTime  = Mathf.Max(0.0f, c2 * (a2 * attackInfo.stunTime + b2));
 
-            target.p_ReceiveAttack(attackInfo);
+            target.p_ReceiveAttack(attackInfo, context);
         }
     }
 
@@ -225,22 +245,21 @@ public class LivingEntity : MonoBehaviour
             luck = l;
         }
 
-        List<string> itemList = new List<string>();
-        foreach (LootPool pool in lootTable)
+        List<GameObject> itemList = new List<GameObject>();
+        if (lootTable != null)
         {
-            pool.AddItems(itemList, random, luck);
+            itemList = lootTable.Get(random, luck);
         }
         ListUtility.Shuffle(itemList, random);
 
         float index = 0.5f;
-        foreach (string itemName in itemList)
+        foreach (GameObject item in itemList)
         {
             float r     = Mathf.Sqrt(index / itemList.Count) * 1.5f;
             float theta = 10.1665f * index;
-            GameObject collectible = ItemManager.instance.GetCollectible(itemName);
-            if (collectible != null)
+            if (item != null)
             {
-                Instantiate(collectible, transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta), 0.0f) * r, Quaternion.identity, transform.parent);
+                Instantiate(item, transform.position + new Vector3(Mathf.Cos(theta), Mathf.Sin(theta), 0.0f) * r, Quaternion.identity, transform.parent);
             }
             index += 1.0f;
         }
@@ -266,7 +285,9 @@ public class LivingEntity : MonoBehaviour
         if (effect.CanOverride(existingEffect))
         {
             existingEffect?.ForceRemove(this);
-            m_statusEffects[effect.id] = effect;
+            m_statusEffects[effect.id]                       = effect;
+            m_statusEffectAttackDealtModifiers[effect.id]    = effect.GetAttackDealtModifier();
+            m_statusEffectAttackReceivedModifiers[effect.id] = effect.GetAttackReceivedModifier();
         }
     }
 
@@ -279,6 +300,8 @@ public class LivingEntity : MonoBehaviour
         }
         existingEffect?.ForceRemove(this);
         m_statusEffects.Remove(effectId);
+        m_statusEffectAttackDealtModifiers.Remove(effectId);
+        m_statusEffectAttackReceivedModifiers.Remove(effectId);
     }
 
     public Transform VFXPivot()
@@ -329,6 +352,15 @@ public class LivingEntity : MonoBehaviour
             {
                 Destroy(m_weapon.gameObject);
             }
+            m_weapon = null;
+        }
+    }
+
+    public void RemoveWeapon()
+    {
+        if (m_weapon != null)
+        {
+            Destroy(m_weapon.gameObject);
             m_weapon = null;
         }
     }
@@ -530,10 +562,11 @@ public class LivingEntity : MonoBehaviour
             .AddStat("bulletSpeed"    , new Stat( 0.0f,  50.0f, bulletSpeed))
             .AddStat("bulletLifetime" , new Stat( 0.0f,  10.0f, bulletLifetime))
             .AddStat("bulletCapacity" , new Stat( 0.0f,  50.0f, bulletCapacity))
-            .AddStat("reloadSpeed"    , new Stat( 0.0f,  10.0f, reloadSpeed));
+            .AddStat("reloadSpeed"    , new Stat( 0.0f,  10.0f, reloadSpeed))
+            .AddStat("meleeRange"     , new Stat( 0.0f,  10.0f, meleeRange));
     }
 
-    private void p_ReceiveAttack(AttackInfo attackInfo)
+    private void p_ReceiveAttack(AttackInfo attackInfo, AttackContext context)
     {
         if (m_invulnerableTime > 0.0f)
         {
@@ -579,6 +612,11 @@ public class LivingEntity : MonoBehaviour
         }
 
         m_shieldTime = 0.0f;
+
+        foreach (string effectId in attackInfo.statusEffectsInflictors.Keys)
+        {
+            AddStatusEffect(attackInfo.statusEffectsInflictors[effectId](context.attacker, attackInfo.statusEffectsTime[effectId], attackInfo.statusEffectsLevel[effectId]));
+        }
     }
 
     public struct Stat {
@@ -848,15 +886,18 @@ public class LivingEntity : MonoBehaviour
     }
 
     public class AttackInfo {
-        public float           damage             = 0.0f;
-        public float           knockback          = 0.0f;
-        public float           stunTime           = 0.0f;
-        public float           invulnerableTime   = 0.0f;
-        public float           critDamage         = 0.0f;
-        public bool            carryOverDamage    = true;
-        public bool            isBlacklist        = false;
-        public Vector2         knockbackDirection = Vector2.zero;
-        public HashSet<string> tags               = new HashSet<string>();
+        public float                                     damage                  = 0.0f;
+        public float                                     knockback               = 0.0f;
+        public float                                     stunTime                = 0.0f;
+        public float                                     invulnerableTime        = 0.0f;
+        public float                                     critDamage              = 0.0f;
+        public bool                                      carryOverDamage         = true;
+        public bool                                      isBlacklist             = false;
+        public Vector2                                   knockbackDirection      = Vector2.zero;
+        public HashSet<string>                           tags                    = new HashSet<string>();
+        public Dictionary<string, StatusEffectInflictor> statusEffectsInflictors = new Dictionary<string, StatusEffectInflictor>();
+        public Dictionary<string, float>                 statusEffectsTime       = new Dictionary<string, float>();
+        public Dictionary<string, int>                   statusEffectsLevel      = new Dictionary<string, int>();
 
         public static AttackInfo Create()
         {
@@ -908,23 +949,54 @@ public class LivingEntity : MonoBehaviour
             this.tags.AddRange(tags);
             return this;
         }
+    
+        public AttackInfo ApplyEffect(string effectId, float time, int level)
+        {
+            statusEffectsInflictors.Add(effectId, StatusEffectManager.Get(effectId));
+            statusEffectsTime.Add(effectId, time);
+            statusEffectsLevel.Add(effectId, level);
+
+            return this;
+        }
     }
 
     public struct AttackModifyingOperation
     {
         public Operation operation;
-        public float amount;
+        public string    effectId;
+        public float     amount;
+        public int       level;
 
         public AttackModifyingOperation(Operation operation)
         {
             this.operation = operation;
-            this.amount = 0.0f;
+            this.effectId  = "";
+            this.amount    = 0.0f;
+            this.level     = 0;
         }
 
         public AttackModifyingOperation(Operation operation, float amount)
         {
             this.operation = operation;
-            this.amount = amount;
+            this.effectId  = "";
+            this.amount    = amount;
+            this.level     = 0;
+        }
+
+        public AttackModifyingOperation(Operation operation, string effectId, float amount, int level)
+        {
+            this.operation = operation;
+            this.effectId  = effectId;
+            this.amount    = amount;
+            this.level     = level;
+        }
+
+        public AttackModifyingOperation(Operation operation, string effectId)
+        {
+            this.operation = operation;
+            this.effectId  = effectId;
+            this.amount    = 0.0f;
+            this.level     = 0;
         }
 
         public enum Operation
@@ -945,6 +1017,8 @@ public class LivingEntity : MonoBehaviour
             StunTimeAdditionPercent,
             StunTimeAdditionValue,
             StunTimeMultiplication,
+
+            InflictStatusEffect
         }
     }
 
@@ -968,7 +1042,6 @@ public class LivingEntity : MonoBehaviour
         }
     }
 
-    [Serializable]
     public class StatusEffect
     {
         public string       id        { get; private set; }
@@ -1050,6 +1123,11 @@ public class LivingEntity : MonoBehaviour
             return false;
         }
 
+        public virtual bool ShouldBeRemovedOnAttack()
+        {
+            return false;
+        }
+
         public virtual void OnApply(LivingEntity target)
         {
         }
@@ -1066,9 +1144,17 @@ public class LivingEntity : MonoBehaviour
         {
             return new StatModifier();
         }
-    }
 
-    // TODO: Maybe?? status effect modifier (dealt + received)
+        public virtual AttackModifier GetAttackDealtModifier()
+        {
+            return new AttackModifier();
+        }
+
+        public virtual AttackModifier GetAttackReceivedModifier()
+        {
+            return new AttackModifier();
+        }
+    }
 
     [Serializable]
     public struct LootPool 
@@ -1147,5 +1233,6 @@ public class LivingEntity : MonoBehaviour
         }
     }
 
-    public delegate void DeathCallback();
+    public delegate void         DeathCallback();
+    public delegate StatusEffect StatusEffectInflictor(LivingEntity owner, float time, int level);
 }

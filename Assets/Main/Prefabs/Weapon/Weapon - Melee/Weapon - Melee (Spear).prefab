@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 1335663714, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -129,15 +129,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14d8d41673e9a544d9e2a9aec77a02df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: Spear
+  weaponSprite: {fileID: 1335663714, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
   sprite: {fileID: 3229405516867290857}
   pierceAttack: {fileID: 5763428770507813971, guid: 92891a5e7c5192240aa2641b4800f0de, type: 3}
   retract: 0.2
   extend: 0.5
-  pierceSize: 1
-  pierceDistance: 1
+  pierceSize: 1.2
+  pierceDistance: 1.2
   damage: 1
   knockback: 0.4
   stunTime: 0.2
   attackTime: 0.3
   activateTime: 0.3
-  tags: []
+  tags:
+  - Melee

@@ -1279,7 +1279,7 @@ MonoBehaviour:
     m_value: 5
   speed:
     m_enabled: 1
-    m_value: 10
+    m_value: 8
   luck:
     m_enabled: 1
     m_value: 0
@@ -1313,11 +1313,14 @@ MonoBehaviour:
   reloadSpeed:
     m_enabled: 1
     m_value: 0
+  meleeRange:
+    m_enabled: 1
+    m_value: 0
   entityTags:
     m_keys:
     - Hostile
     - Boss
-  lootTable: []
+  lootTable: {fileID: 11400000, guid: 5dd0b43fefe108a42a4eeca46b4ea244, type: 2}
   weaponPivot: {fileID: 0}
   vfxPivot: {fileID: 0}
   defaultMaterial: {fileID: 2100000, guid: 402652d384d5b0443b678775b9efe2d0, type: 2}
@@ -1365,7 +1368,7 @@ MonoBehaviour:
   head: {fileID: 4812985427933143055}
   wanderRange: 10
   attackRadius: 5
-  rotateSpeed: 180
+  rotateSpeed: 270
   explodeTime: 0.2
   damageZones:
   - {fileID: 4812985428636473547}

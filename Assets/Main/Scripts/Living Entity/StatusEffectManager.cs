@@ -10,31 +10,21 @@ public class StatusEffectManager : MonoBehaviour
 
     public static StatusEffectManager instance;
 
-    public static LivingEntity.StatusEffect BurnEffect(LivingEntity inflictor, float time, float burnDamage, float burnCycle)
+    public static LivingEntity.StatusEffectInflictor Get(string id)
     {
-        string[] tags = new string[] { "StatusEffect", "Fire" };
-
-        LivingEntity.AttackInfo burnDamageAttackInfo = LivingEntity.AttackInfo.Create()
-            .Damage(burnDamage)
-            .Tags(tags);
-
-        return GeneralStatusEffect.Create("status_effect_burn", inflictor, time)
-            .AttachVFX(instance.burnVFX)
-            .DamageOverTime(burnDamageAttackInfo, burnCycle, new string[] { "StatusEffect", "Fire" }, false);
-    }
-
-    public static LivingEntity.StatusEffect FrozenEffect(LivingEntity inflictor, float time)
-    {
-        return GeneralStatusEffect.Create("status_effect_frozen", inflictor, time)
-            .AttachVFX(instance.frozenVFX)
-            .RemoveOnHurt()
-            .RemoveTargetControl();
-    }
-
-    public static LivingEntity.StatusEffect FrenzyEffect(LivingEntity inflictor, float time)
-    {
-        return GeneralStatusEffect.Create("status_effect_frenzy", inflictor, time)
-            .AttachVFX(instance.frenzyVFX);
+        if (id == "status_effect_burn")
+        {
+            return p_BurnEffect;
+        }
+        if (id == "status_effect_frozen")
+        {
+            return p_FrozenEffect;
+        }
+        if (id == "status_effect_frenzy")
+        {
+            return p_FrenzyEffect;
+        }
+        return null;
     }
 
     private void Start()
@@ -47,6 +37,36 @@ public class StatusEffectManager : MonoBehaviour
         {
             Debug.LogError("There can only be one instance of StatusEffectManager.");
         }
+    }
+
+    private static LivingEntity.StatusEffect p_BurnEffect(LivingEntity inflictor, float time, int level)
+    {
+        string[] tags = new string[] { "StatusEffect", "Fire" };
+
+        LivingEntity.AttackInfo burnDamageAttackInfo = LivingEntity.AttackInfo.Create()
+            .Damage(0.25f * level)
+            .Tags(tags);
+
+        return GeneralStatusEffect.Create("status_effect_burn", inflictor, time)
+            .AttachVFX(instance.burnVFX)
+            .DamageOverTime(burnDamageAttackInfo, 0.5f, new string[] { "StatusEffect", "Fire" }, false);
+    }
+
+    private static LivingEntity.StatusEffect p_FrozenEffect(LivingEntity inflictor, float time, int level)
+    {
+        return GeneralStatusEffect.Create("status_effect_frozen", inflictor, time)
+            .AttachVFX(instance.frozenVFX)
+            .RemoveOnHurt()
+            .RemoveTargetControl();
+    }
+
+    private static LivingEntity.StatusEffect p_FrenzyEffect(LivingEntity inflictor, float time, int level)
+    {
+        return GeneralStatusEffect.Create("status_effect_frenzy", inflictor, time)
+            .AttachVFX(instance.frenzyVFX)
+            .ModifyStat(FixedStatModifier.Create(GameManager.GetGameContext())
+                .Multiplication("attackSpeed", (1.0f + level * 0.5f))
+                .Multiplication("reloadSpeed", (1.0f + level * 0.5f)));
     }
 
     private class GeneralStatusEffect : LivingEntity.StatusEffect

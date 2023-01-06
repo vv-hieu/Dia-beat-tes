@@ -27,7 +27,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1739286075599827012}
   m_Father: {fileID: 7305033726301441921}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -55,12 +56,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4796547880439998035}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.35, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7305033726301441921}
+  m_Father: {fileID: 4222324233123236348}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7354191291283010570
@@ -103,8 +104,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: -1287061927, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -461366806, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -144,7 +145,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1739286075599827012}
   - {fileID: 4222324233123236348}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -161,6 +161,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af35ad52357e1f4cb8b1daab9790cfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: Necromancer's Staff
+  weaponSprite: {fileID: -461366806, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
   sprite: {fileID: 7354191291283010570}
   projectile: {fileID: 2189251045002786747, guid: 40f21544721f30949af5607a9dc98ddd, type: 3}
   projectileSpawnPosition: {fileID: 4222324233123236348}
@@ -175,4 +177,5 @@ MonoBehaviour:
   bulletSpeed: 10
   bulletLifetime: 0.5
   bulletCapacity: 30
-  tags: []
+  tags:
+  - Projectile

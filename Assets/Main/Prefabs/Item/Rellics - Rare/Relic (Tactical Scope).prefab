@@ -71,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 482527371
+  m_SortingLayer: 3
   m_SortingOrder: 3
   m_Sprite: {fileID: -1769740864, guid: 25524b2420f34f34ab621bba67a8222e, type: 3}
   m_Color: {r: 0.2, g: 1, b: 0.4, a: 0.3}
@@ -178,6 +178,7 @@ MonoBehaviour:
     name: Tactical Scope
     description: +1 bullet precision
     type: 1
+    price: 0
   sprite: {fileID: 8272614711378389894}
   shadow: {fileID: 8272614711149105073}
   aura: {fileID: 8272614709674117526}
@@ -265,8 +266,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 482527371
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.39215687}
@@ -349,10 +350,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 482527371
+  m_SortingLayer: 3
   m_SortingOrder: 2
-  m_Sprite: {fileID: -365662275, guid: 0ebb67d024b4fc04e8952ba6abfd1bd6, type: 3}
+  m_Sprite: {fileID: 893669229, guid: 0ebb67d024b4fc04e8952ba6abfd1bd6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

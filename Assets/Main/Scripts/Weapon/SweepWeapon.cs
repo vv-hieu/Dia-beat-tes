@@ -46,7 +46,7 @@ public class SweepWeapon : MeleeWeapon
             Melee m = go.GetComponent<Melee>();
             if (m != null)
             {
-                m.Init(GetUser(), direction, p_AttackTime(), sweepSize, m_reverse, GetAffectedTags(), p_OnMeleeHit);
+                m.Init(GetUser(), direction, p_AttackTime(), p_MeleeRange(), m_reverse, GetAffectedTags(), p_OnMeleeHit);
             }
             m_reverse = !m_reverse;
             m_time = 0.0f;
@@ -122,6 +122,16 @@ public class SweepWeapon : MeleeWeapon
             userAttackSpeed = GetUser().statSet.GetValue("attackSpeed");
         }
         return activateTime * (1.0f - userAttackSpeed * 0.05f);
+    }
+
+    private float p_MeleeRange()
+    {
+        float userMeleeRange = 0.0f;
+        if (GetUser() != null)
+        {
+            userMeleeRange = GetUser().statSet.GetValue("meleeRange");
+        }
+        return sweepSize * (1.0f + userMeleeRange * 0.2f);
     }
 
     private float p_Damage()

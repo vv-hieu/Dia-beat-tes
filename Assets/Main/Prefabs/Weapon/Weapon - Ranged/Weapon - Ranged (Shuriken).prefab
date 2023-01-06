@@ -103,8 +103,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: -461366806, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -2051081136, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -161,6 +161,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af35ad52357e1f4cb8b1daab9790cfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: Shuriken
+  weaponSprite: {fileID: -2051081136, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
   sprite: {fileID: 5714661390625856800}
   projectile: {fileID: 5525423460574286, guid: da69dc3a356b86940979c3a51ba22e6c, type: 3}
   projectileSpawnPosition: {fileID: 1430295057478492374}
@@ -168,11 +170,12 @@ MonoBehaviour:
   damage: 1
   knockback: 0.2
   stunTime: 0.2
-  fireRate: 0.4
+  fireRate: 0.2
   reloadTime: 0.1
   bulletCount: 3
   bulletSpread: 90
   bulletSpeed: 10
   bulletLifetime: 1
   bulletCapacity: 3
-  tags: []
+  tags:
+  - Projectile

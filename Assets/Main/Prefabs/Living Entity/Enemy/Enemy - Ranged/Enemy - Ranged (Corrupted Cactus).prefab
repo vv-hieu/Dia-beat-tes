@@ -345,29 +345,13 @@ MonoBehaviour:
   reloadSpeed:
     m_enabled: 1
     m_value: 0
+  meleeRange:
+    m_enabled: 1
+    m_value: 0
   entityTags:
     m_keys:
     - Hostile
-    - Undead
-  lootTable:
-  - chance: 0.1
-    rolls: 1
-    entries:
-    - item: cherry
-      weight: 8
-      count: {x: 0, y: 1}
-      weightAffectedByLuck: 0
-      countAffectedByLuck: 1
-    - item: strawberry
-      weight: 1
-      count: {x: 0, y: 1}
-      weightAffectedByLuck: 1
-      countAffectedByLuck: 1
-    - item: energy_drink
-      weight: 1
-      count: {x: 0, y: 1}
-      weightAffectedByLuck: 1
-      countAffectedByLuck: 1
+  lootTable: {fileID: 11400000, guid: 5dd0b43fefe108a42a4eeca46b4ea244, type: 2}
   weaponPivot: {fileID: 7507608753773999287}
   vfxPivot: {fileID: 7507608753980141165}
   defaultMaterial: {fileID: 2100000, guid: 402652d384d5b0443b678775b9efe2d0, type: 2}

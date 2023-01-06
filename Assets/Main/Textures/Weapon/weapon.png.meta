@@ -185,8 +185,8 @@ TextureImporter:
       name: weapon_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 16
+        x: 48
+        y: 48
         width: 16
         height: 16
       alignment: 0
@@ -206,7 +206,7 @@ TextureImporter:
       name: weapon_4
       rect:
         serializedVersion: 2
-        x: 16
+        x: 0
         y: 16
         width: 16
         height: 16
@@ -227,7 +227,7 @@ TextureImporter:
       name: weapon_5
       rect:
         serializedVersion: 2
-        x: 32
+        x: 16
         y: 16
         width: 16
         height: 16
@@ -248,7 +248,7 @@ TextureImporter:
       name: weapon_6
       rect:
         serializedVersion: 2
-        x: 48
+        x: 32
         y: 16
         width: 16
         height: 16
@@ -269,8 +269,8 @@ TextureImporter:
       name: weapon_7
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 48
+        y: 16
         width: 16
         height: 16
       alignment: 0
@@ -290,7 +290,7 @@ TextureImporter:
       name: weapon_8
       rect:
         serializedVersion: 2
-        x: 16
+        x: 0
         y: 0
         width: 16
         height: 16
@@ -303,6 +303,27 @@ TextureImporter:
       bones: []
       spriteID: c7beed906ed824045ad711afb8aeb576
       internalID: -2051081136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: weapon_9
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 989583b8680b09e47802b8299abe7064
+      internalID: -531796295
       vertices: []
       indices: 
       edges: []
@@ -322,6 +343,7 @@ TextureImporter:
       weapon_1: -977566408
       weapon_2: 1335663714
       weapon_7: -461366806
+      weapon_9: -531796295
       weapon_3: -255138821
       weapon_4: -1864042516
       weapon_8: -2051081136

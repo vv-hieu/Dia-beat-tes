@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Relic : MonoBehaviour
 {
@@ -22,6 +20,19 @@ public class Relic : MonoBehaviour
     private float       m_time      = 0.0f;
     private float       m_hoverTime = 0.0f;
     private bool        m_hover     = false;
+
+    public Property property
+    {
+        get
+        {
+            return relicProperty;
+        }
+    }
+
+    public void AddToPlayer(Player player)
+    {
+        player.AddRelic(id, relicProperty);
+    }
 
     private void Awake()
     {
@@ -59,13 +70,6 @@ public class Relic : MonoBehaviour
         float d = Mathf.Cos(2.0f * m_time);
         sprite.localPosition = m_originalSpritePos + Vector3.up * d * 0.02f;
         shadow.localScale    = m_originalShadowScale * (1.0f + d * 0.05f);
-        transform.localScale = m_originalScale * Mathf.Clamp01(m_time * 5.0f) * (1.0f + m_hoverTime * 0.2f);
-    
-        if (m_hover && Input.GetMouseButtonDown(0))
-        {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().AddRelic(id, relicProperty);
-            Destroy(gameObject);
-        }
     }
 
     private void OnMouseEnter()
@@ -82,7 +86,7 @@ public class Relic : MonoBehaviour
     {
         if (relicProperty.type == Type.Cursed)
         {
-            return new Color(0.2f, 0.0f, 0.0f, 0.8f);
+            return new Color(0.2f, 0.0f, 0.0f, 0.3f);
         }
         if (relicProperty.type == Type.Common)
         {
@@ -101,6 +105,7 @@ public class Relic : MonoBehaviour
         public string name;
         public string description;
         public Type   type;
+        public int    price;
   
         public StatModifierGenerator   statModifierGenerator;
         public AttackModifierGenerator attackDealtModifierGenerator;

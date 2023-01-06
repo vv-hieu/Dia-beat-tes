@@ -70,8 +70,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 482527371
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.39215687}
@@ -153,6 +153,7 @@ MonoBehaviour:
     name: Milk
     description: +1 shield
     type: 0
+    price: 0
   sprite: {fileID: 1346089856988099641}
   shadow: {fileID: 1346089855714206627}
   aura: {fileID: 4175232421948816055}
@@ -240,8 +241,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 482527371
+  m_SortingLayer: 3
   m_SortingOrder: 2
   m_Sprite: {fileID: -1539108850, guid: 0ebb67d024b4fc04e8952ba6abfd1bd6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -325,8 +326,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 482527371
+  m_SortingLayer: 3
   m_SortingOrder: 3
   m_Sprite: {fileID: -1769740864, guid: 25524b2420f34f34ab621bba67a8222e, type: 3}
   m_Color: {r: 0.2, g: 0.8, b: 1, a: 0.3}

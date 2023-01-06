@@ -71,11 +71,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 482527371
+  m_SortingLayer: 3
   m_SortingOrder: 3
   m_Sprite: {fileID: -1769740864, guid: 25524b2420f34f34ab621bba67a8222e, type: 3}
-  m_Color: {r: 0.2, g: 0, b: 0, a: 0.8}
+  m_Color: {r: 0.2, g: 0, b: 0, a: 0.3}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -176,9 +176,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   relicProperty:
     name: Silver Bullet
-    description: +2 attack damage to undead enemy, -2 attack damage to other types
-      of enemy
+    description: +2 attack damage to undead enemies, -2 attack damage to other types
+      of enemies
     type: 2
+    price: 0
   sprite: {fileID: 5113967161164137568}
   shadow: {fileID: 5113967160935970614}
   aura: {fileID: 5113967160691599358}
@@ -195,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 094c97879ebd89e498defb326f96e70a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  relic: 19
+  relic: 21
 --- !u!1 &5113967160935970615
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,8 +267,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 482527371
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.39215687}
@@ -350,10 +351,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 482527371
+  m_SortingLayer: 3
   m_SortingOrder: 2
-  m_Sprite: {fileID: -1892792418, guid: 0ebb67d024b4fc04e8952ba6abfd1bd6, type: 3}
+  m_Sprite: {fileID: -1112559262, guid: 0ebb67d024b4fc04e8952ba6abfd1bd6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

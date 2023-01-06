@@ -70,8 +70,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 482527371
+  m_SortingLayer: 3
   m_SortingOrder: 2
   m_Sprite: {fileID: 1132955892, guid: 0ebb67d024b4fc04e8952ba6abfd1bd6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -154,8 +154,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 482527371
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.39215687}
@@ -203,7 +203,7 @@ Transform:
   - {fileID: 4648787173615416360}
   - {fileID: 7772347771764665661}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &4648787174197501447
 CircleCollider2D:
@@ -237,6 +237,7 @@ MonoBehaviour:
     name: Apple
     description: +1 health
     type: 0
+    price: 0
   sprite: {fileID: 4648787172205208498}
   shadow: {fileID: 4648787173615416360}
   aura: {fileID: 7772347771764665660}
@@ -325,8 +326,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 482527371
+  m_SortingLayer: 3
   m_SortingOrder: 3
   m_Sprite: {fileID: -1769740864, guid: 25524b2420f34f34ab621bba67a8222e, type: 3}
   m_Color: {r: 0.2, g: 0.8, b: 1, a: 0.3}

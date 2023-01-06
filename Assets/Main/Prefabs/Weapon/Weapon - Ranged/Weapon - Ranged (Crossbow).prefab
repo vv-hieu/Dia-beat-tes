@@ -72,8 +72,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: -1356914388, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -1287061927, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -130,6 +130,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af35ad52357e1f4cb8b1daab9790cfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: Crossbow
+  weaponSprite: {fileID: -1287061927, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
   sprite: {fileID: 234672019465976774}
   projectile: {fileID: 3275910719399180631, guid: a0b7a4c3a574a3046ba6b8267847e86c, type: 3}
   projectileSpawnPosition: {fileID: 6905807625281750576}
@@ -144,7 +146,8 @@ MonoBehaviour:
   bulletSpeed: 15
   bulletLifetime: 1
   bulletCapacity: 2
-  tags: []
+  tags:
+  - Projectile
 --- !u!1 &6905807625281750577
 GameObject:
   m_ObjectHideFlags: 0

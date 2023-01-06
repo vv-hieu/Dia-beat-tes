@@ -41,7 +41,7 @@ public class PierceWeapon : MeleeWeapon
             Melee m = go.GetComponent<Melee>();
             if (m != null)
             {
-                m.Init(GetUser(), direction, p_AttackTime(), pierceSize, false, GetAffectedTags(), p_OnMeleeHit);
+                m.Init(GetUser(), direction, p_AttackTime(), p_MeleeRange(), false, GetAffectedTags(), p_OnMeleeHit);
             }
             m_time = 0.0f;
         }
@@ -116,6 +116,16 @@ public class PierceWeapon : MeleeWeapon
             userAttackSpeed = GetUser().statSet.GetValue("attackSpeed");
         }
         return activateTime * (1.0f - userAttackSpeed * 0.05f);
+    }
+
+    private float p_MeleeRange()
+    {
+        float userMeleeRange = 0.0f;
+        if (GetUser() != null)
+        {
+            userMeleeRange = GetUser().statSet.GetValue("meleeRange");
+        }
+        return pierceSize * (1.0f + userMeleeRange * 0.2f);
     }
 
     private float p_Damage()

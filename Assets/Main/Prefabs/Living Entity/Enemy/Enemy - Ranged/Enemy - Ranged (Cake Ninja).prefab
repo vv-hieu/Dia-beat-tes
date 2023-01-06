@@ -301,19 +301,13 @@ MonoBehaviour:
   reloadSpeed:
     m_enabled: 1
     m_value: 0
+  meleeRange:
+    m_enabled: 1
+    m_value: 0
   entityTags:
     m_keys:
     - Hostile
-    - Undead
-  lootTable:
-  - chance: 0.8
-    rolls: 6
-    entries:
-    - item: cake_piece
-      weight: 1
-      count: {x: 0, y: 1}
-      weightAffectedByLuck: 0
-      countAffectedByLuck: 1
+  lootTable: {fileID: 11400000, guid: 383fe0642b2cafb44a36e12ec227f2ae, type: 2}
   weaponPivot: {fileID: 4983003021266988345}
   vfxPivot: {fileID: 4983003021337671651}
   defaultMaterial: {fileID: 2100000, guid: 402652d384d5b0443b678775b9efe2d0, type: 2}
@@ -591,7 +585,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4983003021266988346}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.25, z: 0}
+  m_LocalPosition: {x: 0, y: -0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

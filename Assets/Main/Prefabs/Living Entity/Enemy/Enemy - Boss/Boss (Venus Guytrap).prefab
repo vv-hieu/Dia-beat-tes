@@ -391,11 +391,14 @@ MonoBehaviour:
   reloadSpeed:
     m_enabled: 1
     m_value: 0
+  meleeRange:
+    m_enabled: 1
+    m_value: 0
   entityTags:
     m_keys:
     - Hostile
     - Boss
-  lootTable: []
+  lootTable: {fileID: 11400000, guid: 5dd0b43fefe108a42a4eeca46b4ea244, type: 2}
   weaponPivot: {fileID: 1749531922698606947}
   vfxPivot: {fileID: 0}
   defaultMaterial: {fileID: 2100000, guid: 402652d384d5b0443b678775b9efe2d0, type: 2}

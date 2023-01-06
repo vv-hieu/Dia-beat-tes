@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    [Header("Weapon Properties")]
+    [SerializeField] private string weaponName;
+    [SerializeField] private Sprite weaponSprite;
+
     [Header("References")]
     [SerializeField] private SpriteRenderer sprite;
 
@@ -26,6 +30,16 @@ public class Weapon : MonoBehaviour
     private string[]     m_affectedTags;
 
     protected Vector2 direction { get; private set; }
+
+    public string Name()
+    {
+        return weaponName;
+    }
+
+    public Sprite Sprite()
+    {
+        return weaponSprite;
+    }
 
     public virtual Type WeaponType()
     {

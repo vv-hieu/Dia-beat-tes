@@ -83,7 +83,7 @@ public class Collectible : MonoBehaviour
                             }
                         case CollectibleType.EnergyDrink:
                             {
-
+                                livingEntity.AddStatusEffect(StatusEffectManager.Get("status_effect_frenzy")(null, 2.0f, 1));
                                 break;
                             }
                         default:

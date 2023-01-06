@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: -977566408, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -129,6 +129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6424837c8fdaad647872846965883d38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: Katana
+  weaponSprite: {fileID: -977566408, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
   sprite: {fileID: 5130541778559349625}
   sweepAttack: {fileID: 979914582220970763, guid: 1ff4a34b938f86f4baed9fcf0116ac1a, type: 3}
   idleAngle: 90
@@ -139,4 +141,5 @@ MonoBehaviour:
   stunTime: 0.2
   attackTime: 0.2
   activateTime: 0.3
-  tags: []
+  tags:
+  - Melee

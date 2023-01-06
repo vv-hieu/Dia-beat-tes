@@ -21,9 +21,9 @@ TagManager:
   - DamageZone
   - MapWall
   - MapWalkable
-  - 
-  - 
-  - 
+  - ProjectileBlocking
+  - NPC
+  - Gateway
   - 
   - 
   - 
@@ -50,4 +50,7 @@ TagManager:
     locked: 0
   - name: Health Bar
     uniqueID: 2097870195
+    locked: 0
+  - name: UI
+    uniqueID: 482527371
     locked: 0
