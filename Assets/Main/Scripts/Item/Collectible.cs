@@ -5,8 +5,8 @@ public class Collectible : MonoBehaviour
     [Header("Collectible")]
     [SerializeField] private CollectibleType type = CollectibleType.Unknown;
 
-    [Header("VFX")]
-    [SerializeField] private GameObject pickupEffect;
+    [Header("Audio")]
+    [SerializeField] private AudioClip pickupSound;
 
     [Header("References")]
     [SerializeField] private Transform sprite;
@@ -17,10 +17,22 @@ public class Collectible : MonoBehaviour
     private Vector3 m_originalSpritePos;
     private Vector3 m_originalShadowScale;
     private Vector3 m_originalScale;
-    private float   m_time = 0.0f;
+    private float   m_time        = 0.0f;
+    private float   m_timeScale   = 1.0f;
+    private float   m_despawnTime = 0.0f;
 
     private static System.Random RANDOM       = new System.Random();
     private static float         DESPAWN_TIME = 0.5f * 60.0f;
+
+    private void Awake()
+    {
+        GameStateManager.instance.onGameStateChanged += p_OnGameStateChanged;
+    }
+
+    private void OnDestroy()
+    {
+        GameStateManager.instance.onGameStateChanged -= p_OnGameStateChanged;
+    }
 
     private void Start()
     {
@@ -31,13 +43,14 @@ public class Collectible : MonoBehaviour
 
     private void Update()
     {
-        m_time += Time.deltaTime;
+        m_time        += Time.deltaTime;
+        m_despawnTime += Time.deltaTime * m_timeScale;
         float d = Mathf.Cos(2.0f * m_time);
         sprite.localPosition = m_originalSpritePos + Vector3.up * d * 0.02f;
         shadow.localScale = m_originalShadowScale * (1.0f + d * 0.05f);
         transform.localScale = m_originalScale * Mathf.Clamp01(m_time * 5.0f);
 
-        if (m_time >= DESPAWN_TIME - 5.0f)
+        if (m_despawnTime >= DESPAWN_TIME - 5.0f)
         {
             bool enabled = (int)((m_time - DESPAWN_TIME) * 4.0f) % 2 != 0;
             sprite.gameObject.SetActive(enabled);
@@ -60,10 +73,7 @@ public class Collectible : MonoBehaviour
             {
                 if (player.CanPickUp(type))
                 {
-                    if (pickupEffect != null)
-                    {
-                        Instantiate(pickupEffect, player.transform.position, Quaternion.identity, player.transform);
-                    }
+                    SoundManager.PlaySound(pickupSound);
                     switch (type)
                     {
                         case CollectibleType.CakePiece:
@@ -92,6 +102,21 @@ public class Collectible : MonoBehaviour
                     Destroy(gameObject);
                 }
             }
+        }
+    }
+
+    private void p_OnGameStateChanged(GameState newState)
+    {
+        switch (newState)
+        {
+            case GameState.Gameplay:
+                m_timeScale = 1.0f;
+                break;
+            case GameState.Paused:
+                m_timeScale = 0.0f;
+                break;
+            default:
+                break;
         }
     }
 

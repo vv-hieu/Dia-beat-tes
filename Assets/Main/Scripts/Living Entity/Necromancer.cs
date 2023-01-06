@@ -177,7 +177,7 @@ public class Necromancer : Boss
 
     private void p_Summon()
     {
-        if (m_summonCooldown > 0.0f)
+        if (m_summonCooldown > 0.0f || !livingEntity.isInControl)
         {
             return;
         }

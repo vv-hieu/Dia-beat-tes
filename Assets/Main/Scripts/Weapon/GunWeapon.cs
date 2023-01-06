@@ -27,6 +27,16 @@ public class GunWeapon : RangedWeapon
     private float m_reloadRotate = 360.0f;
     private bool  m_reloaded     = false;
 
+    public override float BulletCount()
+    {
+        return m_currentBulletCount;
+    }
+
+    public override float BulletCapacity()
+    {
+        return p_BulletCapacity();
+    }
+
     public override void OnStart()
     {
         p_Reload();

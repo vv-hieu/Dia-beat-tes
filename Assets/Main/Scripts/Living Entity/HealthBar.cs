@@ -1,6 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-[ExecuteInEditMode]
 public class HealthBar : MonoBehaviour
 {
     [Header("References")]
@@ -8,22 +8,36 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private Material     material;
 
     private Renderer m_renderer;
+    private Image    m_image;
     private Material m_material;
     private int      m_healthId        = 0;
     private int      m_shieldId        = 0;
     private int      m_currentHealthId = 0;
     private int      m_currentShieldId = 0;
 
+    public void SetEntity(LivingEntity entity)
+    {
+        livingEntity = entity;
+    }
+
     private void Awake()
     {
-        m_renderer          = GetComponent<Renderer>();
-        m_renderer.material = Instantiate(material);
+        m_renderer = GetComponent<Renderer>();
+        m_image    = GetComponent<Image>();
+        if (m_renderer != null)
+        {
+            m_renderer.material = Instantiate(material);
+            m_material = m_renderer.material;
+        }
+        else if (m_image != null)
+        {
+            m_image.material = Instantiate(material);
+            m_material = m_image.material;
+        }
     }
 
     private void Start()
     {
-        m_material = m_renderer.material;
-
         m_healthId        = Shader.PropertyToID("_Health");
         m_shieldId        = Shader.PropertyToID("_Shield");
         m_currentHealthId = Shader.PropertyToID("_CurrentHealth");
@@ -32,10 +46,13 @@ public class HealthBar : MonoBehaviour
 
     private void Update()
     {
-        m_material.SetFloat(m_healthId       , p_Health());
-        m_material.SetFloat(m_shieldId       , p_Shield());
-        m_material.SetFloat(m_currentHealthId, p_CurrentHealth());
-        m_material.SetFloat(m_currentShieldId, p_CurrentShield());
+        if (m_material != null)
+        {
+            m_material.SetFloat(m_healthId,        p_Health());
+            m_material.SetFloat(m_shieldId,        p_Shield());
+            m_material.SetFloat(m_currentHealthId, p_CurrentHealth());
+            m_material.SetFloat(m_currentShieldId, p_CurrentShield());
+        }
     }
 
     private float p_CurrentHealth()

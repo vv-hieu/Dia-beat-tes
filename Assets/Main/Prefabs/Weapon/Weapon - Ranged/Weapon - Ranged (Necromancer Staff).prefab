@@ -163,6 +163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Necromancer's Staff
   weaponSprite: {fileID: -461366806, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
+  useSound: {fileID: 8300000, guid: d43ca80b9cad7bb4eb454351f8209908, type: 3}
   sprite: {fileID: 7354191291283010570}
   projectile: {fileID: 2189251045002786747, guid: 40f21544721f30949af5607a9dc98ddd, type: 3}
   projectileSpawnPosition: {fileID: 4222324233123236348}

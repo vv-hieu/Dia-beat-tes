@@ -8,6 +8,11 @@ public class Lobby : MonoBehaviour
 
     private GameObject m_currentMenu;
 
+    public void ResetLevelCounter()
+    {
+        GameManager.ResetLevel();
+    }
+
     public void ResetCurrentMenu()
     {
         m_currentMenu = null;
@@ -46,7 +51,7 @@ public class Lobby : MonoBehaviour
             {
                 m_currentMenu.SetActive(false);
                 m_currentMenu = null;
-                GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().EnableInput();
+                GameStateManager.instance.SetState(GameState.Gameplay);
             }
             else
             {
@@ -54,7 +59,7 @@ public class Lobby : MonoBehaviour
                 {
                     m_currentMenu = pauseMenu;
                     m_currentMenu.SetActive(true);
-                    GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().DisableInput();
+                    GameStateManager.instance.SetState(GameState.Paused);
                 }
             }
         }
@@ -62,6 +67,6 @@ public class Lobby : MonoBehaviour
 
     private bool p_UseMoney(int amount)
     {
-        return true;
+        return GameManager.SpendCoin(amount);
     }
 }

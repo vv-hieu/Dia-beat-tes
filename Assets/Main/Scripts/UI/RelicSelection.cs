@@ -172,7 +172,12 @@ public class RelicSelection : MonoBehaviour
             if (relic != null)
             {
                 Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-                if (!purchaseRequired || p_Purchase(relic.GetComponent<Relic>().property.price))
+                bool canBuy = true;
+                if (purchaseRequired)
+                {
+                    canBuy = p_Purchase(relic.GetComponent<Relic>().property.price);
+                }
+                if (canBuy)
                 {
                     if (player != null)
                     {
@@ -228,7 +233,7 @@ public class RelicSelection : MonoBehaviour
 
     private bool p_Purchase(int amount)
     {
-        return true;
+        return GameManager.SpendCoin(amount);
     }
 
     public struct QueryInfo 

@@ -86,7 +86,7 @@ public class WeaponForging : MonoBehaviour
 
     private bool p_UseMoney(int amount)
     {
-        return true;
+        return GameManager.SpendCoin(amount);
     }
 
     [Serializable]

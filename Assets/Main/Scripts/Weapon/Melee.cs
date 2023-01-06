@@ -18,7 +18,6 @@ public class Melee : MonoBehaviour
     private bool                    m_firstFrame  = true;
     private float                   m_time        = 0.0f;
     private float                   m_lifetime    = 0.0f;
-    private HashSet<LivingEntity>   m_hitEntities = new HashSet<LivingEntity>();
 
     public void Init(LivingEntity owner, Vector2 direction, float lifetime, float size, bool flipped, string[] affectedTags, OnHit onHit)
     {
@@ -26,7 +25,7 @@ public class Melee : MonoBehaviour
         {
             m_init = true;
 
-            lifetime = Mathf.Max(0.001f, lifetime);
+            lifetime = Mathf.Max(0.1f, lifetime);
 
             this.owner     = owner;
             this.direction = direction;
@@ -68,30 +67,25 @@ public class Melee : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        m_firstFrame = false;
-        m_time += Time.deltaTime;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        LivingEntity entity = LivingEntity.FromCollider(collision);
-        if (entity != null && m_onHit != null)
+        if (m_init)
         {
-            if (m_hitEntities.Add(entity) && entity.HasTagsAny(m_affectTags))
-            {
-                m_onHit(entity, this);
-            }
-        }
-    }
+            Collider2D[] colliders = new Collider2D[100];
+            int count = Physics2D.OverlapCollider(GetComponent<Collider2D>(), new ContactFilter2D().NoFilter(), colliders);
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out LivingEntity entity) && m_onHit != null)
-        {
-            if (m_hitEntities.Add(entity) && entity.HasTagsAny(m_affectTags))
+            for (int i = 0; i < count; ++i)
             {
-                m_onHit(entity, this);
+                LivingEntity entity = LivingEntity.FromCollider(colliders[i]);
+                if (entity != null && m_onHit != null)
+                {
+                    if (entity.HasTagsAny(m_affectTags))
+                    {
+                        m_onHit(entity, this);
+                    }
+                }
             }
+
+            m_firstFrame = false;
+            m_time += Time.deltaTime;
         }
     }
 

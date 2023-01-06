@@ -1,9 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
+    [SerializeField] private AudioClip deathSound;
+
     protected LivingEntity livingEntity { get; private set; }
 
     private bool m_died = false;
@@ -32,12 +32,18 @@ public class Boss : MonoBehaviour
 
     private void Start()
     {
-        livingEntity.onDeath = OnDeath;
+        livingEntity.onDeath = p_OnDeath;
         OnStart();
     }
 
     private void Update()
     {
         OnUpdate();
+    }
+
+    private void p_OnDeath()
+    {
+        OnDeath();
+        SoundManager.PlaySound(deathSound);
     }
 }

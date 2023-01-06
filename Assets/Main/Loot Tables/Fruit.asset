@@ -13,12 +13,16 @@ MonoBehaviour:
   m_Name: Fruit
   m_EditorClassIdentifier: 
   pools:
-  - chance: 0.8
+  - chance: 0.3
+    additionalChancePerLuckLevel: 0.1
     rolls: 3
     entries:
     - item: {fileID: 4820841103614570231, guid: 1adff6b8c123c414bb1e81c1f141e8ff, type: 3}
-      weight: 7
+      baseWeight: 5
+      additionalWeightPerLuckLevel: 0
     - item: {fileID: 7987639848806952558, guid: b9608662b66a08145814680331036f32, type: 3}
-      weight: 3
+      baseWeight: 5
+      additionalWeightPerLuckLevel: 0
     - item: {fileID: 3799053131542543978, guid: b89f9d1304abc4647a28ed5a48a94114, type: 3}
-      weight: 1
+      baseWeight: 1
+      additionalWeightPerLuckLevel: 2

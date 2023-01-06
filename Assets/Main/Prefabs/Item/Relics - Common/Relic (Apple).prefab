@@ -237,7 +237,7 @@ MonoBehaviour:
     name: Apple
     description: +1 health
     type: 0
-    price: 0
+    price: 10
   sprite: {fileID: 4648787172205208498}
   shadow: {fileID: 4648787173615416360}
   aura: {fileID: 7772347771764665660}

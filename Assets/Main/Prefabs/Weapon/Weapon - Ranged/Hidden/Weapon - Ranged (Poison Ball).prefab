@@ -79,6 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: 
   weaponSprite: {fileID: 0}
+  useSound: {fileID: 8300000, guid: 63ed4fe3cced49a4e8d46e2f3c5e9d09, type: 3}
   sprite: {fileID: 6033298990418874771}
   projectile: {fileID: 4045980479880368074, guid: a8a6016fc866bc348866d2de3fd44514, type: 3}
   projectileSpawnPosition: {fileID: 1093661058847452261}

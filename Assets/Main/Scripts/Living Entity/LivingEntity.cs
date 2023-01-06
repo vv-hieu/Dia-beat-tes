@@ -25,7 +25,7 @@ public class LivingEntity : MonoBehaviour
     [SerializeField] private Optional<float> meleeRange;
 
     [Header("Entity Tags")]
-    [SerializeField] private SerializableHashSet<string> entityTags = new SerializableHashSet<string>();
+    [SerializeField] private List<string> entityTags = new List<string>();
 
     [Header("Loot")]
     [SerializeField] private LootTable lootTable;
@@ -37,6 +37,9 @@ public class LivingEntity : MonoBehaviour
     [SerializeField] private Transform vfxPivot;
     [SerializeField] private Material  defaultMaterial;
     [SerializeField] private Material  hitMaterial;
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip hurtSound;
 
     [Header("Component References")]
     [SerializeField] private Collider2D[]                                 colliders;
@@ -207,6 +210,11 @@ public class LivingEntity : MonoBehaviour
         }
     }
 
+    public void SetInvulnerableTime(float amount)
+    {
+        m_invulnerableTime = amount;
+    }
+
     public bool HasTag(string tag)
     {
         return entityTags.Contains(tag);
@@ -372,7 +380,7 @@ public class LivingEntity : MonoBehaviour
 
     public bool UseWeapon(string[] affectedTags)
     {
-        if (m_weapon != null)
+        if (m_weapon != null && isInControl)
         {
             return m_weapon.Use(affectedTags);
         }
@@ -391,6 +399,17 @@ public class LivingEntity : MonoBehaviour
     {
         m_navMeshAgent = GetComponent<NavMeshAgent>();
         m_rigidbody    = GetComponent<Rigidbody2D>();
+
+        GameStateManager.instance.onGameStateChanged += p_OnGameStateChanged;
+    }
+
+    private void OnDestroy()
+    {
+        foreach (Collider2D collider in colliders)
+        {
+            ENTITY_FROM_COLLIDER.Remove(collider);
+        }
+        GameStateManager.instance.onGameStateChanged -= p_OnGameStateChanged;
     }
 
     private void Start()
@@ -434,6 +453,8 @@ public class LivingEntity : MonoBehaviour
 
     private void Update()
     {
+        currentHealth = Mathf.Clamp(currentHealth, 0.0f, statSet.GetValue("health"));
+
         if (m_navMeshAgent != null && statSet != null && statSet.TryGetValue("speed", out float speed))
         {
             m_navMeshAgent.speed = speed;
@@ -462,7 +483,7 @@ public class LivingEntity : MonoBehaviour
         m_stunTime         = Mathf.Max(0.0f, m_stunTime - Time.deltaTime);
         if (m_navMeshAgent != null)
         {
-            m_navMeshAgent.enabled = (m_stunTime <= 0.0f && currentHealth > 0.0f && isInControl);
+            m_navMeshAgent.enabled = (m_stunTime <= 0.0f && currentHealth > 0.0f && isInControl && (GameStateManager.instance.currentState != GameState.Paused));
         }
 
         isHurt = (m_hurtTime > 0.0f);
@@ -507,7 +528,10 @@ public class LivingEntity : MonoBehaviour
 
         if (m_isKnockedback)
         {
-            m_rigidbody.MovePosition(m_knockbackOrigin + m_knockbackDir * Mathf.Pow(Mathf.Clamp01(m_knockbackTime * 10.0f), 0.5f));
+            if (m_rigidbody != null)
+            {
+                m_rigidbody.MovePosition(m_knockbackOrigin + m_knockbackDir * Mathf.Pow(Mathf.Clamp01(m_knockbackTime * 10.0f), 0.5f));
+            }
             m_knockbackTime += dt;
 
             if (m_knockbackTime >= 0.1f)
@@ -537,15 +561,7 @@ public class LivingEntity : MonoBehaviour
         isMoving = (d >= 0.001f);
         m_previousPosition = new Vector2(transform.position.x, transform.position.y);
     }
-
-    private void OnDestroy()
-    {
-        foreach (Collider2D collider in colliders)
-        {
-            ENTITY_FROM_COLLIDER.Remove(collider);
-        }
-    }
-
+    
     private StatSet p_BuildStatSet()
     {
         return StatSet.NewStatSet()
@@ -616,6 +632,22 @@ public class LivingEntity : MonoBehaviour
         foreach (string effectId in attackInfo.statusEffectsInflictors.Keys)
         {
             AddStatusEffect(attackInfo.statusEffectsInflictors[effectId](context.attacker, attackInfo.statusEffectsTime[effectId], attackInfo.statusEffectsLevel[effectId]));
+        }
+        SoundManager.PlaySound(hurtSound);
+    }
+
+    private void p_OnGameStateChanged(GameState newState)
+    {
+        switch (newState)
+        {
+            case GameState.Gameplay:
+                isInControl = true;
+                break;
+            case GameState.Paused:
+                isInControl = false;
+                break;
+            default:
+                break;
         }
     }
 

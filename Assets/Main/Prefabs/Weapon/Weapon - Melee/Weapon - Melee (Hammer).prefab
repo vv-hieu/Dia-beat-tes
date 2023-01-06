@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Hammer
   weaponSprite: {fileID: -255138821, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
+  useSound: {fileID: 8300000, guid: eb0f9b7b948d5c345971ca0de39f29c5, type: 3}
   sprite: {fileID: 3592817225057706243}
   sweepAttack: {fileID: 979914582220970763, guid: 1ff4a34b938f86f4baed9fcf0116ac1a, type: 3}
   idleAngle: 90
@@ -55,8 +56,8 @@ MonoBehaviour:
   damage: 4
   knockback: 1
   stunTime: 0.6
-  attackTime: 1
-  activateTime: 0.8
+  attackTime: 0.6
+  activateTime: 0.3
   tags:
   - Melee
 --- !u!1 &1532302334167528282

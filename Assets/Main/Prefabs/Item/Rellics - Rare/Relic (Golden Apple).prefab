@@ -178,7 +178,7 @@ MonoBehaviour:
     name: Golden Apple
     description: +2 health, limits incoming damage to 10% health
     type: 1
-    price: 0
+    price: 40
   sprite: {fileID: 8804443655888337898}
   shadow: {fileID: 8804443656204181469}
   aura: {fileID: 8804443654451583482}

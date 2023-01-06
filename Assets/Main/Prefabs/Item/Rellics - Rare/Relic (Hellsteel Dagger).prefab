@@ -69,7 +69,7 @@ MonoBehaviour:
     name: Hellsteel Dagger
     description: +2 crit chance, +0.25 crit damage for each cursed relic held
     type: 1
-    price: 0
+    price: 35
   sprite: {fileID: 8241451433049040582}
   shadow: {fileID: 8241451433280537329}
   aura: {fileID: 8241451432606729430}

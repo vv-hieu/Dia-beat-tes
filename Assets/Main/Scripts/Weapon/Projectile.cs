@@ -72,20 +72,20 @@ public class Projectile : MonoBehaviour
     {
         if (m_init)
         {
-            lifeTime -= Time.deltaTime;
+            lifeTime -= Time.deltaTime * (GameStateManager.instance.currentState == GameState.Gameplay ? 1.0f : 0.0f);
             if (lifeTime <= 0.0f)
             {
                 lifeTime = 0.0f;
                 Destroy(gameObject);
             }
-            m_rotate += Time.deltaTime * angularVelocity;
+            m_rotate += Time.deltaTime * (GameStateManager.instance.currentState == GameState.Gameplay ? 1.0f : 0.0f) * angularVelocity;
         }
     }
 
     private void FixedUpdate()
     {
         Vector2 oldPos = new Vector2(transform.position.x, transform.position.y);
-        Vector2 newPos = oldPos + velocity * Time.fixedDeltaTime;
+        Vector2 newPos = oldPos + velocity * Time.fixedDeltaTime * (GameStateManager.instance.currentState == GameState.Gameplay ? 1.0f : 0.0f);
         p_Move(oldPos, newPos);
         p_RotateToDir();
     }
@@ -109,6 +109,11 @@ public class Projectile : MonoBehaviour
 
     private void p_Move(Vector2 from, Vector2 to)
     {
+        if (from == to)
+        {
+            return;
+        }
+
         Vector2 dest   = to;
         Vector2 movDir = (to - from).normalized;
         float   movDis = Vector2.Distance(from, to);

@@ -69,7 +69,7 @@ MonoBehaviour:
     name: Chainmail Armor
     description: +2 shield, excess damage is removed
     type: 1
-    price: 0
+    price: 60
   sprite: {fileID: 424131071267445992}
   shadow: {fileID: 424131071111444703}
   aura: {fileID: 424131070707318520}

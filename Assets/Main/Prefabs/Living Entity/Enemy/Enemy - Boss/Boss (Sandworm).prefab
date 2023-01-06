@@ -1317,14 +1317,14 @@ MonoBehaviour:
     m_enabled: 1
     m_value: 0
   entityTags:
-    m_keys:
-    - Hostile
-    - Boss
+  - Hostile
+  - Boss
   lootTable: {fileID: 11400000, guid: 5dd0b43fefe108a42a4eeca46b4ea244, type: 2}
   weaponPivot: {fileID: 0}
   vfxPivot: {fileID: 0}
   defaultMaterial: {fileID: 2100000, guid: 402652d384d5b0443b678775b9efe2d0, type: 2}
   hitMaterial: {fileID: 2100000, guid: 5cee859d7010ca44a92534195d6b9630, type: 2}
+  hurtSound: {fileID: 8300000, guid: 63a9556619d133a4093a53bf7777aed7, type: 3}
   colliders:
   - {fileID: 4812985427933143154}
   - {fileID: 4812985428499355498}
@@ -1365,6 +1365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1551183ad247bda4b8fb824d147bcc9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathSound: {fileID: 8300000, guid: 95d4cecee1b71e14991fa153b7e63739, type: 3}
   head: {fileID: 4812985427933143055}
   wanderRange: 10
   attackRadius: 5
@@ -1384,6 +1385,7 @@ MonoBehaviour:
   - {fileID: 4812985428040303109}
   - {fileID: 4812985429638201807}
   explodeVFX: {fileID: 2896250060390599886, guid: 892bcb50723c0d54aadd3119539f0010, type: 3}
+  explodeSound: {fileID: 8300000, guid: 4c1d447ff19d4ba45abdc48a062b883e, type: 3}
 --- !u!1 &4812985428040303111
 GameObject:
   m_ObjectHideFlags: 0

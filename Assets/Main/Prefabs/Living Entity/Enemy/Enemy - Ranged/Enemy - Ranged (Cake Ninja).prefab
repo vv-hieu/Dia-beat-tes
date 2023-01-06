@@ -305,13 +305,13 @@ MonoBehaviour:
     m_enabled: 1
     m_value: 0
   entityTags:
-    m_keys:
-    - Hostile
+  - Hostile
   lootTable: {fileID: 11400000, guid: 383fe0642b2cafb44a36e12ec227f2ae, type: 2}
   weaponPivot: {fileID: 4983003021266988345}
   vfxPivot: {fileID: 4983003021337671651}
   defaultMaterial: {fileID: 2100000, guid: 402652d384d5b0443b678775b9efe2d0, type: 2}
   hitMaterial: {fileID: 2100000, guid: 5cee859d7010ca44a92534195d6b9630, type: 2}
+  hurtSound: {fileID: 8300000, guid: 63a9556619d133a4093a53bf7777aed7, type: 3}
   colliders: []
   sprites:
     m_keys:

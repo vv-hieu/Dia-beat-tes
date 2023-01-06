@@ -232,6 +232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 3
+  pickupSound: {fileID: 8300000, guid: 2eeb941e122dd1445a169feed5ee30f8, type: 3}
   sprite: {fileID: 3799053130355540952}
   shadow: {fileID: 3799053131094922306}
-  pickupEffect: {fileID: 0}
+  id: 

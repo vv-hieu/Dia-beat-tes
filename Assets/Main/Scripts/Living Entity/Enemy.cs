@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -52,6 +53,8 @@ public class Enemy : MonoBehaviour
         m_navMeshAgent.updateUpAxis   = false;
         m_navMeshAgent.updateRotation = false;
 
+        livingEntity.statSet.AddModifier("local_difficulty_modifier", new LocalDifficultyStatModifier());
+
         OnStart();
     }
 
@@ -62,5 +65,27 @@ public class Enemy : MonoBehaviour
         OnUpdate();
 
         transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0.0f);
+    }
+
+    private class LocalDifficultyStatModifier : LivingEntity.StatModifier
+    {
+        public override List<LivingEntity.StatModifyingOperation> Modify()
+        {
+            int completedLevels = GameManager.GetGameContext().completedLevels;
+
+            List<LivingEntity.StatModifyingOperation> res = new List<LivingEntity.StatModifyingOperation>();
+
+            res.Add(LivingEntity.StatModifyingOperation.AdditionValue("health"      , 1.25f * completedLevels));
+            res.Add(LivingEntity.StatModifyingOperation.AdditionValue("attackDamage", 0.25f * completedLevels));
+            res.Add(LivingEntity.StatModifyingOperation.AdditionValue("speed"       , 0.25f * completedLevels));
+            res.Add(LivingEntity.StatModifyingOperation.AdditionValue("meleeRange"  , 0.75f  * completedLevels));
+
+            if (completedLevels >= 2)
+            {
+                res.Add(LivingEntity.StatModifyingOperation.AdditionValue("shield" , 1.0f));
+            }
+
+            return res;
+        }
     }
 }

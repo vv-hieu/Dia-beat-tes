@@ -86,7 +86,7 @@ public class DefaultRelicEffect : RelicEffect
         if (relic == RelicName.ExtendedClip)
         {
             return FixedStatModifier.Create(context)
-                .AdditionValue("bulletCount", 1.0f);
+                .AdditionValue("bulletCapacity", 2.0f);
         }
         if (relic == RelicName.HelpingHand)
         {

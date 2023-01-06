@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
@@ -17,6 +19,9 @@ public class Player : MonoBehaviour
 
     [Header("Interacting")]
     [SerializeField] private float interactRadius;
+
+    [Header("Events")]
+    public PlayerDieHandler onPlayerDie;
 
     [Header("References")]
     [SerializeField] private SpriteRenderer   sprite;
@@ -40,20 +45,16 @@ public class Player : MonoBehaviour
     private Vector2                                         m_rollDirection                = Vector2.right;
     private HashSet<Interactable>                           m_interactables                = new HashSet<Interactable>();
     private bool                                            m_inputEnabled                 = true;
+    private bool                                            m_died                         = false;
 
     public int commonRelicCount { get; private set; } = 0;
     public int rareRelicCount   { get; private set; } = 0;
     public int cursedRelicCount { get; private set; } = 0;
     public int totalRelicCount  { get; private set; } = 0;
 
-    public void EnableInput()
+    public void ResetPosition()
     {
-        m_inputEnabled = true;
-    }
-
-    public void DisableInput()
-    {
-        m_inputEnabled = false;
+        transform.position = Vector3.zero;
     }
 
     public void SetFatness(float amount)
@@ -152,7 +153,10 @@ public class Player : MonoBehaviour
         m_livingEntity.attackDealtModifier    = new PlayerAttackModifier(this, true);
         m_livingEntity.attackReceivedModifier = new PlayerAttackModifier(this, false);
 
-        m_livingEntity.SetWeapon(weapon);
+        if (m_livingEntity.GetWeapon() == null)
+        {
+            m_livingEntity.SetWeapon(weapon);
+        }
 
         if (rollingDamageZone != null)
         {
@@ -175,7 +179,7 @@ public class Player : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown("space") && m_rollTime <= 0.0f)
+            if (Input.GetKeyDown("space") && m_rollTime <= 0.0f && m_fatMeter >= 1.0f)
             {
                 SetFatness(0.0f);
                 m_rolling = true;
@@ -196,6 +200,7 @@ public class Player : MonoBehaviour
         {
             rollingSprite.transform.localEulerAngles = new Vector3(0.0f, 0.0f, (m_livingEntity.isFacingRight ? m_rollAngle : -m_rollAngle));
             m_rollAngle += rollSpeed * Time.deltaTime;
+            m_livingEntity.SetInvulnerableTime(0.1f);
         }
         m_rollTime = Mathf.Max(0.0f, m_rollTime - Time.deltaTime);
 
@@ -226,6 +231,11 @@ public class Player : MonoBehaviour
             {
                 interactable.OnInteract(this);
             }
+        }
+    
+        if (!m_died && m_livingEntity.currentHealth <= 0.0f)
+        {
+            onPlayerDie?.Invoke();
         }
     }
 
@@ -286,4 +296,7 @@ public class Player : MonoBehaviour
             return res;
         }
     }
+
+    [Serializable]
+    public class PlayerDieHandler : UnityEvent { };
 }

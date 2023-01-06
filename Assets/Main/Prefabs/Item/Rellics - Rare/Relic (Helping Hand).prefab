@@ -178,7 +178,7 @@ MonoBehaviour:
     name: Helping Hand
     description: +1 reload speed
     type: 1
-    price: 0
+    price: 65
   sprite: {fileID: 6230663138752462658}
   shadow: {fileID: 6230663138453379957}
   aura: {fileID: 6230663136712121682}

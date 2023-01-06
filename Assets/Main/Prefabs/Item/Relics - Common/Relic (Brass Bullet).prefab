@@ -346,7 +346,7 @@ MonoBehaviour:
     name: Brass Bullet
     description: +1 bullet count
     type: 0
-    price: 0
+    price: 25
   sprite: {fileID: 850878250266924624}
   shadow: {fileID: 850878250439914087}
   aura: {fileID: 850878250848171072}

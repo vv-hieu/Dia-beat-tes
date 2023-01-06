@@ -176,9 +176,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   relicProperty:
     name: Extended Clip
-    description: +1 bullet capacity
+    description: +2 bullet capacity
     type: 1
-    price: 0
+    price: 65
   sprite: {fileID: 7183382593706413279}
   shadow: {fileID: 7183382593869441256}
   aura: {fileID: 7183382592391311055}

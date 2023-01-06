@@ -6,6 +6,9 @@ public class Weapon : MonoBehaviour
     [SerializeField] private string weaponName;
     [SerializeField] private Sprite weaponSprite;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip useSound;
+
     [Header("References")]
     [SerializeField] private SpriteRenderer sprite;
 
@@ -136,12 +139,22 @@ public class Weapon : MonoBehaviour
         {
             return false;
         }
-
         m_affectedTags = affectedTags;
+
         OnActivate();
 
         m_state = State.Activating;
         return true;
+    }
+
+    public virtual float BulletCount()
+    {
+        return 0.0f;
+    }
+
+    public virtual float BulletCapacity()
+    {
+        return 0.0f;
     }
 
     public virtual void OnStart()
@@ -207,6 +220,7 @@ public class Weapon : MonoBehaviour
             if (ActivateEnded())
             {
                 OnUse();
+                SoundManager.PlaySound(useSound);
                 m_state = State.Using;
             }
         }

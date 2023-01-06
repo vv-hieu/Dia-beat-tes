@@ -346,7 +346,7 @@ MonoBehaviour:
     name: Orange Juice
     description: +1 attack speed
     type: 0
-    price: 0
+    price: 20
   sprite: {fileID: 3311128172452431353}
   shadow: {fileID: 3311128173189714531}
   aura: {fileID: 480864626400758647}

@@ -346,7 +346,7 @@ MonoBehaviour:
     name: Lucky Clover
     description: +1 luck
     type: 0
-    price: 0
+    price: 5
   sprite: {fileID: 86190311450241494}
   shadow: {fileID: 86190311294225889}
   aura: {fileID: 86190311964888006}

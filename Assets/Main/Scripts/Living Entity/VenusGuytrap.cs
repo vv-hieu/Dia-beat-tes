@@ -162,7 +162,7 @@ public class VenusGuytrap : Boss
 
         if (!changedState)
         {
-            m_time += Time.deltaTime;
+            m_time += (GameStateManager.instance.currentState != GameState.Paused ? Time.deltaTime : 0.0f);
         }
     }
 

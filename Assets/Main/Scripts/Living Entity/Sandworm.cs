@@ -9,6 +9,7 @@ public class Sandworm : Boss
     [SerializeField] private float              explodeTime;
     [SerializeField] private RadialDamageZone[] damageZones;
     [SerializeField] private GameObject         explodeVFX;
+    [SerializeField] private AudioClip          explodeSound;
 
     private Player      m_player;
     private State       m_state = State.Starting;
@@ -93,6 +94,7 @@ public class Sandworm : Boss
                 if (m_time <= 0.0f)
                 {
                     Instantiate(explodeVFX, m_segments[m_segmentIndex].position, Quaternion.identity, transform.parent);
+                    SoundManager.PlaySound(explodeSound);
                     Destroy(m_segments[m_segmentIndex].gameObject);
                     ++m_segmentIndex;
                     if (m_segmentIndex >= m_segments.Length)
@@ -106,7 +108,7 @@ public class Sandworm : Boss
                 break;
         }
 
-        if (m_state != State.Dying)
+        if (m_state != State.Dying && GameStateManager.instance.currentState != GameState.Paused)
         {
             float distToTarget = Vector2.Distance(new Vector2(head.position.x, head.position.y), m_target);
             if (distToTarget > 0.05f)
@@ -123,15 +125,6 @@ public class Sandworm : Boss
     {
         m_state = State.Dying;
         m_segments = head.GetComponent<ConnectedSegments>().GetSegments(true);
-        //ConnectedSegments connectedSegments = head.GetComponent<ConnectedSegments>();
-        //if (connectedSegments != null)
-        //{
-        //    foreach (Transform segment in connectedSegments.GetSegments())
-        //    {
-        //        Instantiate(explodeVFX, segment.position, Quaternion.identity, transform.parent);
-        //    }
-        //}
-        //Destroy(gameObject);
     }
 
     private void p_OnWander()

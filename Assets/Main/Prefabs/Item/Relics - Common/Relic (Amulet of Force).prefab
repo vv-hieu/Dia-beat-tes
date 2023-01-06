@@ -237,7 +237,7 @@ MonoBehaviour:
     name: Amulet of Force
     description: +1 attack damage, +1 melee range
     type: 0
-    price: 0
+    price: 15
   sprite: {fileID: 5234815071947698663}
   shadow: {fileID: 5234815071650715088}
   aura: {fileID: 5234815073131729911}

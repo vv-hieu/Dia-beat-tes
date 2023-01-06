@@ -37,24 +37,30 @@ public class RadialDamageZone : MonoBehaviour
         {
             m_damage = d;
         }
-    }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
         if (m_init)
         {
-            LivingEntity entity = LivingEntity.FromCollider(collision);
-            if (entity != null && entity.HasTagsAny(m_affectedTags))
-            {
-                Vector2 direction = new Vector2(entity.transform.position.x - transform.position.x, entity.transform.position.y - transform.position.y);
+            Collider2D[] colliders = new Collider2D[100];
+            int count = Physics2D.OverlapCollider(GetComponent<Collider2D>(), new ContactFilter2D().NoFilter(), colliders);
 
-                LivingEntity.HandleAttack(m_owner, entity, LivingEntity.AttackInfo.Create()
-                    .Damage(m_damage)
-                    .Knockback(m_knockback)
-                    .StunTime(m_stunTime)
-                    .InvulnerableTime(m_invulnerableTime)
-                    .KnockbackDirection(direction)
-                    .Tags(m_tags), m_crit);
+            for (int i = 0; i < count; ++i)
+            {
+                LivingEntity entity = LivingEntity.FromCollider(colliders[i]);
+                if (entity != null)
+                {
+                    if (entity.HasTagsAny(m_affectedTags))
+                    {
+                        Vector2 direction = new Vector2(entity.transform.position.x - transform.position.x, entity.transform.position.y - transform.position.y);
+
+                        LivingEntity.HandleAttack(m_owner, entity, LivingEntity.AttackInfo.Create()
+                            .Damage(m_damage)
+                            .Knockback(m_knockback)
+                            .StunTime(m_stunTime)
+                            .InvulnerableTime(m_invulnerableTime)
+                            .KnockbackDirection(direction)
+                            .Tags(m_tags), m_crit);
+                    }
+                }
             }
         }
     }

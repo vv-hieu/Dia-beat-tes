@@ -131,6 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Katana
   weaponSprite: {fileID: -977566408, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
+  useSound: {fileID: 8300000, guid: eb0f9b7b948d5c345971ca0de39f29c5, type: 3}
   sprite: {fileID: 5130541778559349625}
   sweepAttack: {fileID: 979914582220970763, guid: 1ff4a34b938f86f4baed9fcf0116ac1a, type: 3}
   idleAngle: 90

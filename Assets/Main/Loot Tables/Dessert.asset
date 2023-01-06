@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: Dessert
   m_EditorClassIdentifier: 
   pools:
-  - chance: 0.8
+  - chance: 0.3
+    additionalChancePerLuckLevel: 0.1
     rolls: 5
     entries:
     - item: {fileID: 4714962614108088636, guid: e090c9540da556546a8fd8da920e38c1, type: 3}
-      weight: 10
+      baseWeight: 10
+      additionalWeightPerLuckLevel: 0
     - item: {fileID: 3799053131542543978, guid: b89f9d1304abc4647a28ed5a48a94114, type: 3}
-      weight: 1
+      baseWeight: 1
+      additionalWeightPerLuckLevel: 2

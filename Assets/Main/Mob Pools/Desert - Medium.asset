@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 481065f5a771a06479a95965cd472fb8, type: 3}
+  m_Name: Desert - Medium
+  m_EditorClassIdentifier: 
+  entries:
+  - mob: {fileID: 5801965007680053457, guid: 7a67b4085115fee40875935ac223093b, type: 3}
+    weight: 8
+  - mob: {fileID: 8257956402191617878, guid: 227d2fc20db9d1740a78fc9ffa935f7d, type: 3}
+    weight: 5
+  - mob: {fileID: 7597460274769344936, guid: 1c9489c498a2c3b4eab4ba6c6da61383, type: 3}
+    weight: 5
+  - mob: {fileID: 7507608752533946671, guid: d055f55f0576d9e4b90240c0c83c224f, type: 3}
+    weight: 2
+  - mob: {fileID: 5082660890556403860, guid: 948155c75cddcf041a81fb817305860d, type: 3}
+    weight: 3
+  - mob: {fileID: 4983003020430710945, guid: ad7230cd5acd03a4d90a38206d029e0f, type: 3}
+    weight: 1
+  - mob: {fileID: 4306740918760107159, guid: 0c0b8367d128c144194ef2aab632e7c8, type: 3}
+    weight: 1

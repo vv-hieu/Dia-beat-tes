@@ -131,6 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Spear
   weaponSprite: {fileID: 1335663714, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
+  useSound: {fileID: 8300000, guid: eb0f9b7b948d5c345971ca0de39f29c5, type: 3}
   sprite: {fileID: 3229405516867290857}
   pierceAttack: {fileID: 5763428770507813971, guid: 92891a5e7c5192240aa2641b4800f0de, type: 3}
   retract: 0.2

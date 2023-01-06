@@ -237,7 +237,7 @@ MonoBehaviour:
     name: Candy
     description: +1 speed
     type: 0
-    price: 0
+    price: 15
   sprite: {fileID: 293688004424863774}
   shadow: {fileID: 293688005298456452}
   aura: {fileID: 3408171572894260880}

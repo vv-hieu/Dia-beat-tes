@@ -132,6 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Crossbow
   weaponSprite: {fileID: -1287061927, guid: 5c88fa07864ccc246a414da09c71c525, type: 3}
+  useSound: {fileID: 8300000, guid: 31510c9eb127671479996e7e04595a0b, type: 3}
   sprite: {fileID: 234672019465976774}
   projectile: {fileID: 3275910719399180631, guid: a0b7a4c3a574a3046ba6b8267847e86c, type: 3}
   projectileSpawnPosition: {fileID: 6905807625281750576}

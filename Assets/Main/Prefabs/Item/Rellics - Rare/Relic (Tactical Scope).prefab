@@ -178,7 +178,7 @@ MonoBehaviour:
     name: Tactical Scope
     description: +1 bullet precision
     type: 1
-    price: 0
+    price: 40
   sprite: {fileID: 8272614711378389894}
   shadow: {fileID: 8272614711149105073}
   aura: {fileID: 8272614709674117526}

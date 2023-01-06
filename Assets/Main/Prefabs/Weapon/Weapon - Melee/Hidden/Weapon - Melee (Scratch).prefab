@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: 
   weaponSprite: {fileID: 0}
+  useSound: {fileID: 8300000, guid: eb0f9b7b948d5c345971ca0de39f29c5, type: 3}
   sprite: {fileID: 3592817225057706243}
   sweepAttack: {fileID: 979914582220970763, guid: 1ff4a34b938f86f4baed9fcf0116ac1a, type: 3}
   idleAngle: 90

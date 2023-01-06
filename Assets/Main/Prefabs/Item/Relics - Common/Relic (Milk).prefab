@@ -153,7 +153,7 @@ MonoBehaviour:
     name: Milk
     description: +1 shield
     type: 0
-    price: 0
+    price: 25
   sprite: {fileID: 1346089856988099641}
   shadow: {fileID: 1346089855714206627}
   aura: {fileID: 4175232421948816055}

@@ -346,7 +346,7 @@ MonoBehaviour:
     name: Monocle
     description: +1 crit chance, +0.1 crit damage
     type: 0
-    price: 0
+    price: 10
   sprite: {fileID: 103531379210326442}
   shadow: {fileID: 103531379566294429}
   aura: {fileID: 103531379972453306}

@@ -29,11 +29,17 @@ public class WeaponWieldingEnemy : Enemy
         {
             Vector2 targetPos = new Vector2(target.transform.position.x, target.transform.position.y);
             SetDestination(targetPos);
-            livingEntity.AimWeaponAt(targetPos);
+            if (livingEntity != null)
+            {
+                livingEntity.AimWeaponAt(targetPos);
+            }
         }
         if (IsInStopDistance() || m_weaponHasNoReach)
         {
-            livingEntity.UseWeapon(new string[] { "Friendly" });
+            if (livingEntity != null)
+            {
+                livingEntity.UseWeapon(new string[] { "Friendly" });
+            }
         }
     }
 }

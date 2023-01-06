@@ -69,7 +69,7 @@ MonoBehaviour:
     name: Hellsteel Armor
     description: +0.2 shield for each cursed relic held
     type: 1
-    price: 0
+    price: 35
   sprite: {fileID: 3300176085997772492}
   shadow: {fileID: 3300176086179347195}
   aura: {fileID: 3300176085770042588}

@@ -148,9 +148,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  pickupSound: {fileID: 8300000, guid: 71b9cf9a965db274fbda59841c4610cf, type: 3}
   sprite: {fileID: 4714962614238106766}
   shadow: {fileID: 4714962613366866708}
-  pickupEffect: {fileID: 0}
+  id: 
 --- !u!1 &4714962614238106753
 GameObject:
   m_ObjectHideFlags: 0

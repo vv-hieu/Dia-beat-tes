@@ -346,7 +346,7 @@ MonoBehaviour:
     name: Hellsteel Blade
     description: +0.2 attack damage for each cursed relic held
     type: 1
-    price: 0
+    price: 35
   sprite: {fileID: 3192561917727620963}
   shadow: {fileID: 3192561917420870484}
   aura: {fileID: 3192561918090222963}
