@@ -168,6 +168,16 @@ public class DefaultRelicEffect : RelicEffect
 
     public override LivingEntity.AttackModifier GenerateAttackReceivedModifier(GameManager.GameContext context)
     {
+        if (relic == RelicName.GoldenApple)
+        {
+            return new GoldenAppleAttackReceivedModifier();
+        }
+        if (relic == RelicName.ChainmailArmor)
+        {
+            return FixedAttackModifier.Create(context)
+                .CritNegation();
+        }
+
         return base.GenerateAttackReceivedModifier(context);
     }
 
@@ -498,5 +508,26 @@ public class ConditionalAttackModifier : LivingEntity.AttackModifier
             HasAll,
             HasAny
         }
+    }
+}
+
+public class GoldenAppleAttackReceivedModifier : LivingEntity.AttackModifier
+{
+    public override List<LivingEntity.AttackModifyingOperation> Modify(LivingEntity.AttackInfo attackInfo, LivingEntity.AttackContext attackContext)
+    {
+
+        if (attackContext.target != null)
+        {
+            List<LivingEntity.AttackModifyingOperation> res = new List<LivingEntity.AttackModifyingOperation>();
+            float health = attackContext.target.statSet.GetValue("health");
+            if (attackInfo.damage > 0.1f * health)
+            {
+                float p = attackInfo.damage / (0.1f * health);
+                res.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.DamageMultiplication, p));
+                return res;
+            }
+        }
+        
+        return base.Modify(attackInfo, attackContext);
     }
 }
