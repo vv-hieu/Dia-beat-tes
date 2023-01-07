@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 [Serializable]
 public struct Optional<T>
@@ -18,6 +21,7 @@ public struct Optional<T>
     }
 }
 
+#if UNITY_EDITOR
 namespace MyEditor
 {
     [CustomPropertyDrawer(typeof(Optional<>))]
@@ -55,3 +59,4 @@ namespace MyEditor
         }
     }
 }
+#endif

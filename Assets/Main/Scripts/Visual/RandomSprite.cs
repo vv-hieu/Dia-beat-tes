@@ -1,5 +1,8 @@
-using UnityEditor;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class RandomSprite : MonoBehaviour
 {
@@ -33,6 +36,7 @@ public class RandomSprite : MonoBehaviour
     }
 }
 
+#if UNITY_EDITOR
 namespace MyEditor
 {
     [CustomEditor(typeof(RandomSprite))]
@@ -49,3 +53,4 @@ namespace MyEditor
         }
     }
 }
+#endif

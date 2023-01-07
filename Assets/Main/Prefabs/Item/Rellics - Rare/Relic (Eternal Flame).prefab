@@ -175,8 +175,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   relicProperty:
-    name: Tactical Scope
-    description: +1 bullet precision
+    name: Eternal Flame
+    description: Sets enemies on fire
     type: 1
     price: 45
   sprite: {fileID: 8272614711378389894}

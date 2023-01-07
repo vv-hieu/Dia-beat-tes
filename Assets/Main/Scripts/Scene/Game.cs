@@ -10,6 +10,12 @@ public class Game : MonoBehaviour
     [SerializeField] private int            endSceneId;
 
     private GameObject m_currentMenu;
+    private bool       m_allowEscapeKey = true;
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 
     public void CompleteLevel()
     {
@@ -22,6 +28,12 @@ public class Game : MonoBehaviour
             }
         }
         GameManager.CompleteLevel();
+        GameManager.ResetTimer();
+    }
+
+    public void OpenMenuDelayed(GameObject menu)
+    {
+        StartCoroutine(p_OpenMenuAsync(menu, 1.0f));
     }
 
     public void QueryRelics(int phaseIdx)
@@ -90,6 +102,15 @@ public class Game : MonoBehaviour
     private void p_OnPlayerDie()
     {
         StartCoroutine(p_OnPlayerDieAsync());
+    }
+
+    private IEnumerator p_OpenMenuAsync(GameObject menu, float delay)
+    {
+        m_allowEscapeKey = false;
+        yield return new WaitForSeconds(delay);
+        menu.SetActive(true);
+        SetCurrentMenu(menu);
+        m_allowEscapeKey = true;
     }
 
     private IEnumerator p_OnPlayerDieAsync()

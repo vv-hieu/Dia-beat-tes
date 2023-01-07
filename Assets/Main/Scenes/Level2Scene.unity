@@ -2028,6 +2028,7 @@ MonoBehaviour:
   currentHealth: {fileID: 231114741}
   currentShield: {fileID: 38360147}
   currentTimer: {fileID: 488776750}
+  totalCoin: {fileID: 0}
   bullet: {fileID: 1680504508}
 --- !u!4 &527416055
 Transform:
@@ -3415,7 +3416,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 945109841}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 527416056}
+        m_TargetAssemblyTypeName: Game, Assembly-CSharp
+        m_MethodName: Quit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &945109841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5946,11 +5959,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7087115976575421058, guid: eeadac7c6f9411346a828bdd8fcba4a8, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.size
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7087115976575421058, guid: eeadac7c6f9411346a828bdd8fcba4a8, type: 3}
       propertyPath: onPhaseChange.m_PersistentCalls.m_Calls.Array.size
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7087115976575421058, guid: eeadac7c6f9411346a828bdd8fcba4a8, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -6042,7 +6055,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7087115976575421058, guid: eeadac7c6f9411346a828bdd8fcba4a8, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: SetCurrentMenu
+      value: OpenMenuDelayed
       objectReference: {fileID: 0}
     - target: {fileID: 7087115976575421058, guid: eeadac7c6f9411346a828bdd8fcba4a8, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
@@ -6074,7 +6087,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7087115976575421058, guid: eeadac7c6f9411346a828bdd8fcba4a8, type: 3}
       propertyPath: onPhaseChange.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: SetCurrentMenu
+      value: OpenMenuDelayed
       objectReference: {fileID: 0}
     - target: {fileID: 7087115976575421058, guid: eeadac7c6f9411346a828bdd8fcba4a8, type: 3}
       propertyPath: onPhaseChange.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName

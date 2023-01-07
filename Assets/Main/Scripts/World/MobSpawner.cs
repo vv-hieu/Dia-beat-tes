@@ -72,12 +72,10 @@ public class MobSpawner : MonoBehaviour
 
     private void p_OnPhaseEnter(int index)
     {
-        Debug.Log("Enter phase " + index);
     }
 
     private void p_OnPhaseEnded(int index)
     {
-        Debug.Log("Exit phase " + index);
         onPhaseChange?.Invoke(index);
     }
 
@@ -122,7 +120,6 @@ public class MobSpawner : MonoBehaviour
     private IEnumerator p_BeginAsync(float delay)
     {
         yield return new WaitForSeconds(delay);
-        GameManager.ResetTimer();
         m_init = true;
     }
 

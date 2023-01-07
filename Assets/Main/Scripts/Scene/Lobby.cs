@@ -8,9 +8,15 @@ public class Lobby : MonoBehaviour
 
     private GameObject m_currentMenu;
 
-    public void ResetLevelCounter()
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    public void ResetLevelCounterAndTimer()
     {
         GameManager.ResetLevel();
+        GameManager.ResetTimer();
     }
 
     public void ResetCurrentMenu()

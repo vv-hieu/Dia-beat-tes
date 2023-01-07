@@ -75,14 +75,16 @@ public class Enemy : MonoBehaviour
 
             List<LivingEntity.StatModifyingOperation> res = new List<LivingEntity.StatModifyingOperation>();
 
-            res.Add(LivingEntity.StatModifyingOperation.AdditionValue("health"      , 1.25f * completedLevels));
-            res.Add(LivingEntity.StatModifyingOperation.AdditionValue("attackDamage", 0.25f * completedLevels));
-            res.Add(LivingEntity.StatModifyingOperation.AdditionValue("speed"       , 0.25f * completedLevels));
-            res.Add(LivingEntity.StatModifyingOperation.AdditionValue("meleeRange"  , 0.75f  * completedLevels));
+            res.Add(LivingEntity.StatModifyingOperation.AdditionValue("health"      , 2.25f * completedLevels));
+            res.Add(LivingEntity.StatModifyingOperation.AdditionValue("attackDamage", 0.75f * completedLevels));
+            res.Add(LivingEntity.StatModifyingOperation.AdditionValue("meleeRange"  , 1.25f * completedLevels));
+
+            res.Add(LivingEntity.StatModifyingOperation.AdditionPercent("speed"      , 0.35f * completedLevels));
+            res.Add(LivingEntity.StatModifyingOperation.AdditionPercent("attackSpeed", 0.15f * completedLevels));
 
             if (completedLevels >= 2)
             {
-                res.Add(LivingEntity.StatModifyingOperation.AdditionValue("shield" , 1.0f));
+                res.Add(LivingEntity.StatModifyingOperation.AdditionValue("shield", 1.0f));
             }
 
             return res;

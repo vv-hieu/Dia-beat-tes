@@ -4,7 +4,10 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.Serialization;
 using UnityEngine;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 public abstract class SerializableDictionaryBase
 {
@@ -260,6 +263,7 @@ public class SerializableDictionary<TKey, TValue, TValueStorage> : SerializableD
 	}
 }
 
+#if UNITY_EDITOR
 namespace MyEditor
 {
 	[CustomPropertyDrawer(typeof(SerializableDictionaryBase), true)]
@@ -864,3 +868,4 @@ namespace MyEditor
 		}
 	}
 }
+#endif

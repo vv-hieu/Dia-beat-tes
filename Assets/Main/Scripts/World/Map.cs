@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Tilemaps;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class Map : MonoBehaviour
 {
@@ -765,6 +768,7 @@ public class Map : MonoBehaviour
     }
 }
 
+#if UNITY_EDITOR
 namespace MyEditor
 {
     [CustomEditor(typeof(Map))]
@@ -785,3 +789,4 @@ namespace MyEditor
         }
     }
 }
+#endif
