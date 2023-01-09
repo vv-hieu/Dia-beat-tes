@@ -513,7 +513,9 @@ public class LivingEntity : MonoBehaviour
 
         if (currentHealth <= 0.01f && !m_died)
         {
+            RemoveWeapon();
             m_died = true;
+            isInControl = false;
             OnDeath();
             if (onDeath != null)
             {

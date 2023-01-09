@@ -954,6 +954,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1342740737}
+        m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
+        m_MethodName: Unpause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &178044663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13984,6 +13996,7 @@ GameObject:
   - component: {fileID: 1196514489}
   - component: {fileID: 1196514492}
   - component: {fileID: 1196514493}
+  - component: {fileID: 1196514494}
   m_Layer: 0
   m_Name: Global
   m_TagString: Global
@@ -14209,6 +14222,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c3484fb883e917438d939a6294ae0c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1196514494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196514483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 480b03441b739e043be00b5cc0a7e766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1198607540

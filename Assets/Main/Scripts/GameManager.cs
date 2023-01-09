@@ -43,6 +43,46 @@ public class GameManager
         return res;
     }
 
+    public static void GetVolumeSettings(out float music, out float sfx)
+    {
+        if (File.Exists(PERSISTENT_DATA_PATH))
+        {
+            using StreamReader reader = new StreamReader(PERSISTENT_DATA_PATH);
+            string json = reader.ReadToEnd();
+
+            PersistentData data = JsonUtility.FromJson<PersistentData>(json);
+            music = data.musicVolume;
+            sfx   = data.soundFxVolume;
+        }
+        else
+        {
+            music = 1.0f;
+            sfx   = 1.0f;
+        }
+    }
+
+    public static void SetVolumeSettings(float music, float sfx)
+    {
+        PersistentData data = new PersistentData();
+        data.coinCount     = 0;
+        data.musicVolume   = 1.0f;
+        data.soundFxVolume = 1.0f;
+        if (File.Exists(PERSISTENT_DATA_PATH))
+        {
+            using StreamReader reader = new StreamReader(PERSISTENT_DATA_PATH);
+            string json1 = reader.ReadToEnd();
+
+            data = JsonUtility.FromJson<PersistentData>(json1);
+        }
+        data.musicVolume   = music;
+        data.soundFxVolume = sfx;
+
+        string json2 = JsonUtility.ToJson(data);
+
+        using StreamWriter writer = new StreamWriter(PERSISTENT_DATA_PATH);
+        writer.Write(json2);
+    }
+
     public static void ResetTimer()
     {
         instance.m_timer = 0.0f;
@@ -68,12 +108,22 @@ public class GameManager
         instance.m_totalCoinCount = amount;
 
         PersistentData data = new PersistentData();
+        data.coinCount     = 0;
+        data.musicVolume   = 1.0f;
+        data.soundFxVolume = 1.0f;
+        if (File.Exists(PERSISTENT_DATA_PATH))
+        {
+            using StreamReader reader = new StreamReader(PERSISTENT_DATA_PATH);
+            string json1 = reader.ReadToEnd();
+
+            data = JsonUtility.FromJson<PersistentData>(json1);
+        }
         data.coinCount = amount;
 
-        string json = JsonUtility.ToJson(data);
+        string json2 = JsonUtility.ToJson(data);
 
         using StreamWriter writer = new StreamWriter(PERSISTENT_DATA_PATH);
-        writer.Write(json);
+        writer.Write(json2);
     }
 
     public static bool SpendCoin(int amount)
@@ -124,6 +174,8 @@ public class GameManager
 
     public struct PersistentData
     {
-        public int coinCount;
+        public int   coinCount;
+        public float musicVolume;
+        public float soundFxVolume;
     }
 }
