@@ -7,7 +7,7 @@ public class DestructibleTilemap : MonoBehaviour
     [SerializeField] SerializableDictionary<TileBase, GameObject> breakingEffects = new SerializableDictionary<TileBase, GameObject>();
     
     [Header("Audio")]
-    [SerializeField] SerializableDictionary<TileBase, AudioClip>  soundEffects    = new SerializableDictionary<TileBase, AudioClip>();
+    [SerializeField] SerializableDictionary<TileBase, AudioClip> soundEffects = new SerializableDictionary<TileBase, AudioClip>();
 
     private Tilemap m_tilemap;
     

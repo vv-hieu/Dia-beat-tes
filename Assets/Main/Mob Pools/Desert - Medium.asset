@@ -17,7 +17,7 @@ MonoBehaviour:
     weight: 8
   - mob: {fileID: 8257956402191617878, guid: 227d2fc20db9d1740a78fc9ffa935f7d, type: 3}
     weight: 5
-  - mob: {fileID: 7597460274769344936, guid: 1c9489c498a2c3b4eab4ba6c6da61383, type: 3}
+  - mob: {fileID: 2823664701801294402, guid: 427d2f35bba112045a9796f791fe435e, type: 3}
     weight: 5
   - mob: {fileID: 7507608752533946671, guid: d055f55f0576d9e4b90240c0c83c224f, type: 3}
     weight: 2

@@ -46,14 +46,14 @@ public class Enemy : MonoBehaviour
     {
         m_navMeshAgent = GetComponent<NavMeshAgent>();
         livingEntity   = GetComponent<LivingEntity>();
+
+        livingEntity.statSet.AddModifier("local_difficulty_modifier", new LocalDifficultyStatModifier());
     }
 
     private void Start()
     {
         m_navMeshAgent.updateUpAxis   = false;
         m_navMeshAgent.updateRotation = false;
-
-        livingEntity.statSet.AddModifier("local_difficulty_modifier", new LocalDifficultyStatModifier());
 
         OnStart();
     }
@@ -75,17 +75,13 @@ public class Enemy : MonoBehaviour
 
             List<LivingEntity.StatModifyingOperation> res = new List<LivingEntity.StatModifyingOperation>();
 
-            res.Add(LivingEntity.StatModifyingOperation.AdditionValue("health"      , 2.25f * completedLevels));
             res.Add(LivingEntity.StatModifyingOperation.AdditionValue("attackDamage", 0.75f * completedLevels));
             res.Add(LivingEntity.StatModifyingOperation.AdditionValue("meleeRange"  , 1.25f * completedLevels));
 
             res.Add(LivingEntity.StatModifyingOperation.AdditionPercent("speed"      , 0.35f * completedLevels));
             res.Add(LivingEntity.StatModifyingOperation.AdditionPercent("attackSpeed", 0.15f * completedLevels));
 
-            if (completedLevels >= 2)
-            {
-                res.Add(LivingEntity.StatModifyingOperation.AdditionValue("shield", 1.0f));
-            }
+            res.Add(LivingEntity.StatModifyingOperation.AdditionValue("shield", 0.5f));
 
             return res;
         }

@@ -6,23 +6,23 @@ using UnityEngine.Events;
 
 public class MobSpawner : MonoBehaviour
 {
-    [SerializeField] private Map                map;
-    [SerializeField] private Phase[]            phases;
-    [SerializeField] private GameObject         boss;
-    [SerializeField] private int                mobCap;
-    [SerializeField] private BossDefeatHandler  onBossDefeat;
+    [SerializeField] private Map map;
+    [SerializeField] private Phase[] phases;
+    [SerializeField] private GameObject boss;
+    [SerializeField] private int mobCap;
+    [SerializeField] private BossDefeatHandler onBossDefeat;
     [SerializeField] private PhaseChangeHandler onPhaseChange;
 
-    private Phase            m_currentPhase;
-    private int              m_phaseIdx        = -1;
-    private float            m_phaseTimestamp  = 0.0f;
-    private float            m_timer           = 0.0f;
-    private bool             m_init            = false;
-    private System.Random    m_rng             = new System.Random();
-    private List<GameObject> m_mobs            = new List<GameObject>();
-    private bool             m_normalPhases    = true;
-    private bool             m_bossSummoned    = false;
-    private GameObject       m_boss;
+    private Phase m_currentPhase;
+    private int m_phaseIdx = -1;
+    private float m_phaseTimestamp = 0.0f;
+    private float m_timer = 0.0f;
+    private bool m_init = false;
+    private System.Random m_rng = new System.Random();
+    private List<GameObject> m_mobs = new List<GameObject>();
+    private bool m_normalPhases = true;
+    private bool m_bossSummoned = false;
+    private GameObject m_boss;
 
     private void Start()
     {
@@ -108,7 +108,8 @@ public class MobSpawner : MonoBehaviour
         if (mob != null)
         {
             Vector2 spawnPos = map.RandomWalkable(m_rng);
-            m_mobs.Add(Instantiate(mob, new Vector3(spawnPos.x, spawnPos.y, 0.0f), Quaternion.identity, transform));
+            GameObject newMob = Instantiate(mob, new Vector3(spawnPos.x, spawnPos.y, 0.0f), Quaternion.identity, transform);
+            m_mobs.Add(newMob);
         }
     }
 
@@ -126,8 +127,8 @@ public class MobSpawner : MonoBehaviour
     [Serializable]
     public struct Phase
     {
-        public float   duration;
-        public float   spawnRate;
+        public float duration;
+        public float spawnRate;
         public MobPool mobPool;
     }
 

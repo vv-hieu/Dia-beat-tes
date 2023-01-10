@@ -17,10 +17,10 @@ public class Game : MonoBehaviour
         Application.Quit();
     }
 
-    public void CompleteLevel()
+    public void CompleteLevel(bool resetPlayerPosition)
     {
         GameObject go = GameObject.FindGameObjectWithTag("Player");
-        if (go != null)
+        if (go != null && resetPlayerPosition)
         {
             if (go.TryGetComponent(out Player player))
             {

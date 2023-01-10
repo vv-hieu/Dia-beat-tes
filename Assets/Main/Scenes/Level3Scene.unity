@@ -4941,7 +4941,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
       propertyPath: onPhaseChange.m_PersistentCalls.m_Calls.Array.size
@@ -4953,16 +4953,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 1
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
+      propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 527416059}
+      objectReference: {fileID: 527416057}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -4970,11 +4974,11 @@ PrefabInstance:
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 527416056}
+      objectReference: {fileID: 527416059}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 527416056}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
       propertyPath: onPhaseChange.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -4993,14 +4997,18 @@ PrefabInstance:
       objectReference: {fileID: 1132472802}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetDelay
+      value: PauseForSeconds
       objectReference: {fileID: 0}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: LoadSceneWithDelay
+      value: SetDelay
       objectReference: {fileID: 0}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: LoadSceneWithDelay
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
+      propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
       value: CompleteLevel
       objectReference: {fileID: 0}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
@@ -5009,7 +5017,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SceneLoader, Assembly-CSharp
+      value: PauseManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
@@ -5017,14 +5025,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: SceneLoader, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
+      propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
       value: Game, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_IntArgument
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
+      propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_IntArgument
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
@@ -5036,12 +5052,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
+      propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_FloatArgument
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
@@ -5065,6 +5085,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436895366362301780, guid: 708cf793ffd7c7843992442df5c75af5, type: 3}
+      propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -401,6 +401,17 @@ public class LivingEntity : MonoBehaviour
         m_rigidbody    = GetComponent<Rigidbody2D>();
 
         GameStateManager.instance.onGameStateChanged += p_OnGameStateChanged;
+
+        statSet = p_BuildStatSet();
+
+        if (statSet.TryGetValue("health", out float h))
+        {
+            currentHealth = h;
+        }
+        if (statSet.TryGetValue("shield", out float s))
+        {
+            currentShield = s;
+        }
     }
 
     private void OnDestroy()
@@ -414,17 +425,6 @@ public class LivingEntity : MonoBehaviour
 
     private void Start()
     {
-        statSet = p_BuildStatSet();
-
-        if (statSet.TryGetValue("health", out float h))
-        {
-            currentHealth = h;
-        }
-        if (statSet.TryGetValue("shield", out float s))
-        {
-            currentShield = s;
-        }
-
         m_previousPosition = new Vector2(transform.position.x, transform.position.y);
 
         foreach (Collider2D collider in colliders)

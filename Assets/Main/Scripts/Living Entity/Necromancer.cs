@@ -105,7 +105,10 @@ public class Necromancer : Boss
             case State.Wandering:
                 if (m_hasTarget)
                 {
-                    m_navMeshAgent.SetDestination(m_wanderTarget);
+                    if (m_navMeshAgent.isOnNavMesh)
+                    {
+                        m_navMeshAgent.SetDestination(m_wanderTarget);
+                    }
                     if (p_DistanceToTarget() < 0.5f)
                     {
                         m_state = m_summonCooldown > 0.0f ? State.Starting : State.Summoning;

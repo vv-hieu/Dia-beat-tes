@@ -588,14 +588,14 @@ MonoBehaviour:
       - m_Target: {fileID: 527416056}
         m_TargetAssemblyTypeName: Game, Assembly-CSharp
         m_MethodName: CompleteLevel
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &143274956
 MonoBehaviour:
@@ -5678,14 +5678,14 @@ MonoBehaviour:
       - m_Target: {fileID: 527416056}
         m_TargetAssemblyTypeName: Game, Assembly-CSharp
         m_MethodName: CompleteLevel
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!1 &1770258656
 GameObject:
@@ -5972,7 +5972,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7087115976575421058, guid: eeadac7c6f9411346a828bdd8fcba4a8, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7087115976575421058, guid: eeadac7c6f9411346a828bdd8fcba4a8, type: 3}
       propertyPath: onPhaseChange.m_PersistentCalls.m_Calls.Array.size
@@ -6025,7 +6025,7 @@ PrefabInstance:
     - target: {fileID: 7087115976575421058, guid: eeadac7c6f9411346a828bdd8fcba4a8, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
-      objectReference: {fileID: 245149704}
+      objectReference: {fileID: 527416056}
     - target: {fileID: 7087115976575421058, guid: eeadac7c6f9411346a828bdd8fcba4a8, type: 3}
       propertyPath: onPhaseChange.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -6072,7 +6072,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7087115976575421058, guid: eeadac7c6f9411346a828bdd8fcba4a8, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
-      value: SetActive
+      value: CompleteLevel
       objectReference: {fileID: 0}
     - target: {fileID: 7087115976575421058, guid: eeadac7c6f9411346a828bdd8fcba4a8, type: 3}
       propertyPath: onPhaseChange.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -6120,7 +6120,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7087115976575421058, guid: eeadac7c6f9411346a828bdd8fcba4a8, type: 3}
       propertyPath: onBossDefeat.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: Game, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7087115976575421058, guid: eeadac7c6f9411346a828bdd8fcba4a8, type: 3}
       propertyPath: onPhaseChange.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

@@ -18534,6 +18534,11 @@ MonoBehaviour:
     - {fileID: 11400000, guid: e241b47e740095c4182bd3896bf30909, type: 2}
     m_values:
     - {fileID: 4330566404898234175, guid: 9550648ee1a1ec9498dd8fd895efeb18, type: 3}
+  soundEffects:
+    m_keys:
+    - {fileID: 11400000, guid: e241b47e740095c4182bd3896bf30909, type: 2}
+    m_values:
+    - {fileID: 8300000, guid: 948eca4311d1c3044bba491bb12a9c29, type: 3}
 --- !u!1 &7305588481909602267
 GameObject:
   m_ObjectHideFlags: 0
@@ -109762,23 +109767,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 5486216546310107219}
-  phase0:
-    spawnRate: 0.1
-    mobPool: {fileID: 11400000, guid: 8b7e9c94f6a982d48b6fd73ac64178bb, type: 2}
-  phase1:
-    spawnRate: 0.2
-    mobPool: {fileID: 11400000, guid: 8b7e9c94f6a982d48b6fd73ac64178bb, type: 2}
-  phase2:
-    spawnRate: 0.2
-    mobPool: {fileID: 11400000, guid: a3e9ac9e44ea52a40906b29557436082, type: 2}
-  phase3:
-    spawnRate: 0.3
-    mobPool: {fileID: 11400000, guid: a3e9ac9e44ea52a40906b29557436082, type: 2}
-  phase4:
-    spawnRate: 0.5
-    mobPool: {fileID: 11400000, guid: 76539594004dddf46a58d2111ed188b0, type: 2}
+  phases: []
   boss: {fileID: 1749531922943260975, guid: 665d47dbdf7d13e42902c84a04962f72, type: 3}
   mobCap: 100
+  onBossDefeat:
+    m_PersistentCalls:
+      m_Calls: []
+  onPhaseChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8786613100308254045
 GameObject:
   m_ObjectHideFlags: 0

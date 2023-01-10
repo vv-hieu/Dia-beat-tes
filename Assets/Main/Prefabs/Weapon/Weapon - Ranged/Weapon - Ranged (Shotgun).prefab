@@ -168,7 +168,7 @@ MonoBehaviour:
   projectile: {fileID: 3383687889652752435, guid: 305b7ce513456764983bade8f793ddeb, type: 3}
   projectileSpawnPosition: {fileID: 4222324233123236348}
   recoil: 0.3
-  damage: 1
+  damage: 0.5
   knockback: 0.4
   stunTime: 0.2
   fireRate: 1
@@ -176,7 +176,7 @@ MonoBehaviour:
   bulletCount: 3
   bulletSpread: 60
   bulletSpeed: 25
-  bulletLifetime: 0.2
+  bulletLifetime: 0.1
   bulletCapacity: 6
   tags:
   - Projectile

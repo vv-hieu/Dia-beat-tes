@@ -1068,6 +1068,8 @@ MonoBehaviour:
   - {fileID: 4812985429509234722}
   segmentTargetDistance: 1.2
   smoothSpeed: 200
+  wiggleSpeed: 8
+  wiggleAngle: 2
 --- !u!114 &6712021000097138022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1273,13 +1275,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health:
     m_enabled: 1
-    m_value: 50
+    m_value: 100
   shield:
     m_enabled: 1
-    m_value: 5
+    m_value: 10
   speed:
     m_enabled: 1
-    m_value: 8
+    m_value: 10
   luck:
     m_enabled: 1
     m_value: 0
@@ -1369,7 +1371,7 @@ MonoBehaviour:
   head: {fileID: 4812985427933143055}
   wanderRange: 10
   attackRadius: 5
-  rotateSpeed: 270
+  rotateSpeed: 360
   explodeTime: 0.2
   damageZones:
   - {fileID: 4812985428636473547}
