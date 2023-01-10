@@ -107,7 +107,16 @@ public class MobSpawner : MonoBehaviour
         GameObject mob = m_currentPhase.mobPool.Get(m_rng);
         if (mob != null)
         {
-            Vector2 spawnPos = map.RandomWalkable(m_rng);
+            Vector2 spawnPos  = map.RandomWalkable(m_rng);
+            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+            if (playerObject != null)
+            {
+                while (Vector2.Distance(spawnPos, playerObject.transform.position) < 8.0f)
+                {
+                    spawnPos = map.RandomWalkable(m_rng);
+                }
+            }
+            
             GameObject newMob = Instantiate(mob, new Vector3(spawnPos.x, spawnPos.y, 0.0f), Quaternion.identity, transform);
             m_mobs.Add(newMob);
         }

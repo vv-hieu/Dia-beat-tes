@@ -31,7 +31,7 @@ public class Relic : MonoBehaviour
 
     public void AddToPlayer(Player player)
     {
-        player.AddRelic(id, relicProperty);
+        player.AddRelic(id, gameObject);
     }
 
     private void Awake()

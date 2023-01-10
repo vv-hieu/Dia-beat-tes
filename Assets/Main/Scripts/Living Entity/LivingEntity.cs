@@ -465,7 +465,7 @@ public class LivingEntity : MonoBehaviour
 
         if (currentShield < shield)
         {
-            m_shieldTime += Time.deltaTime;
+            m_shieldTime += GameStateManager.instance.currentState == GameState.Paused ? 0.0f : Time.deltaTime;
             while (m_shieldTime >= SHIELD_REGENERATE_TIME)
             {
                 m_shieldTime -= SHIELD_REGENERATE_TIME;

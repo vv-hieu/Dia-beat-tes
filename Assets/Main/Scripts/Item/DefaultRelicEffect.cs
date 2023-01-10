@@ -522,7 +522,7 @@ public class GoldenAppleAttackReceivedModifier : LivingEntity.AttackModifier
             float health = attackContext.target.statSet.GetValue("health");
             if (attackInfo.damage > 0.1f * health)
             {
-                float p = attackInfo.damage / (0.1f * health);
+                float p = (0.1f * health) / attackInfo.damage;
                 res.Add(new LivingEntity.AttackModifyingOperation(LivingEntity.AttackModifyingOperation.Operation.DamageMultiplication, p));
                 return res;
             }

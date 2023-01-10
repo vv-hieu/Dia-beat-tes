@@ -50,17 +50,17 @@ public class PierceWeapon : MeleeWeapon
 
     public override void Activating()
     {
-        m_time += Time.deltaTime;
+        m_time += GameStateManager.instance.currentState == GameState.Paused ? 0.0f : Time.deltaTime;
     }
 
     public override void CoolingDown()
     {
-        m_time += Time.deltaTime;
+        m_time += GameStateManager.instance.currentState == GameState.Paused ? 0.0f : Time.deltaTime;
     }
 
     public override void Using()
     {
-        m_time += Time.deltaTime;
+        m_time += GameStateManager.instance.currentState == GameState.Paused ? 0.0f : Time.deltaTime;
     }
 
     public override bool ActivateEnded()

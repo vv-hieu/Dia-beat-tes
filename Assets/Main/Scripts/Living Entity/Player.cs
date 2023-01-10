@@ -46,6 +46,9 @@ public class Player : MonoBehaviour
     private HashSet<Interactable>                           m_interactables                = new HashSet<Interactable>();
     private bool                                            m_inputEnabled                 = true;
     private bool                                            m_died                         = false;
+    private Dictionary<string, int>                         m_collectedRelicCount          = new Dictionary<string, int>();
+    private Dictionary<string, GameObject>                  m_collectedRelics              = new Dictionary<string, GameObject>();
+    private List<string>                                    m_collectedRelicNames          = new List<string>();
 
     public int commonRelicCount { get; private set; } = 0;
     public int rareRelicCount   { get; private set; } = 0;
@@ -91,8 +94,23 @@ public class Player : MonoBehaviour
         SetFatness(m_fatMeter + amount);
     }
 
-    public void AddRelic(string id, Relic.Property relicProperty)
+    public void AddRelic(string id, GameObject relic)
     {
+        Relic.Property relicProperty = relic.GetComponent<Relic>().property;
+
+        if (m_collectedRelicCount.TryGetValue(relicProperty.name, out int relicCount))
+        {
+            m_collectedRelicCount[relicProperty.name] = relicCount + 1;
+        }
+        else
+        {
+            m_collectedRelicCount[relicProperty.name] = 1;
+            GameObject savedRelic = Instantiate(relic, transform);
+            savedRelic.SetActive(false);
+            m_collectedRelics[relicProperty.name] = savedRelic;
+            m_collectedRelicNames.Add(relicProperty.name);
+        }
+
         switch (relicProperty.type)
         {
             case Relic.Type.Common:
@@ -129,6 +147,24 @@ public class Player : MonoBehaviour
         m_relicAttackReceivedModifiers[modifierId] = relicProperty.attackReceivedModifierGenerator(GameManager.GetGameContext());
 
         m_livingEntity.statSet.AddModifier(modifierId, m_relicStatModifiers[modifierId]);
+    }
+
+    public bool GetRelic(int index, out GameObject relicObject, out int count, out string name)
+    {
+        if (index < m_collectedRelicNames.Count)
+        {
+            name        = m_collectedRelicNames[index];
+            count       = m_collectedRelicCount[name];
+            relicObject = m_collectedRelics[name];
+            return true;
+        }
+        else
+        {
+            name        = "";
+            count       = -1;
+            relicObject = null;
+            return false;
+        }
     }
 
     public bool CanPickUp(Collectible.CollectibleType collectibleType)
