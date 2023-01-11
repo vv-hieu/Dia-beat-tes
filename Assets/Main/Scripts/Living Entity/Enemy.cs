@@ -77,11 +77,12 @@ public class Enemy : MonoBehaviour
 
             res.Add(LivingEntity.StatModifyingOperation.AdditionValue("attackDamage", 0.75f * completedLevels));
             res.Add(LivingEntity.StatModifyingOperation.AdditionValue("meleeRange"  , 1.25f * completedLevels));
+            res.Add(LivingEntity.StatModifyingOperation.AdditionValue("bulletSpeed" , 1.50f * completedLevels));
 
             res.Add(LivingEntity.StatModifyingOperation.AdditionPercent("speed"      , 0.35f * completedLevels));
             res.Add(LivingEntity.StatModifyingOperation.AdditionPercent("attackSpeed", 0.15f * completedLevels));
 
-            res.Add(LivingEntity.StatModifyingOperation.AdditionValue("shield", 0.5f));
+            res.Add(LivingEntity.StatModifyingOperation.AdditionValue("shield", 0.5f * completedLevels));
 
             return res;
         }

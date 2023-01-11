@@ -317,7 +317,7 @@ MonoBehaviour:
     m_value: 0
   attackDamage:
     m_enabled: 1
-    m_value: 0
+    m_value: 0.5
   attackSpeed:
     m_enabled: 1
     m_value: 0
@@ -329,7 +329,7 @@ MonoBehaviour:
     m_value: 0
   bulletCount:
     m_enabled: 1
-    m_value: 0
+    m_value: 9
   bulletPrecision:
     m_enabled: 1
     m_value: 0
@@ -341,7 +341,7 @@ MonoBehaviour:
     m_value: 0
   bulletCapacity:
     m_enabled: 1
-    m_value: 0
+    m_value: 9
   reloadSpeed:
     m_enabled: 1
     m_value: 0

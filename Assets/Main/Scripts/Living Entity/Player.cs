@@ -21,7 +21,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float interactRadius;
 
     [Header("Events")]
-    public PlayerDieHandler onPlayerDie;
+    public PlayerDieHandler  onPlayerDie;
+    public PlayerRollHandler onRollFinished;
 
     [Header("References")]
     [SerializeField] private SpriteRenderer   sprite;
@@ -50,10 +51,13 @@ public class Player : MonoBehaviour
     private Dictionary<string, GameObject>                  m_collectedRelics              = new Dictionary<string, GameObject>();
     private List<string>                                    m_collectedRelicNames          = new List<string>();
 
+    public float fatness => m_fatMeter;
+
     public int commonRelicCount { get; private set; } = 0;
     public int rareRelicCount   { get; private set; } = 0;
     public int cursedRelicCount { get; private set; } = 0;
     public int totalRelicCount  { get; private set; } = 0;
+    public int totalKillCount   { get; private set; } = 0;
 
     public void ResetPosition()
     {
@@ -180,6 +184,8 @@ public class Player : MonoBehaviour
     {
         m_livingEntity = GetComponent<LivingEntity>();
         m_rigidbody    = GetComponent<Rigidbody2D>();
+
+        m_livingEntity.onKill += p_IncreaseKillCount;
     }
 
     private void Start()
@@ -231,6 +237,7 @@ public class Player : MonoBehaviour
             m_rolling = false;
             defaultState.SetActive(true);
             rollingState.SetActive(false);
+            onRollFinished?.Invoke();
         }
         else if (m_rollTime > 0.0f)
         {
@@ -289,6 +296,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void p_IncreaseKillCount()
+    {
+        ++totalKillCount;
+    }
+
     private struct RelicEntry
     {
         public Relic.Property relicProperty;
@@ -335,4 +347,7 @@ public class Player : MonoBehaviour
 
     [Serializable]
     public class PlayerDieHandler : UnityEvent { };
+
+    [Serializable]
+    public class PlayerRollHandler : UnityEvent { };
 }

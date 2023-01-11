@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56e398ba7a12445448e102d6bbb5ca70, type: 3}
+  m_Name: Tutorial Zombie
+  m_EditorClassIdentifier: 
+  pools:
+  - chance: 1
+    additionalChancePerLuckLevel: 0
+    rolls: 16
+    entries:
+    - item: {fileID: 4714962614108088636, guid: e090c9540da556546a8fd8da920e38c1, type: 3}
+      baseWeight: 1
+      additionalWeightPerLuckLevel: 0

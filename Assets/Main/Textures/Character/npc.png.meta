@@ -181,6 +181,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: npc_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3248b0ec4e572044b039e604c63295c
+      internalID: -1099082592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -192,6 +213,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      npc_3: -1099082592
       npc_2: -825992982
       npc_1: 801264850
       npc_0: -1680631364

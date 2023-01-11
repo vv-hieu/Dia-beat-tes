@@ -363,7 +363,7 @@ MonoBehaviour:
     m_value: 0
   attackDamage:
     m_enabled: 1
-    m_value: 0
+    m_value: 1
   attackSpeed:
     m_enabled: 1
     m_value: 0

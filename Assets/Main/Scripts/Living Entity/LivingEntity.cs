@@ -48,6 +48,7 @@ public class LivingEntity : MonoBehaviour
     public AttackModifier attackDealtModifier;
     public AttackModifier attackReceivedModifier;
     public DeathCallback  onDeath;
+    public KillCallback   onKill;
 
     public float   currentHealth { get; private set; } = 0.0f;
     public float   currentShield { get; private set; } = 0.0f;
@@ -636,6 +637,11 @@ public class LivingEntity : MonoBehaviour
             AddStatusEffect(attackInfo.statusEffectsInflictors[effectId](context.attacker, attackInfo.statusEffectsTime[effectId], attackInfo.statusEffectsLevel[effectId]));
         }
         SoundManager.PlaySound(hurtSound);
+
+        if (currentHealth <= 0.01f)
+        {
+            context.attacker.onKill?.Invoke();
+        }
     }
 
     private void p_OnGameStateChanged(GameState newState)
@@ -1268,5 +1274,6 @@ public class LivingEntity : MonoBehaviour
     }
 
     public delegate void         DeathCallback();
+    public delegate void         KillCallback();
     public delegate StatusEffect StatusEffectInflictor(LivingEntity owner, float time, int level);
 }

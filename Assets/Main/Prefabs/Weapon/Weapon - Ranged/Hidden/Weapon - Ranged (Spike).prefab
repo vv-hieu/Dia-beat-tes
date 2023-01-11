@@ -79,20 +79,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: 
   weaponSprite: {fileID: 0}
+  useSound: {fileID: 0}
   sprite: {fileID: 5906699607843889756}
   projectile: {fileID: 9172409831265519558, guid: 2d19645372d5f314e98f0875cac415ba, type: 3}
   projectileSpawnPosition: {fileID: 968041341476741034}
   recoil: 0
-  damage: 0.5
+  damage: 0
   knockback: 0
   stunTime: 0.2
   fireRate: 0.3
   reloadTime: 0.25
-  bulletCount: 9
+  bulletCount: 0
   bulletSpread: 400
   bulletSpeed: 8
   bulletLifetime: 1
-  bulletCapacity: 9
+  bulletCapacity: 0
   tags:
   - Projectile
 --- !u!1 &8459830610092879877

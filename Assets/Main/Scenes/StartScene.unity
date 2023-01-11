@@ -1272,13 +1272,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2034667282}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 3
+      - m_Target: {fileID: 2034667284}
+        m_TargetAssemblyTypeName: StartMenu, Assembly-CSharp
+        m_MethodName: LoadNextScene
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 2034667282}
+          m_ObjectArgumentAssemblyTypeName: SceneLoader, Assembly-CSharp
           m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2855,6 +2855,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf64d5a88259994081b6e23cafe4b0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lobbySceneId: 1
+  tutoialSceneId: 6
 --- !u!1 &2067055283
 GameObject:
   m_ObjectHideFlags: 0
